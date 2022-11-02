@@ -7,6 +7,7 @@ import ConnectionRoute from "./routes/Connection/ConnectionRoute";
 import ShowViewRoute from "./routes/ShowView/ShowViewRoute";
 import styled from "@emotion/styled";
 import { Box, Stack } from "@mui/material";
+import PopularRoute from "./routes/Popular/PopularRoute";
 
 const routeList = [
   {
@@ -20,6 +21,10 @@ const routeList = [
   {
     path: "/show-view",
     element: <ShowViewRoute />,
+  },
+  {
+    path: "/popular",
+    element: <PopularRoute />,
   },
 ];
 const router = createBrowserRouter(routeList);
