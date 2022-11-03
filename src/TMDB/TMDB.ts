@@ -24,7 +24,7 @@ import {
   Query,
   TMDBApi,
 } from "../@types/TMDB";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import deepMapKeys from "deep-map-keys";
 
 export default class TMDB implements TMDBApi {
@@ -38,30 +38,52 @@ export default class TMDB implements TMDBApi {
   async get<T>(resource: string, parameters: Query = {}): Promise<T> {
     let url = "https://api.themoviedb.org/3/" + resource;
     url += `?api_key=${this.apiKey}`;
-    url += `&query=${parameters.query}`;
-    const headers = {
-      responseType: "json",
-      searchParams: {
-        api_key: this.apiKey,
-        ...parameters,
-      },
-      throwHttpErrors: false,
-    };
-    console.log(`🐽 parameters`, parameters);
+    if (parameters.query) {
+      url += `&query=${parameters.query}`;
+    }
+    try {
+      const response = (await axios({
+        url,
+        method: "get",
+        responseType: "json",
+        data: {
+          api_key: this.apiKey,
+          ...parameters,
+        },
+      })) as any;
 
-    const response = (await axios({
-      url,
-      method: "get",
-      responseType: "json",
-      data: {
-        api_key: this.apiKey,
-        ...parameters,
-      },
-    })) as any;
+      // console.log(`🐽 response`, response);
+      const rateLimitRemaining = Number(
+        response.headers["x-ratelimit-remaining"]
+      );
 
-    // console.log(`🐽 response`, response);
+      // RATE LIMIT
+      if (rateLimitRemaining) {
+        console.log(`[M@][TMDB] rateLimitRemaining`, rateLimitRemaining);
+        const currentTime = Math.round(new Date().getTime() / 1000);
+        const rateLimitReset = Number(response.headers["x-ratelimit-reset"]);
 
-    return deepMapKeys(response.data, camelCase) as T;
+        // The minimum 30 seconds cooldown ensures that in case 'x-ratelimit-reset'
+        // time is wrong, we don't bombard the TMDb server with requests.
+        const cooldownTime = Math.max(rateLimitReset - currentTime, 30);
+
+        // TODO: M@ this should be completed:
+        console.error("🐽 WE HAVE BEEN RATE LIMITED... DO SOMETHING!");
+      }
+
+      return deepMapKeys(response.data, camelCase) as T;
+    } catch (axiosError: any) {
+      // console.log(`🐽 axiosError`, axiosError);
+      const error = axiosError as AxiosError;
+
+      const statusCode = error.response?.status ?? 500;
+
+      if (statusCode === 404) {
+        throw new NotFoundError();
+      }
+
+      throw new RemoteError(error.message, statusCode);
+    }
   }
   async getFetch<T>(resource: string, parameters: Query = {}): Promise<T> {
     const url = "https://api.themoviedb.org/3/" + resource;
@@ -98,50 +120,6 @@ export default class TMDB implements TMDBApi {
     console.log(`🐽 data`, data);
 
     return Promise.resolve() as T;
-  }
-
-  async getGot<T>(resource: string, parameters: Query = {}): Promise<T> {
-    return Promise.resolve() as T;
-    // while (true) {
-    //   const response = await got<PlainResponse>(
-    //     "https://api.themoviedb.org/3/" + resource,
-    //     {
-    //       responseType: "json",
-    //       searchParams: {
-    //         api_key: this.apiKey,
-    //         ...parameters,
-    //       },
-    //       throwHttpErrors: false,
-    //     }
-    //   );
-    //   if (!String(response.statusCode).startsWith("2")) {
-    //     if (response.headers["x-ratelimit-remaining"]) {
-    //       const rateLimitRemaining = Number(
-    //         response.headers["x-ratelimit-remaining"]
-    //       );
-    //       if (!rateLimitRemaining) {
-    //         const currentTime = Math.round(new Date().getTime() / 1000);
-    //         const rateLimitReset = Number(
-    //           response.headers["x-ratelimit-reset"]
-    //         );
-    //         // The minimum 30 seconds cooldown ensures that in case 'x-ratelimit-reset'
-    //         // time is wrong, we don't bombard the TMDb server with requests.
-    //         const cooldownTime = Math.max(rateLimitReset - currentTime, 30);
-    //         console.log("reached rate limit; waiting %d seconds", cooldownTime);
-    //         // await delay(cooldownTime * 1000);
-    //         continue;
-    //       }
-    //     }
-    //     if (response.statusCode === 404) {
-    //       throw new NotFoundError();
-    //     }
-    //     throw new RemoteError(
-    //       (response.body as any).status_message,
-    //       (response.body as any).status_code
-    //     );
-    //   }
-    //   return deepMapKeys(response.body, camelCase) as T;
-    // }
   }
 
   async getMovie(movieId: number): Promise<Movie> {
