@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Movie } from "../../@types/TMDB";
 import useMegaStore from "../../store/MegaStore";
-import { NotFoundError } from "../errors";
 
 export default function useMovie(id: number) {
   const tmdb = useMegaStore((state) => state.tmdb);
