@@ -1,5 +1,3 @@
-// import got, { PlainResponse } from "got";
-// import { delay } from "bluefeather";
 import { camelCase } from "lodash";
 import {
   NotFoundError,
@@ -12,19 +10,19 @@ import {
   Company,
   FinditResults,
   Movie,
-  MovieBackdropImage,
+  MovieImage,
   MovieCastCredit,
   MovieCredits,
   MovieCrewCredit,
-  MoviePosterImage,
-  MoviePosterImageCollection,
+  MovieImageCollection,
   MovieVideo,
   MovieVideoCollection,
   Person,
   Query,
   TMDBApi,
+  OptionsBag,
+  TvShow,
 } from "../@types/TMDB";
-import axios, { AxiosError } from "axios";
 import deepMapKeys from "deep-map-keys";
 
 export default class TMDB implements TMDBApi {
@@ -35,97 +33,45 @@ export default class TMDB implements TMDBApi {
     this.apiKey = apiKey;
     this.language = language;
   }
-  async get<T>(resource: string, parameters: Query = {}): Promise<T> {
-    let url = "https://api.themoviedb.org/3/" + resource;
-    url += `?api_key=${this.apiKey}`;
-    if (parameters.query) {
-      url += `&query=${parameters.query}`;
+  async get<T>(resource: string, parameters: any): Promise<T> | never {
+    const url =
+      `https://api.themoviedb.org/3/${resource}?` +
+      // `&language=${this.language}` +
+      `&${new URLSearchParams(parameters).toString()}` +
+      `&api_key=${this.apiKey}`;
+
+    console.log(`🐽 [TMDB] url`, url);
+
+    //  ___     _       _
+    // |  _|___| |_ ___| |_
+    // |  _| -_|  _|  _|   |
+    // |_| |___|_| |___|_|_|
+    const srvcResponse = (await fetch(url)) as any;
+    const data = await srvcResponse.json();
+    const statusCode = srvcResponse.status ?? 500;
+
+    // console.log(`🐽 [TMDB] srvcResponse`, srvcResponse);
+    //  ___ ___ ___ ___ ___ ___
+    // | -_|  _|  _| . |  _|_ -|
+    // |___|_| |_| |___|_| |___|
+    if (statusCode > 200) {
+      console.log(`🐽 [TMDB] Error: `, url);
     }
-    try {
-      const response = (await axios({
-        url,
-        method: "get",
-        responseType: "json",
-        data: {
-          api_key: this.apiKey,
-          ...parameters,
-        },
-      })) as any;
-
-      // console.log(`🐽 response`, response);
-      const rateLimitRemaining = Number(
-        response.headers["x-ratelimit-remaining"]
-      );
-
-      // RATE LIMIT
-      if (rateLimitRemaining) {
-        console.log(`[M@][TMDB] rateLimitRemaining`, rateLimitRemaining);
-        const currentTime = Math.round(new Date().getTime() / 1000);
-        const rateLimitReset = Number(response.headers["x-ratelimit-reset"]);
-
-        // The minimum 30 seconds cooldown ensures that in case 'x-ratelimit-reset'
-        // time is wrong, we don't bombard the TMDb server with requests.
-        const cooldownTime = Math.max(rateLimitReset - currentTime, 30);
-
-        // TODO: M@ this should be completed:
-        console.error("🐽 WE HAVE BEEN RATE LIMITED... DO SOMETHING!");
-      }
-
-      return deepMapKeys(response.data, camelCase) as T;
-    } catch (axiosError: any) {
-      // console.log(`🐽 axiosError`, axiosError);
-      const error = axiosError as AxiosError;
-
-      const statusCode = error.response?.status ?? 500;
-
-      if (statusCode === 404) {
+    switch (statusCode) {
+      case 404:
         throw new NotFoundError();
-      }
+      case 500:
+        throw new RemoteError(data?.status_message, statusCode);
 
-      throw new RemoteError(error.message, statusCode);
+      default:
+        break;
     }
-  }
-  async getFetch<T>(resource: string, parameters: Query = {}): Promise<T> {
-    const url = "https://api.themoviedb.org/3/" + resource;
-    // const headers = {
-    //   responseType: "json",
-    //   searchParams: {
-    //     api_key: this.apiKey,
-    //     ...parameters,
-    //   },
-    //   throwHttpErrors: false,
-    // };
-    // const response = await fetch(url, { ...(headers as any) });
 
-    const searchParams = {
-      api_key: this.apiKey,
-    };
-    const headers = {
-      "Content-Type": "application/json",
-      searchParams: {
-        api_key: this.apiKey,
-      },
-    };
-    const response = await fetch(url, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        searchParams: {
-          api_key: this.apiKey,
-        },
-      }),
-    });
-    const data = await response.json();
-    console.log(`🐽 data`, data);
-
-    return Promise.resolve() as T;
+    return deepMapKeys(data, camelCase) as T;
   }
 
-  async getMovie(movieId: number): Promise<Movie> {
-    const movie = await this.get<Movie>("movie/" + movieId, {
-      language: this.language,
-    });
+  async getMovie(id: number | string, options?: OptionsBag): Promise<Movie> {
+    const movie = await this.get<Movie>(`movie/${id}`, options);
 
     return {
       ...movie,
@@ -137,24 +83,21 @@ export default class TMDB implements TMDBApi {
       runtime: movie.runtime || null,
     };
   }
+  // async getMovie(movieId: number): Promise<Movie> {
+  //   const movie = await this.get<Movie>("movie/" + movieId, {
+  //     language: this.language,
+  //   });
 
-  // https://developers.themoviedb.org/3/movies/get-movie-images
-  async getMovieBackdropImages(
-    movieId: number,
-    includeImageLanguage: string[]
-  ): Promise<MovieBackdropImage[]> {
-    const imageCollection = await this.get<MoviePosterImageCollection>(
-      "movie/" + movieId + "/images",
-      {
-        include_image_language: includeImageLanguage
-          ? includeImageLanguage.join(",")
-          : null,
-        language: this.language,
-      }
-    );
+  //   return {
+  //     ...movie,
 
-    return imageCollection.backdrops ?? [];
-  }
+  //     // Revenue can be 0, e.g. https://gist.github.com/gajus/b396a7e1af22977b0d98f4c63a664d44#file-response-json-L94
+  //     revenue: movie.revenue || null,
+
+  //     // Runtime can be 0, e.g. https://gist.github.com/gajus/b396a7e1af22977b0d98f4c63a664d44#file-response-json-L95
+  //     runtime: movie.runtime || null,
+  //   };
+  // }
 
   // https://developers.themoviedb.org/3/movies/get-movie-credits
   async getMovieCastCredits(movieId: number): Promise<MovieCastCredit[]> {
@@ -181,21 +124,62 @@ export default class TMDB implements TMDBApi {
   }
 
   // https://developers.themoviedb.org/3/movies/get-movie-images
-  async getMoviePosterImages(
-    movieId: number,
-    includeImageLanguage: string[]
-  ): Promise<MoviePosterImage[]> {
-    const images = await this.get<MoviePosterImageCollection>(
-      "movie/" + movieId + "/images",
-      {
-        include_image_language: includeImageLanguage
-          ? includeImageLanguage.join(",")
-          : null,
-        language: this.language,
-      }
+  async getMovieImages(
+    id: number | string,
+    options?: OptionsBag
+  ): Promise<MovieImageCollection> {
+    let image_language_options;
+    if (options?.includeImageLanguage) {
+      options = Object.assign({}, options, {
+        include_image_language: options.includeImageLanguage.join(","),
+      });
+      delete options.includeImageLanguage;
+    }
+    image_language_options = options?.includeImageLanguage
+      ? {
+          include_image_language: options.includeImageLanguage.join(","),
+        }
+      : null;
+
+    const images = await this.get<MovieImageCollection>(
+      `movie/${id}/images`,
+      options
     );
 
+    return (
+      images ?? {
+        backdrops: [],
+        posters: [],
+        id: movieId,
+      }
+    );
+  }
+
+  // https://developers.themoviedb.org/3/movies/get-movie-images
+  async getMoviePosters(
+    id: number | string,
+    options?: OptionsBag
+  ): Promise<MovieImage[]> {
+    const images = await this.getMovieImages(id, options);
     return images.posters ?? [];
+  }
+
+  // https://developers.themoviedb.org/3/movies/get-movie-images
+  async getMovieBackdrops(
+    id: number | string,
+    options?: OptionsBag
+  ): Promise<MovieImage[]> {
+    const images = await this.getMovieImages(id, options);
+    return images.backdrops ?? [];
+  }
+
+  // https://developers.themoviedb.org/3/movies/get-movie-images
+  async getMovieLogos(
+    id: number | string,
+    options?: OptionsBag
+  ): Promise<MovieImage[]> {
+    const images = await this.getMovieImages(id, options);
+    return images.logos ?? [];
   }
 
   /**
@@ -276,5 +260,10 @@ export default class TMDB implements TMDBApi {
     }
 
     return Number(results[0].id);
+  }
+
+  async getTvShow(id: number | string, options?: OptionsBag): Promise<TvShow> {
+    const tvShow = await this.get<TvShow>(`tv/${id}`, options);
+    return tvShow;
   }
 }

@@ -1,29 +1,53 @@
 interface TMDBApi {
   apiKey: string;
   language: string;
+  /** @throws {NotFoundError, RemoteError} */
   get: <T>(resource: string, parameters: QueryType) => Promise<T>;
-  getMovie: (movieId: number) => Promise<Movie>;
-  getMovieBackdropImages: (
-    movieId: number,
+  /** @throws {NotFoundError, RemoteError} */
+  getMovie: (id: number | string, options?: OptionsBag) => Promise<Movie>;
+  /** @throws {NotFoundError, RemoteError} */
+  getTvShow: (id: number | string, options?: OptionsBag) => Promise<TvShow>;
+
+  /** @throws {NotFoundError, RemoteError} */
+  getMovieCastCredits: (movieId: number) => Promise<CastCredit[]>;
+  /** @throws {NotFoundError, RemoteError} */
+  getMovieCrewCredits: (movieId: number) => Promise<CrewCredit[]>;
+
+  /** @throws {NotFoundError, RemoteError} */
+  getMoviePosters: (
+    id: number,
     includeImageLanguage: string[]
-  ) => Promise<MovieBackdropImage[]>;
-  getMovieCastCredits: (movieId: number) => Promise<MovieCastCredit[]>;
-  getMovieCrewCredits: (movieId: number) => Promise<MovieCrewCredit[]>;
-  getMoviePosterImages: (
-    movieId: number,
+  ) => Promise<ShowImage[]>;
+  /** @throws {NotFoundError, RemoteError} */
+  getMovieBackdrops: (
+    id: number,
     includeImageLanguage: string[]
-  ) => Promise<MoviePosterImage[]>;
+  ) => Promise<ShowImage[]>;
+  /** @throws {NotFoundError, RemoteError} */
+  getMovieLogos: (
+    id: number,
+    includeImageLanguage: string[]
+  ) => Promise<ShowImage[]>;
+
+  /** @throws {NotFoundError, RemoteError} */
   getMovieVideos: (movieId: number) => Promise<MovieVideo[]>;
+  /** @throws {NotFoundError, RemoteError} */
   getPerson: (personId: number) => Promise<Person>;
+  /** @throws {NotFoundError, RemoteError} */
   getCompany: (companyId: number) => Promise<Company>;
+  /** @throws {NotFoundError, RemoteError} */
   findId: (
     resourceType: "movie" | "person",
     externalSource: "imdb",
     externalId: string
   ) => Promise<number>;
 }
+type ApiFn = Function;
 type Query = {
   [key: string]: string | number | null;
+};
+type OptionsBag = {
+  [key: string]: any;
 };
 // https://developers.themoviedb.org/3/movies/get-movie-details
 type Movie = {
@@ -66,12 +90,13 @@ type Country = {
   name: string;
 };
 type Language = {
+  english_name: string;
   iso6391: string;
   name: string;
 };
 type ImagePath = SoN;
 
-export type MovieBackdropImage = {
+export type ShowImage = {
   aspectRatio?: number;
   filePath?: string;
   height?: number;
@@ -80,12 +105,12 @@ export type MovieBackdropImage = {
   voteCount?: number;
   width?: number;
 };
-type MovieCredits = {
+type Credits = {
   id?: number;
-  cast?: MovieCastCredit[];
-  crew?: MovieCrewCredit[];
+  cast?: CastCredit[];
+  crew?: CrewCredit[];
 };
-type MovieCastCredit = {
+type CastCredit = {
   castId?: number;
   character?: string;
   creditId?: string;
@@ -96,7 +121,7 @@ type MovieCastCredit = {
   profilePath?: ImagePath;
 };
 
-type MovieCrewCredit = {
+type CrewCredit = {
   creditId?: string;
   department?: string;
   gender?: NoN;
@@ -106,12 +131,13 @@ type MovieCrewCredit = {
   profilePath?: ImagePath;
 };
 
-type MoviePosterImageCollection = {
+type ShowImageCollection = {
   id?: number;
-  backdrops?: MovieBackdropImage[];
-  posters?: MoviePosterImage[];
+  backdrops?: ShowImage[];
+  posters?: ShowImage[];
+  logos?: ShowImage[];
 };
-type MoviePosterImage = {
+type ShowImage = {
   aspectRatio?: number;
   filePath?: string;
   height?: number;
@@ -184,4 +210,68 @@ type APIResponse = {
     status_message: string;
     status_code: number;
   };
+};
+type Season = {
+  airDate?: string;
+  episodeCount?: number;
+  id?: number;
+  name?: string;
+  overview?: string;
+  posterPath?: string;
+  seasonNumber?: number;
+};
+type Network = {
+  id?: number;
+  name?: string;
+  logoPath?: string;
+  originCountry?: string;
+};
+type Episode = {
+  airDate?: string;
+  episodeNumber?: number;
+  id?: number;
+  name?: string;
+  overview?: string;
+  productionCode?: string;
+  runtime?: number;
+  seasonNumber?: number;
+  showId?: number;
+  stillPath?: string;
+  voteAverage?: number;
+  voteCount?: number;
+};
+type TvShow = {
+  adult?: boolean;
+  backdropPath?: string;
+  createdBy?: CrewCredit[];
+  episodeRunTime?: number[];
+  firstAirDate?: string;
+  genres?: Genre[];
+  genreIds?: number[];
+  homepage?: string;
+  id?: number;
+  inProduction?: boolean;
+  languages?: string[];
+  lastAirDate?: string;
+  lastEpisodeToAir?: Episode;
+  name?: string;
+  nextEpisodeToAir?: null;
+  networks?: Network[];
+  numberOfEpisodes?: number;
+  numberOfSeasons?: number;
+  originCountry?: string[];
+  originalLanguage?: string;
+  originalName?: string;
+  overview?: string;
+  popularity?: number;
+  posterPath?: string;
+  productionCompanies?: Company[];
+  productionCountries?: Country[];
+  seasons?: Season[];
+  spokenLanguages?: Language[];
+  status?: string;
+  tagline?: string;
+  type?: string;
+  voteAverage?: number;
+  voteCount?: number;
 };
