@@ -10,22 +10,24 @@ import {
   Company,
   FinditResults,
   Movie,
-  MovieImage,
-  MovieCastCredit,
-  MovieCredits,
-  MovieCrewCredit,
-  MovieImageCollection,
+  ShowImage,
+  CastCredit,
+  Credits,
+  CrewCredit,
+  ShowImageCollection,
   MovieVideo,
   MovieVideoCollection,
   Person,
   Query,
-  TMDBApi,
   OptionsBag,
   TvShow,
+  ShowType,
 } from "../@types/TMDB";
 import deepMapKeys from "deep-map-keys";
+import extractKey from "./utils/extractKey";
 
-export default class TMDB implements TMDBApi {
+// export default class TMDB implements TMDBApi {
+export default class TMDB {
   apiKey: string;
   language: string;
 
@@ -69,7 +71,6 @@ export default class TMDB implements TMDBApi {
 
     return deepMapKeys(data, camelCase) as T;
   }
-
   async getMovie(id: number | string, options?: OptionsBag): Promise<Movie> {
     const movie = await this.get<Movie>(`movie/${id}`, options);
 
@@ -83,51 +84,28 @@ export default class TMDB implements TMDBApi {
       runtime: movie.runtime || null,
     };
   }
-  // async getMovie(movieId: number): Promise<Movie> {
-  //   const movie = await this.get<Movie>("movie/" + movieId, {
-  //     language: this.language,
-  //   });
-
-  //   return {
-  //     ...movie,
-
-  //     // Revenue can be 0, e.g. https://gist.github.com/gajus/b396a7e1af22977b0d98f4c63a664d44#file-response-json-L94
-  //     revenue: movie.revenue || null,
-
-  //     // Runtime can be 0, e.g. https://gist.github.com/gajus/b396a7e1af22977b0d98f4c63a664d44#file-response-json-L95
-  //     runtime: movie.runtime || null,
-  //   };
-  // }
-
   // https://developers.themoviedb.org/3/movies/get-movie-credits
-  async getMovieCastCredits(movieId: number): Promise<MovieCastCredit[]> {
-    const movieCredits = await this.get<MovieCredits>(
-      "movie/" + movieId + "/credits",
-      {
-        language: this.language,
-      }
-    );
+  async getCastCredits(movieId: number): Promise<CastCredit[]> {
+    const Credits = await this.get<Credits>("movie/" + movieId + "/credits", {
+      language: this.language,
+    });
 
-    return movieCredits.cast ?? [];
+    return Credits.cast ?? [];
   }
-
   // https://developers.themoviedb.org/3/movies/get-movie-credits
-  async getMovieCrewCredits(movieId: number): Promise<MovieCrewCredit[]> {
-    const movieCredits = await this.get<MovieCredits>(
-      "movie/" + movieId + "/credits",
-      {
-        language: this.language,
-      }
-    );
+  async getCrewCredits(movieId: number): Promise<CrewCredit[]> {
+    const Credits = await this.get<Credits>("movie/" + movieId + "/credits", {
+      language: this.language,
+    });
 
-    return movieCredits.crew ?? [];
+    return Credits.crew ?? [];
   }
-
   // https://developers.themoviedb.org/3/movies/get-movie-images
-  async getMovieImages(
+  async getShowImages(
     id: number | string,
+    type: ShowType,
     options?: OptionsBag
-  ): Promise<MovieImageCollection> {
+  ): Promise<ShowImageCollection> {
     let image_language_options;
     if (options?.includeImageLanguage) {
       options = Object.assign({}, options, {
@@ -141,8 +119,8 @@ export default class TMDB implements TMDBApi {
         }
       : null;
 
-    const images = await this.get<MovieImageCollection>(
-      `movie/${id}/images`,
+    const images = await this.get<ShowImageCollection>(
+      `${type}/${id}/images`,
       options
     );
 
@@ -150,38 +128,49 @@ export default class TMDB implements TMDBApi {
       images ?? {
         backdrops: [],
         posters: [],
-        id: movieId,
+        id,
       }
     );
   }
-
   // https://developers.themoviedb.org/3/movies/get-movie-images
-  async getMoviePosters(
+  async getShowPosters(
     id: number | string,
-    options?: OptionsBag
-  ): Promise<MovieImage[]> {
-    const images = await this.getMovieImages(id, options);
+    options: OptionsBag & { type: ShowType }
+  ): Promise<ShowImage[]> {
+    if (!options || !options.type) {
+      console.error("You must provide a type");
+      return [];
+    }
+    const type = extractKey("type", options) as ShowType;
+    const images = await this.getShowImages(id, type, options);
     return images.posters ?? [];
   }
-
   // https://developers.themoviedb.org/3/movies/get-movie-images
-  async getMovieBackdrops(
+  async getShowBackdrops(
     id: number | string,
-    options?: OptionsBag
-  ): Promise<MovieImage[]> {
-    const images = await this.getMovieImages(id, options);
+    options: OptionsBag & { type: ShowType }
+  ): Promise<ShowImage[]> {
+    if (!options || !options.type) {
+      console.error("You must provide a type");
+      return [];
+    }
+    const type = extractKey("type", options) as ShowType;
+    const images = await this.getShowImages(id, type, options);
     return images.backdrops ?? [];
   }
-
   // https://developers.themoviedb.org/3/movies/get-movie-images
-  async getMovieLogos(
+  async getShowLogos(
     id: number | string,
-    options?: OptionsBag
-  ): Promise<MovieImage[]> {
-    const images = await this.getMovieImages(id, options);
+    options: OptionsBag & { type: ShowType }
+  ): Promise<ShowImage[]> {
+    if (!options || !options.type) {
+      console.error("You must provide a type");
+      return [];
+    }
+    const type = extractKey("type", options) as ShowType;
+    const images = await this.getShowImages(id, type, options);
     return images.logos ?? [];
   }
-
   /**
    * Get the videos that have been added to a movie.
    *
@@ -197,7 +186,6 @@ export default class TMDB implements TMDBApi {
 
     return movieVideoCollection.results ?? [];
   }
-
   /**
    * Get the primary person details by id.
    *
@@ -210,7 +198,6 @@ export default class TMDB implements TMDBApi {
 
     return person;
   }
-
   /**
    * Get a companies details by id.
    *
@@ -223,7 +210,6 @@ export default class TMDB implements TMDBApi {
 
     return company;
   }
-
   async findId(
     resourceType: "movie" | "person",
     externalSource: "imdb",
@@ -261,7 +247,6 @@ export default class TMDB implements TMDBApi {
 
     return Number(results[0].id);
   }
-
   async getTvShow(id: number | string, options?: OptionsBag): Promise<TvShow> {
     const tvShow = await this.get<TvShow>(`tv/${id}`, options);
     return tvShow;

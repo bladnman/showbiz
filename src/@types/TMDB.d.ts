@@ -1,81 +1,10 @@
-interface TMDBApi {
-  apiKey: string;
-  language: string;
-  /** @throws {NotFoundError, RemoteError} */
-  get: <T>(resource: string, parameters: QueryType) => Promise<T>;
-  /** @throws {NotFoundError, RemoteError} */
-  getMovie: (id: number | string, options?: OptionsBag) => Promise<Movie>;
-  /** @throws {NotFoundError, RemoteError} */
-  getTvShow: (id: number | string, options?: OptionsBag) => Promise<TvShow>;
-
-  /** @throws {NotFoundError, RemoteError} */
-  getMovieCastCredits: (movieId: number) => Promise<CastCredit[]>;
-  /** @throws {NotFoundError, RemoteError} */
-  getMovieCrewCredits: (movieId: number) => Promise<CrewCredit[]>;
-
-  /** @throws {NotFoundError, RemoteError} */
-  getMoviePosters: (
-    id: number,
-    includeImageLanguage: string[]
-  ) => Promise<ShowImage[]>;
-  /** @throws {NotFoundError, RemoteError} */
-  getMovieBackdrops: (
-    id: number,
-    includeImageLanguage: string[]
-  ) => Promise<ShowImage[]>;
-  /** @throws {NotFoundError, RemoteError} */
-  getMovieLogos: (
-    id: number,
-    includeImageLanguage: string[]
-  ) => Promise<ShowImage[]>;
-
-  /** @throws {NotFoundError, RemoteError} */
-  getMovieVideos: (movieId: number) => Promise<MovieVideo[]>;
-  /** @throws {NotFoundError, RemoteError} */
-  getPerson: (personId: number) => Promise<Person>;
-  /** @throws {NotFoundError, RemoteError} */
-  getCompany: (companyId: number) => Promise<Company>;
-  /** @throws {NotFoundError, RemoteError} */
-  findId: (
-    resourceType: "movie" | "person",
-    externalSource: "imdb",
-    externalId: string
-  ) => Promise<number>;
-}
 type ApiFn = Function;
+type ShowType = "movie" | "tv";
 type Query = {
   [key: string]: string | number | null;
 };
 type OptionsBag = {
   [key: string]: any;
-};
-// https://developers.themoviedb.org/3/movies/get-movie-details
-type Movie = {
-  adult?: boolean;
-  backdropPath?: ImagePath;
-  belongsToCollection?: null | Object;
-  budget?: number;
-  genres?: Genre[];
-  homepage?: SoN;
-  id?: number;
-  imdbId?: SoN;
-  originalLanguage?: string;
-  originalTitle?: string;
-  overview?: SoN;
-  popularity?: number;
-  posterPath?: ImagePath;
-  productionCompanies?: Company[];
-  productionCountries?: Country[];
-  releaseDate?: string;
-  revenue?: NoN;
-  runtime?: NoN;
-  spokenLanguages?: Language[];
-  status?: string;
-  tagline?: SoN;
-  title?: string;
-  video?: boolean;
-  voteAverage?: number;
-  voteCount?: number;
 };
 type Genre = {
   id: number;
@@ -95,7 +24,6 @@ type Language = {
   name: string;
 };
 type ImagePath = SoN;
-
 export type ShowImage = {
   aspectRatio?: number;
   filePath?: string;
@@ -120,7 +48,6 @@ type CastCredit = {
   order?: number;
   profilePath?: ImagePath;
 };
-
 type CrewCredit = {
   creditId?: string;
   department?: string;
@@ -130,7 +57,6 @@ type CrewCredit = {
   name?: string;
   profilePath?: ImagePath;
 };
-
 type ShowImageCollection = {
   id?: number;
   backdrops?: ShowImage[];
@@ -146,7 +72,6 @@ type ShowImage = {
   voteCount?: number;
   width?: number;
 };
-
 type MovieVideoCollection = {
   id?: number;
   results?: MovieVideo[];
@@ -161,7 +86,6 @@ type MovieVideo = {
   size?: number;
   type?: string;
 };
-
 type Person = {
   adult?: boolean;
   alsoKnownAs?: string[];
@@ -178,7 +102,6 @@ type Person = {
   profilePath?: ImagePath;
   knownFor: any;
 };
-
 type Company = {
   description?: string;
   headquarters?: string;
@@ -188,28 +111,6 @@ type Company = {
   name?: string;
   originCountry?: string;
   parentCompany?: null | Company;
-};
-
-type ErrorResponse = {
-  statusCode: number;
-  statusMessage: string;
-};
-type FinditResults = {
-  movieResults?: Movie[];
-  personResults?: Person[];
-  tvResults?: Movie[];
-  tvEpisodeResults: any;
-  tvSeasonResults: any;
-};
-type APIResponse = {
-  statusCode: string;
-  headers: {
-    [key: string]: any;
-  };
-  body: {
-    status_message: string;
-    status_code: number;
-  };
 };
 type Season = {
   airDate?: string;
@@ -240,38 +141,107 @@ type Episode = {
   voteAverage?: number;
   voteCount?: number;
 };
-type TvShow = {
+type ShowBase = {
   adult?: boolean;
-  backdropPath?: string;
+  backdropPath?: ImagePath;
+  genreIds?: number[];
+  genres?: Genre[];
+  homepage?: SoN;
+  id?: number;
+  originalLanguage?: string;
+  overview?: SoN;
+  popularity?: number;
+  posterPath?: ImagePath;
+  productionCompanies?: Company[];
+  productionCountries?: Country[];
+  spokenLanguages?: Language[];
+  status?: string;
+  tagline?: SoN;
+  voteAverage?: number;
+  voteCount?: number;
+};
+type TvShow = ShowBase & {
   createdBy?: CrewCredit[];
   episodeRunTime?: number[];
   firstAirDate?: string;
-  genres?: Genre[];
-  genreIds?: number[];
-  homepage?: string;
-  id?: number;
   inProduction?: boolean;
   languages?: string[];
   lastAirDate?: string;
   lastEpisodeToAir?: Episode;
   name?: string;
-  nextEpisodeToAir?: null;
   networks?: Network[];
+  nextEpisodeToAir?: null;
   numberOfEpisodes?: number;
   numberOfSeasons?: number;
-  originCountry?: string[];
-  originalLanguage?: string;
   originalName?: string;
-  overview?: string;
-  popularity?: number;
-  posterPath?: string;
-  productionCompanies?: Company[];
-  productionCountries?: Country[];
+  originCountry?: string[];
   seasons?: Season[];
-  spokenLanguages?: Language[];
-  status?: string;
-  tagline?: string;
   type?: string;
-  voteAverage?: number;
-  voteCount?: number;
+};
+// https://developers.themoviedb.org/3/movies/get-movie-details
+type Movie = ShowBase & {
+  belongsToCollection?: null | Object;
+  budget?: number;
+  imdbId?: SoN;
+  originalTitle?: string;
+  releaseDate?: string;
+  revenue?: NoN;
+  runtime?: NoN;
+  title?: string;
+  video?: boolean;
+};
+type ShowBaseExtras = {
+  /**
+   * these are values that are returned
+   * in search results that are generally only
+   * found on one type or the other.
+   */
+  firstAirDate?: string; // tv
+  mediaType?: string; // to support search responses
+  name?: string; // tv
+  originalTitle?: string; // movie
+  releaseDate?: string; // movie
+  title?: string; // movie
+  video?: boolean; // movie
+};
+type SearchResultShow = ShowBase & ShowBaseExtras;
+
+/**
+ *  ___ ___ ___ ___ ___ ___ ___ ___ ___
+ * |  _| -_|_ -| . | . |   |_ -| -_|_ -|
+ * |_| |___|___|  _|___|_|_|___|___|___|
+ *             |_|
+ */
+type ErrorResponse = {
+  statusCode: number;
+  statusMessage: string;
+};
+type FinditResults = {
+  movieResults?: Movie[];
+  personResults?: Person[];
+  tvResults?: Movie[];
+  tvEpisodeResults: any;
+  tvSeasonResults: any;
+};
+type APIResponse = {
+  statusCode: string;
+  headers: {
+    [key: string]: any;
+  };
+  body: {
+    status_message: string;
+    status_code: number;
+  };
+};
+type FindResults = {
+  movieResults: SearchResultShow[];
+  personResults: Person[];
+  tvResults: SearchResultShow[];
+  tvEpisodeResults: Episode[];
+  tvSeasonResults: Season[];
+};
+type SearchMultiResults = {
+  results: SearchResultShow[];
+  totalPages: number;
+  totalResults: number;
 };

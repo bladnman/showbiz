@@ -13,9 +13,9 @@ import LoadingTile from "../../components/LoadingTile";
 import NotFoundTile from "../../components/NotFoundTile";
 import {
   useMovie,
-  useMovieBackdrops,
-  useMovieLogos,
-  useMoviePosters,
+  useShowBackdrops,
+  useShowLogos,
+  useShowPosters,
 } from "../../TMDB/hooks/useApi";
 
 export default function TvTesterRoute() {
@@ -75,7 +75,7 @@ function TotalBox({ total }: { total: number }) {
   );
 }
 function LogoView({ id }: ViewProps) {
-  const [logos, isLoading, error] = useMovieLogos(id, {
+  const [logos, isLoading, error] = useShowLogos(id, {
     includeImageLanguage: ["null", "en"],
   });
 
@@ -105,7 +105,7 @@ function LogoView({ id }: ViewProps) {
   );
 }
 function PosterView({ id }: ViewProps) {
-  const [posters, isLoading, error] = useMoviePosters(id, {
+  const [posters, isLoading, error] = useShowPosters(id, {
     includeImageLanguage: ["null", "en"],
     page: 1,
   });
@@ -137,7 +137,7 @@ function PosterView({ id }: ViewProps) {
 }
 function BackdropView({ id }: ViewProps) {
   const theme = useTheme();
-  const [posters, isLoading, error] = useMovieBackdrops(id, {
+  const [posters, isLoading, error] = useShowBackdrops(id, {
     includeImageLanguage: ["null", "en"],
   });
 

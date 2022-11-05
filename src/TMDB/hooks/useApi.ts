@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import {
   ApiFn,
   Movie,
-  MovieImage,
+  ShowImage,
   OptionsBag,
   TvShow,
+  ShowType,
 } from "../../@types/TMDB";
 import useMegaStore from "../../store/MegaStore";
 
@@ -53,19 +54,25 @@ export function useMovie(id?: number | string) {
   const tmdb = useMegaStore((state) => state.tmdb);
   return useApi<Movie>(tmdb.getMovie.bind(tmdb), id);
 }
-export function useMoviePosters(id?: number | string, options?: OptionsBag) {
+export function useShowPosters(id?: number | string, options?: OptionsBag) {
   const tmdb = useMegaStore((state) => state.tmdb);
-  return useApi<MovieImage[]>(tmdb.getMoviePosters.bind(tmdb), id, options);
+  return useApi<ShowImage[]>(tmdb.getShowPosters.bind(tmdb), id, options);
 }
-export function useMovieBackdrops(id?: number | string, options?: OptionsBag) {
+export function useShowBackdrops(id?: number | string, options?: OptionsBag) {
   const tmdb = useMegaStore((state) => state.tmdb);
-  return useApi<MovieImage[]>(tmdb.getMovieBackdrops.bind(tmdb), id, options);
+  return useApi<ShowImage[]>(tmdb.getShowBackdrops.bind(tmdb), id, options);
 }
-export function useMovieLogos(id?: number | string, options?: OptionsBag) {
+export function useShowLogos(
+  id: number | string,
+  type: ShowType,
+  options?: OptionsBag
+) {
   const tmdb = useMegaStore((state) => state.tmdb);
-  return useApi<MovieImage[]>(tmdb.getMovieLogos.bind(tmdb), id, options);
+  return useApi<ShowImage[]>(tmdb.getShowLogos.bind(tmdb), id, {
+    ...options,
+    type,
+  });
 }
-
 export function useTvShow(id?: number | string) {
   const tmdb = useMegaStore((state) => state.tmdb);
   return useApi<TvShow>(tmdb.getTvShow.bind(tmdb), id);

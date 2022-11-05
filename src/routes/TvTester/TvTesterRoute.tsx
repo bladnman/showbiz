@@ -16,15 +16,16 @@ import LoadingTile from "../../components/LoadingTile";
 import NotFoundTile from "../../components/NotFoundTile";
 import {
   useMovie,
-  useMovieBackdrops,
-  useMovieLogos,
-  useMoviePosters,
+  useShowBackdrops,
+  useShowLogos,
+  useShowPosters,
   useTvShow,
 } from "../../TMDB/hooks/useApi";
 
 export default function MovieTesterRoute() {
   const { id } = useParams();
 
+  if (!id) return null;
   return (
     <Box>
       <Box>
@@ -32,14 +33,13 @@ export default function MovieTesterRoute() {
       </Box>
 
       <TvView id={id} />
-
-      {/* <LogoView id={id} />
+      <LogoView id={id} />
       <PosterView id={id} />
-      <BackdropView id={id} /> */}
+      <BackdropView id={id} />
     </Box>
   );
 }
-type ViewProps = { id?: number | string };
+type ViewProps = { id: number | string };
 
 function TvView({ id }: ViewProps) {
   const [show, isLoading, error] = useTvShow(id);
@@ -50,9 +50,10 @@ function TvView({ id }: ViewProps) {
   console.log(`🐽 tvShow`, show);
   const countEpisodes = (seasons?: Season[]) => {
     let total = 0;
-    seasons.forEach((season) => {
-      total += season?.episodeCount ?? 0;
-    });
+    seasons &&
+      seasons.forEach((season) => {
+        total += season?.episodeCount ?? 0;
+      });
     return total;
   };
   const episodeCount = countEpisodes(show?.seasons);
@@ -66,28 +67,7 @@ function TvView({ id }: ViewProps) {
             component="img"
             height="300"
             image={`https://image.tmdb.org/t/p/original${show.backdropPath}`}
-            // sx={{ objectFit: "cover" }}
           />
-          {/* <Box
-            sx={{
-              width: 170,
-              height: 250,
-              objectFit: "contain",
-              // backgroundImage: `url(https://image.tmdb.org/t/p/original${show.posterPath})`,
-              position: "absolute",
-              color: "white",
-              right: 10,
-              bottom: "25%",
-              // transform: "translateX(-50%)",
-              borderStyle: "solid",
-              borderWidth: 1,
-            }}
-          >
-            <img
-              src={`https://image.tmdb.org/t/p/original${show.posterPath}`}
-              style={{ width: "100%", height: "100%" }}
-            />
-          </Box> */}
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
               {show.name}
@@ -109,7 +89,6 @@ function TvView({ id }: ViewProps) {
     </Box>
   );
 }
-
 function Header({ title, total }: { title: string; total: number }) {
   return (
     <Stack direction={"row"} alignItems={"center"}>
@@ -129,7 +108,7 @@ function TotalBox({ total }: { total: number }) {
   );
 }
 function LogoView({ id }: ViewProps) {
-  const [logos, isLoading, error] = useMovieLogos(id, {
+  const [logos, isLoading, error] = useShowLogos(id, "tv", {
     includeImageLanguage: ["null", "en"],
   });
 
@@ -159,7 +138,7 @@ function LogoView({ id }: ViewProps) {
   );
 }
 function PosterView({ id }: ViewProps) {
-  const [posters, isLoading, error] = useMoviePosters(id, {
+  const [posters, isLoading, error] = useShowPosters(id, "tv", {
     includeImageLanguage: ["null", "en"],
     page: 1,
   });
@@ -191,7 +170,7 @@ function PosterView({ id }: ViewProps) {
 }
 function BackdropView({ id }: ViewProps) {
   const theme = useTheme();
-  const [posters, isLoading, error] = useMovieBackdrops(id, {
+  const [posters, isLoading, error] = useShowBackdrops(id, "tv", {
     includeImageLanguage: ["null", "en"],
   });
 

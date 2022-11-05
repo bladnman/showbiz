@@ -1,11 +1,10 @@
 import create from "zustand";
 import { devtools } from "zustand/middleware";
-import { TMDBApi } from "../@types/TMDB";
 import TMDB from "../TMDB/TMDB";
 
 export interface MegaStore {
   appName: string;
-  tmdb: TMDBApi;
+  tmdb: TMDB;
 }
 
 const useMegaStore = create<MegaStore>()(
