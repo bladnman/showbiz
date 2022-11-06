@@ -1,14 +1,19 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import useMegaStore from "../../store/MegaStore";
 import {
   ApiFn,
-  Movie,
-  ShowImage,
   OptionsBag,
+  Movie,
   TvShow,
   ShowType,
-} from "../../@types/TMDB";
-import useMegaStore from "../../store/MegaStore";
+  ShowImage,
+} from "../types";
 
+//                          _    ___     _       _
+//  ___ ___ ___ ___ ___ ___| |  |  _|___| |_ ___| |_ ___ ___
+// | . | -_|   | -_|  _| .'| |  |  _| -_|  _|  _|   | -_|  _|
+// |_  |___|_|_|___|_| |__,|_|  |_| |___|_| |___|_|_|___|_|
+// |___|
 type UseApiResponse<T> = [T | null | undefined, boolean, any | undefined];
 export default function useApi<T>(
   fn: ApiFn,
@@ -50,17 +55,45 @@ export default function useApi<T>(
   return [data, isLoading, error];
 }
 
+//      _
+//  ___| |_ ___ _ _ _ ___
+// |_ -|   | . | | | |_ -|
+// |___|_|_|___|_____|___|
 export function useMovie(id?: number | string) {
   const tmdb = useMegaStore((state) => state.tmdb);
   return useApi<Movie>(tmdb.getMovie.bind(tmdb), id);
 }
-export function useShowPosters(id?: number | string, options?: OptionsBag) {
+export function useTvShow(id?: number | string) {
   const tmdb = useMegaStore((state) => state.tmdb);
-  return useApi<ShowImage[]>(tmdb.getShowPosters.bind(tmdb), id, options);
+  return useApi<TvShow>(tmdb.getTvShow.bind(tmdb), id);
 }
-export function useShowBackdrops(id?: number | string, options?: OptionsBag) {
+
+//  _
+// |_|_____ ___ ___ ___ ___
+// | |     | .'| . | -_|_ -|
+// |_|_|_|_|__,|_  |___|___|
+//             |___|
+export function useShowPosters(
+  id: number | string,
+  type: ShowType,
+  options?: OptionsBag
+) {
   const tmdb = useMegaStore((state) => state.tmdb);
-  return useApi<ShowImage[]>(tmdb.getShowBackdrops.bind(tmdb), id, options);
+  return useApi<ShowImage[]>(tmdb.getShowPosters.bind(tmdb), id, {
+    ...options,
+    type,
+  });
+}
+export function useShowBackdrops(
+  id: number | string,
+  type: ShowType,
+  options?: OptionsBag
+) {
+  const tmdb = useMegaStore((state) => state.tmdb);
+  return useApi<ShowImage[]>(tmdb.getShowBackdrops.bind(tmdb), id, {
+    ...options,
+    type,
+  });
 }
 export function useShowLogos(
   id: number | string,
@@ -72,8 +105,4 @@ export function useShowLogos(
     ...options,
     type,
   });
-}
-export function useTvShow(id?: number | string) {
-  const tmdb = useMegaStore((state) => state.tmdb);
-  return useApi<TvShow>(tmdb.getTvShow.bind(tmdb), id);
 }

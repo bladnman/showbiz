@@ -1,29 +1,29 @@
-type ApiFn = Function;
-type ShowType = "movie" | "tv";
-type Query = {
+export type ApiFn = Function;
+export type ShowType = "movie" | "tv";
+export type Query = {
   [key: string]: string | number | null;
 };
-type OptionsBag = {
+export type OptionsBag = {
   [key: string]: any;
 };
-type Genre = {
+export type Genre = {
   id: number;
   name: string;
 };
-type Company = {
+export type Company = {
   id: number;
   name: string;
 };
-type Country = {
+export type Country = {
   iso31661: string;
   name: string;
 };
-type Language = {
+export type Language = {
   english_name: string;
   iso6391: string;
   name: string;
 };
-type ImagePath = SoN;
+export type ImagePath = SoN;
 export type ShowImage = {
   aspectRatio?: number;
   filePath?: string;
@@ -33,12 +33,12 @@ export type ShowImage = {
   voteCount?: number;
   width?: number;
 };
-type Credits = {
+export type Credits = {
   id?: number;
   cast?: CastCredit[];
   crew?: CrewCredit[];
 };
-type CastCredit = {
+export type CastCredit = {
   castId?: number;
   character?: string;
   creditId?: string;
@@ -48,7 +48,7 @@ type CastCredit = {
   order?: number;
   profilePath?: ImagePath;
 };
-type CrewCredit = {
+export type CrewCredit = {
   creditId?: string;
   department?: string;
   gender?: NoN;
@@ -57,13 +57,13 @@ type CrewCredit = {
   name?: string;
   profilePath?: ImagePath;
 };
-type ShowImageCollection = {
+export type ShowImageCollection = {
   id?: number;
   backdrops?: ShowImage[];
   posters?: ShowImage[];
   logos?: ShowImage[];
 };
-type ShowImage = {
+export type ShowImage = {
   aspectRatio?: number;
   filePath?: string;
   height?: number;
@@ -72,11 +72,11 @@ type ShowImage = {
   voteCount?: number;
   width?: number;
 };
-type MovieVideoCollection = {
+export type MovieVideoCollection = {
   id?: number;
   results?: MovieVideo[];
 };
-type MovieVideo = {
+export type MovieVideo = {
   id?: string;
   iso31661?: string;
   iso6391?: string;
@@ -86,7 +86,7 @@ type MovieVideo = {
   size?: number;
   type?: string;
 };
-type Person = {
+export type Person = {
   adult?: boolean;
   alsoKnownAs?: string[];
   biography?: string;
@@ -102,7 +102,7 @@ type Person = {
   profilePath?: ImagePath;
   knownFor: any;
 };
-type Company = {
+export type Company = {
   description?: string;
   headquarters?: string;
   homepage?: string;
@@ -112,7 +112,7 @@ type Company = {
   originCountry?: string;
   parentCompany?: null | Company;
 };
-type Season = {
+export type Season = {
   airDate?: string;
   episodeCount?: number;
   id?: number;
@@ -121,13 +121,13 @@ type Season = {
   posterPath?: string;
   seasonNumber?: number;
 };
-type Network = {
+export type Network = {
   id?: number;
   name?: string;
   logoPath?: string;
   originCountry?: string;
 };
-type Episode = {
+export type Episode = {
   airDate?: string;
   episodeNumber?: number;
   id?: number;
@@ -141,7 +141,7 @@ type Episode = {
   voteAverage?: number;
   voteCount?: number;
 };
-type ShowBase = {
+export type ShowBase = {
   adult?: boolean;
   backdropPath?: ImagePath;
   genreIds?: number[];
@@ -160,7 +160,7 @@ type ShowBase = {
   voteAverage?: number;
   voteCount?: number;
 };
-type TvShow = ShowBase & {
+export type TvShow = ShowBase & {
   createdBy?: CrewCredit[];
   episodeRunTime?: number[];
   firstAirDate?: string;
@@ -179,7 +179,7 @@ type TvShow = ShowBase & {
   type?: string;
 };
 // https://developers.themoviedb.org/3/movies/get-movie-details
-type Movie = ShowBase & {
+export type Movie = ShowBase & {
   belongsToCollection?: null | Object;
   budget?: number;
   imdbId?: SoN;
@@ -190,11 +190,11 @@ type Movie = ShowBase & {
   title?: string;
   video?: boolean;
 };
-type ShowBaseExtras = {
+export type ShowBaseExtras = {
   /**
    * these are values that are returned
    * in search results that are generally only
-   * found on one type or the other.
+   * found on one export type or the other.
    */
   firstAirDate?: string; // tv
   mediaType?: string; // to support search responses
@@ -204,7 +204,7 @@ type ShowBaseExtras = {
   title?: string; // movie
   video?: boolean; // movie
 };
-type SearchResultShow = ShowBase & ShowBaseExtras;
+export type SearchResultShow = ShowBase & ShowBaseExtras;
 
 /**
  *  ___ ___ ___ ___ ___ ___ ___ ___ ___
@@ -212,18 +212,18 @@ type SearchResultShow = ShowBase & ShowBaseExtras;
  * |_| |___|___|  _|___|_|_|___|___|___|
  *             |_|
  */
-type ErrorResponse = {
+export type ErrorResponse = {
   statusCode: number;
   statusMessage: string;
 };
-type FinditResults = {
+export type FinditResults = {
   movieResults?: Movie[];
   personResults?: Person[];
   tvResults?: Movie[];
   tvEpisodeResults: any;
   tvSeasonResults: any;
 };
-type APIResponse = {
+export type APIResponse = {
   statusCode: string;
   headers: {
     [key: string]: any;
@@ -233,14 +233,14 @@ type APIResponse = {
     status_code: number;
   };
 };
-type FindResults = {
+export type FindResults = {
   movieResults: SearchResultShow[];
   personResults: Person[];
   tvResults: SearchResultShow[];
   tvEpisodeResults: Episode[];
   tvSeasonResults: Season[];
 };
-type SearchMultiResults = {
+export type SearchMultiResults = {
   results: SearchResultShow[];
   totalPages: number;
   totalResults: number;
