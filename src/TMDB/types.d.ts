@@ -6,6 +6,16 @@ export type Query = {
 export type OptionsBag = {
   [key: string]: any;
 };
+export type ExternalSource =
+  | "imdb_id"
+  | "freebase_mid"
+  | "freebase_id"
+  | "tvdb_id"
+  | "tvrage_id"
+  | "facebook_id"
+  | "twitter_id"
+  | "instagram_id";
+
 export type Genre = {
   id: number;
   name: string;
@@ -190,6 +200,7 @@ export type Movie = ShowBase & {
   title?: string;
   video?: boolean;
 };
+export type Show = Movie | TvShow;
 export type ShowBaseExtras = {
   /**
    * these are values that are returned

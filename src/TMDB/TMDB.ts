@@ -22,6 +22,10 @@ import {
   OptionsBag,
   TvShow,
   ShowType,
+  Show,
+  SearchMultiResults,
+  ExternalSource,
+  FindResults,
 } from "./types";
 import deepMapKeys from "deep-map-keys";
 import extractKey from "./utils/extractKey";
@@ -41,11 +45,12 @@ export default class TMDB {
   // |_  |___|_|_|___|_| |__,|_|  |_| |___|_| |___|_|_|___|_|
   // |___|
   async get<T>(resource: string, parameters: any): Promise<T> | never {
-    const url =
-      `https://api.themoviedb.org/3/${resource}?` +
-      // `&language=${this.language}` +
-      `&${new URLSearchParams(parameters).toString()}` +
-      `&api_key=${this.apiKey}`;
+    let url = `https://api.themoviedb.org/3/${resource}`;
+    if (url.indexOf("?") < 0) {
+      url += "?";
+    }
+    url += `&${new URLSearchParams(parameters).toString()}`;
+    url += `&api_key=${this.apiKey}`;
 
     console.log(`🐽 [TMDB] url`, url);
 
@@ -106,10 +111,12 @@ export default class TMDB {
   //             |___|
   async getShowImages(
     id: number | string,
-    type: ShowType,
-    options?: OptionsBag
+    options: OptionsBag & { type: ShowType }
   ): Promise<ShowImageCollection> {
     let image_language_options;
+
+    const type = extractKey("type", options) as ShowType;
+
     if (options?.includeImageLanguage) {
       options = Object.assign({}, options, {
         include_image_language: options.includeImageLanguage.join(","),
@@ -142,8 +149,7 @@ export default class TMDB {
     if (!options || !options.type) {
       return [];
     }
-    const type = extractKey("type", options) as ShowType;
-    const images = await this.getShowImages(id, type, options);
+    const images = await this.getShowImages(id, options);
     return images.posters ?? [];
   }
   async getShowBackdrops(
@@ -153,8 +159,7 @@ export default class TMDB {
     if (!options || !options.type) {
       return [];
     }
-    const type = extractKey("type", options) as ShowType;
-    const images = await this.getShowImages(id, type, options);
+    const images = await this.getShowImages(id, options);
     return images.backdrops ?? [];
   }
   async getShowLogos(
@@ -164,8 +169,7 @@ export default class TMDB {
     if (!options || !options.type) {
       return [];
     }
-    const type = extractKey("type", options) as ShowType;
-    const images = await this.getShowImages(id, type, options);
+    const images = await this.getShowImages(id, options);
     return images.logos ?? [];
   }
   async getMovieVideos(movieId: number): Promise<MovieVideo[]> {
@@ -253,5 +257,34 @@ export default class TMDB {
     }
 
     return Number(results[0].id);
+  }
+  async search(
+    query: string,
+    options?: OptionsBag & { type: ShowType }
+  ): Promise<Show[]> {
+    const type = extractKey("type", options ?? {}) as ShowType | undefined;
+    const isValidType = type === "movie" || type === "tv";
+    const endpoint = isValidType
+      ? `search/${type}?query=${query}`
+      : `search/multi?query=${query}`;
+
+    const response = await this.get<SearchMultiResults>(endpoint, options);
+    return response?.results ?? [];
+  }
+  async findShowById(
+    id: string,
+    options?: OptionsBag & { type: ShowType }
+  ): Promise<Show | null> {
+    const externalSource = extractKey("externalSource", options ?? {}) as
+      | ExternalSource
+      | undefined;
+    if (!externalSource) return null;
+    const endpoint = `find/${id}`;
+    const response = await this.get<FindResults>(endpoint, {
+      ...options,
+      external_source: `${externalSource}_id`,
+    });
+    const shows = [...response.movieResults, ...response.tvResults];
+    return shows.length ? shows[0] : null;
   }
 }

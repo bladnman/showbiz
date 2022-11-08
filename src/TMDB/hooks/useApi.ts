@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import useMegaStore from "../../store/MegaStore";
+import FindByIdRoute from "../../routes/FindByIdRoute/FindByIdRoute";
 import {
   ApiFn,
   OptionsBag,
@@ -7,6 +8,8 @@ import {
   TvShow,
   ShowType,
   ShowImage,
+  Show,
+  ExternalSource,
 } from "../types";
 
 //                          _    ___     _       _
@@ -17,7 +20,7 @@ import {
 type UseApiResponse<T> = [T | null | undefined, boolean, any | undefined];
 export default function useApi<T>(
   fn: ApiFn,
-  id?: number | string,
+  queryValue?: number | string,
   options?: OptionsBag
 ): UseApiResponse<T> {
   const [data, setData] = useState<T | null | undefined>();
@@ -26,11 +29,10 @@ export default function useApi<T>(
 
   useEffect(() => {
     const doFetch = async () => {
-      if (!id) return;
+      if (!queryValue) return;
 
       try {
-        const data = await fn(id, options);
-        // const data = await tmdb.getMovie(id, options);
+        const data = await fn(queryValue, options);
         setData(data as T);
         setIsLoading(false);
       } catch (error: any) {
@@ -50,7 +52,7 @@ export default function useApi<T>(
     setData(null);
     setError(null);
     doFetch();
-  }, [id]);
+  }, [queryValue]);
 
   return [data, isLoading, error];
 }
@@ -104,5 +106,25 @@ export function useShowLogos(
   return useApi<ShowImage[]>(tmdb.getShowLogos.bind(tmdb), id, {
     ...options,
     type,
+  });
+}
+
+//                      _
+//  ___ ___ ___ ___ ___| |_
+// |_ -| -_| .'|  _|  _|   |
+// |___|___|__,|_| |___|_|_|
+export function useSearch(query?: string, options?: OptionsBag) {
+  const tmdb = useMegaStore((state) => state.tmdb);
+  return useApi<Show[]>(tmdb.search.bind(tmdb), query, options);
+}
+export function useFindShowById(
+  id: number | string | undefined,
+  externalSource: ExternalSource | undefined,
+  options?: OptionsBag
+) {
+  const tmdb = useMegaStore((state) => state.tmdb);
+  return useApi<Show | null>(tmdb.findShowById.bind(tmdb), id, {
+    ...options,
+    externalSource,
   });
 }

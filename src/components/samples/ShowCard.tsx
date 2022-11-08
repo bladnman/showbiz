@@ -17,7 +17,9 @@ export default function ShowCard({ show }: { show: Movie | TvShow }) {
   };
   return (
     <Box>
-      <Typography variant="h6">TV Show</Typography>
+      <Typography variant="h6">
+        {"title" in show ? "Movie" : "TV Show"}
+      </Typography>
       <Card key={show.id} sx={{ maxWidth: 450 }}>
         <div style={{ position: "relative", overflow: "visible" }}>
           <CardMedia
