@@ -5,7 +5,7 @@ import NotFoundTile from "../../components/NotFoundTile";
 import BackdropList from "../../components/samples/BackdropList";
 import LogoList from "../../components/samples/LogoList";
 import PosterList from "../../components/samples/PosterList";
-import ShowCard from "../../components/samples/ShowCard";
+import BottomCard from "../../components/cards/BottomCard";
 import { useMovie } from "../../TMDB/hooks/useApi";
 
 export default function TvTesterRoute() {

@@ -5,7 +5,7 @@ import NotFoundTile from "../../components/NotFoundTile";
 import BackdropList from "../../components/samples/BackdropList";
 import LogoList from "../../components/samples/LogoList";
 import PosterList from "../../components/samples/PosterList";
-import ShowCard from "../../components/samples/ShowCard";
+import BottomCard from "../../components/cards/BottomCard";
 import { useTvShow } from "../../TMDB/hooks/useApi";
 
 export default function MovieTesterRoute() {
@@ -22,7 +22,7 @@ export default function MovieTesterRoute() {
         <Typography variant="h3">TV Tester</Typography>
       </Box>
 
-      <ShowCard show={show} />
+      <BottomCard show={show} />
 
       <LogoList id={id} type={"tv"} />
       <PosterList id={id} type={"tv"} />

@@ -7,23 +7,26 @@ import MovieTesterRoute from "./routes/MovieTester/MovieTesterRoute";
 import TvTesterRoute from "./routes/TvTester/TvTesterRoute";
 import SearchRoute from "./routes/SearchRoute/SearchRoute";
 import FindByIdRoute from "./routes/FindByIdRoute/FindByIdRoute";
+import Theme from "./theme/Theme";
 
 function App() {
   return (
     <React.StrictMode>
       <BrowserRouter>
-        <Routes>
-          <Route path="/movie_hold/:id" element={<MovieRoute />} />
-          <Route path="/movie/:id" element={<MovieTesterRoute />} />
-          <Route path="/tv/:id" element={<TvTesterRoute />} />
-          <Route path="/search/:query" element={<SearchRoute />} />
-          <Route path="/search/:type/:query" element={<SearchRoute />} />
-          <Route
-            path="/find_by_id/:externalSource/:id"
-            element={<FindByIdRoute />}
-          />
-          <Route path="*" element={<WelcomeRoute />} />
-        </Routes>
+        <Theme>
+          <Routes>
+            <Route path="/movie_hold/:id" element={<MovieRoute />} />
+            <Route path="/movie/:id" element={<MovieTesterRoute />} />
+            <Route path="/tv/:id" element={<TvTesterRoute />} />
+            <Route path="/search/:query" element={<SearchRoute />} />
+            <Route path="/search/:type/:query" element={<SearchRoute />} />
+            <Route
+              path="/find_by_id/:externalSource/:id"
+              element={<FindByIdRoute />}
+            />
+            <Route path="*" element={<WelcomeRoute />} />
+          </Routes>
+        </Theme>
       </BrowserRouter>
     </React.StrictMode>
   );

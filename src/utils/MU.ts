@@ -16,3 +16,20 @@ export function pad(value: number | string, width: number, char?: string) {
     ? value
     : new Array(width - value.length + 1).join(char ?? "0") + value;
 }
+export function fLeft(
+  str: string | null | undefined,
+  delim: string | null | undefined
+) {
+  if (!str || !delim) {
+    return "";
+  }
+
+  str = `${str}`;
+  delim = `${delim}`;
+
+  var theSpot = str.indexOf(delim);
+  if (theSpot > -1) {
+    return str.substring(0, theSpot);
+  }
+  return "";
+}

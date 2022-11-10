@@ -5,6 +5,8 @@ import TMDB from "../TMDB/TMDB";
 export interface MegaStore {
   appName: string;
   tmdb: TMDB;
+  searchQuery: string;
+  searchType: string;
 }
 
 const useMegaStore = create<MegaStore>()(

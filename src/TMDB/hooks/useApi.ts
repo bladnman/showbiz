@@ -10,6 +10,7 @@ import {
   ShowImage,
   Show,
   ExternalSource,
+  Person,
 } from "../types";
 
 //                          _    ___     _       _
@@ -123,7 +124,7 @@ export function useFindShowById(
   options?: OptionsBag
 ) {
   const tmdb = useMegaStore((state) => state.tmdb);
-  return useApi<Show | null>(tmdb.findShowById.bind(tmdb), id, {
+  return useApi<Show | Person | null>(tmdb.findShowById.bind(tmdb), id, {
     ...options,
     externalSource,
   });

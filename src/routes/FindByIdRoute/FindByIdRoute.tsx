@@ -4,7 +4,7 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import LoadingTile from "../../components/LoadingTile";
 import NotFoundTile from "../../components/NotFoundTile";
-import ShowCard from "../../components/samples/ShowCard";
+import BottomCard from "../../components/cards/BottomCard";
 import { useFindShowById } from "../../TMDB/hooks/useApi";
 import { ExternalSource } from "../../TMDB/types";
 
@@ -24,7 +24,7 @@ export default function FindByIdRoute() {
         <Typography variant="h3">Find by Id</Typography>
       </Box>
 
-      <ShowCard show={show} />
+      <BottomCard show={show} />
     </Box>
   );
 }
