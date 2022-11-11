@@ -1,23 +1,30 @@
 import { Box } from "@mui/material";
-import { useCallback } from "react";
-import { Movie, Person, TvShow } from "../../TMDB/types";
-import {
-  isMovieType,
-  isPersonType,
-  isTvShowType,
-} from "../../TMDB/utils/duckTyping";
+import { useCallback, useRef } from "react";
+import { Movie, Person, Tv } from "../../TMDB/types";
 import MovieCard from "./MovieCard";
 import PersonCard from "./PersonCard";
-import TvShowCard from "./TvShowCard";
+import TvCard from "./TvCard";
 
-export default function TopCard({ item }: { item: Movie | TvShow | Person }) {
+export default function TopCard({
+  item,
+  onClick,
+}: {
+  item: Movie | Tv | Person;
+  onClick?: (item: Movie | Tv | Person) => void;
+}) {
+  const handleClick = useRef(() => {
+    console.log(`🐽 [TopCard] item`, item);
+
+    onClick && onClick(item);
+  }).current;
+
   const renderCard = useCallback(() => {
-    if (isMovieType(item)) return <MovieCard show={item as Movie} />;
-    if (isTvShowType(item)) return <TvShowCard show={item as TvShow} />;
-    if (isPersonType(item)) return <PersonCard person={item as Person} />;
+    if (item.isMovie) return <MovieCard show={item as Movie} />;
+    if (item.isTv) return <TvCard show={item as Tv} />;
+    if (item.isPerson) return <PersonCard person={item as Person} />;
     return null;
   }, [item]);
 
   if (!item) return null;
-  return <Box onClick={() => console.log(`🐽 Item`, item)}>{renderCard()}</Box>;
+  return <Box onClick={handleClick}>{renderCard()}</Box>;
 }

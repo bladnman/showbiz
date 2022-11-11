@@ -1,10 +1,13 @@
 import { useMemo } from "react";
-import { Movie, Person, TvShow } from "../../TMDB/types";
+import { useBaseImageUrl } from "../../TMDB/hooks/useApi";
+import { Person } from "../../TMDB/types";
 import BottomCard from "./BottomCard";
 
 export default function PersonCard({ person }: { person: Person }) {
   if (!person) return null;
   if (!person.name) return null;
+
+  const baseImgUrl = useBaseImageUrl();
 
   const description = useMemo(() => {
     if (person.biography) {
@@ -20,7 +23,7 @@ export default function PersonCard({ person }: { person: Person }) {
 
   return (
     <BottomCard
-      imageUrl={`https://image.tmdb.org/t/p/original${person.profilePath}`}
+      imageUrl={`${baseImgUrl}${person.profilePath}`}
       title={person.name}
       description={description}
     />

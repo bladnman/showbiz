@@ -1,5 +1,32 @@
 export type ApiFn = Function;
 export type ShowType = "movie" | "tv";
+export type ObjectType =
+  | "movie"
+  | "episode"
+  | "tv"
+  | "season"
+  | "person"
+  | "company"
+  | "network"
+  | "video"
+  | "image"
+  | "cast"
+  | null;
+export type ObjectBase = {
+  objectType?: ObjectType; // code
+
+  // specific types to check
+  isMovie?: boolean;
+  isEpisode?: boolean;
+  isTv?: boolean;
+  isSeason?: boolean;
+  isPerson?: boolean;
+  isCompany?: boolean;
+  isNetwork?: boolean;
+  isVideo?: boolean;
+  isImage?: boolean;
+  isCast?: boolean;
+};
 export type Query = {
   [key: string]: string | number | null;
 };
@@ -20,7 +47,7 @@ export type Genre = {
   id: number;
   name: string;
 };
-export type Company = {
+export type Company = ObjectBase & {
   id: number;
   name: string;
 };
@@ -34,7 +61,7 @@ export type Language = {
   name: string;
 };
 export type ImagePath = SoN;
-export type ShowImage = {
+export type ShowImage = ObjectBase & {
   aspectRatio?: number;
   filePath?: string;
   height?: number;
@@ -43,12 +70,12 @@ export type ShowImage = {
   voteCount?: number;
   width?: number;
 };
-export type Credits = {
+export type Credits = ObjectBase & {
   id?: number;
   cast?: CastCredit[];
   crew?: CrewCredit[];
 };
-export type CastCredit = {
+export type CastCredit = ObjectBase & {
   castId?: number;
   character?: string;
   creditId?: string;
@@ -58,7 +85,7 @@ export type CastCredit = {
   order?: number;
   profilePath?: ImagePath;
 };
-export type CrewCredit = {
+export type CrewCredit = ObjectBase & {
   creditId?: string;
   department?: string;
   gender?: NoN;
@@ -67,13 +94,13 @@ export type CrewCredit = {
   name?: string;
   profilePath?: ImagePath;
 };
-export type ShowImageCollection = {
+export type ShowImageCollection = ObjectBase & {
   id?: number;
   backdrops?: ShowImage[];
   posters?: ShowImage[];
   logos?: ShowImage[];
 };
-export type ShowImage = {
+export type ShowImage = ObjectBase & {
   aspectRatio?: number;
   filePath?: string;
   height?: number;
@@ -82,11 +109,11 @@ export type ShowImage = {
   voteCount?: number;
   width?: number;
 };
-export type MovieVideoCollection = {
+export type MovieVideoCollection = ObjectBase & {
   id?: number;
   results?: MovieVideo[];
 };
-export type MovieVideo = {
+export type MovieVideo = ObjectBase & {
   id?: string;
   iso31661?: string;
   iso6391?: string;
@@ -96,7 +123,7 @@ export type MovieVideo = {
   size?: number;
   type?: string;
 };
-export type Person = {
+export type Person = ObjectBase & {
   adult?: boolean;
   alsoKnownAs?: string[];
   biography?: string;
@@ -112,7 +139,7 @@ export type Person = {
   profilePath?: ImagePath;
   knownFor: any;
 };
-export type Company = {
+export type Company = ObjectBase & {
   description?: string;
   headquarters?: string;
   homepage?: string;
@@ -122,7 +149,7 @@ export type Company = {
   originCountry?: string;
   parentCompany?: null | Company;
 };
-export type Season = {
+export type Season = ObjectBase & {
   airDate?: string;
   episodeCount?: number;
   id?: number;
@@ -131,13 +158,13 @@ export type Season = {
   posterPath?: string;
   seasonNumber?: number;
 };
-export type Network = {
+export type Network = ObjectBase & {
   id?: number;
   name?: string;
   logoPath?: string;
   originCountry?: string;
 };
-export type Episode = {
+export type Episode = ObjectBase & {
   airDate?: string;
   episodeNumber?: number;
   id?: number;
@@ -151,7 +178,7 @@ export type Episode = {
   voteAverage?: number;
   voteCount?: number;
 };
-export type ShowBase = {
+export type ShowBase = ObjectBase & {
   adult?: boolean;
   backdropPath?: ImagePath;
   genreIds?: number[];
@@ -170,7 +197,7 @@ export type ShowBase = {
   voteAverage?: number;
   voteCount?: number;
 };
-export type TvShow = ShowBase & {
+export type Tv = ShowBase & {
   createdBy?: CrewCredit[];
   episodeRunTime?: number[];
   firstAirDate?: string;
@@ -200,7 +227,7 @@ export type Movie = ShowBase & {
   title?: string;
   video?: boolean;
 };
-export type Show = Movie | TvShow;
+export type Show = Movie | Tv;
 export type ShowBaseExtras = {
   /**
    * these are values that are returned

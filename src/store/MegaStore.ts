@@ -3,18 +3,27 @@ import { devtools } from "zustand/middleware";
 import TMDB from "../TMDB/TMDB";
 
 export interface MegaStore {
+  isLocalDev: boolean;
   appName: string;
   tmdb: TMDB;
   searchQuery: string;
   searchType: string;
 }
 
+const IS_LOCAL_DEV = false;
+
 const useMegaStore = create<MegaStore>()(
   devtools(
     () =>
       ({
+        isLocalDev: IS_LOCAL_DEV,
         appName: "Showbiz",
-        tmdb: new TMDB(import.meta.env.VITE_TMDB_KEY, "en"),
+        tmdb: new TMDB(
+          import.meta.env.VITE_TMDB_KEY,
+          "en",
+          IS_LOCAL_DEV,
+          `http://localhost:${import.meta.env.VITE_DEV_SERVER_PORT}`
+        ),
       } as MegaStore)
   )
 );

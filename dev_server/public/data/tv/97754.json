@@ -1,0 +1,160 @@
+{
+  "adult": false,
+  "backdrop_path": "/kpOC1w7PrVDMryzAmPRlVdHY88I.jpg",
+  "created_by": [
+    {
+      "id": 1224454,
+      "credit_id": "5e1bdd996a300b00135d64c7",
+      "name": "Nahnatchka Khan",
+      "gender": 1,
+      "profile_path": "/lIr3fOt0OZgDlVBvyvIdWhzz2.jpg"
+    },
+    {
+      "id": 1857891,
+      "credit_id": "602cb53ad55697004058ba26",
+      "name": "Jeff Chiang",
+      "gender": 2,
+      "profile_path": null
+    }
+  ],
+  "episode_run_time": [22],
+  "first_air_date": "2021-02-16",
+  "genres": [
+    {
+      "id": 35,
+      "name": "Comedy"
+    }
+  ],
+  "homepage": "https://www.nbc.com/young-rock",
+  "id": 97754,
+  "in_production": true,
+  "languages": ["en"],
+  "last_air_date": "2022-11-04",
+  "last_episode_to_air": {
+    "air_date": "2022-11-04",
+    "episode_number": 1,
+    "id": 3811970,
+    "name": "The People Need You",
+    "overview": "After losing the 2032 election, Dwayne Johnson is ready to withdraw from political life for good when he gets an unexpected call. In 1985, Rocky learns there are consequences to crossing Vince. In 1997, Dwayne finds fans hate him even when he’s a winner.",
+    "production_code": "",
+    "runtime": 22,
+    "season_number": 3,
+    "show_id": 97754,
+    "still_path": "/awuszL417IzEd4FFSVXpiRa2ufM.jpg",
+    "vote_average": 0.0,
+    "vote_count": 0
+  },
+  "name": "Young Rock",
+  "next_episode_to_air": {
+    "air_date": "2022-11-11",
+    "episode_number": 2,
+    "id": 4020397,
+    "name": "Rocky Sucks",
+    "overview": "Miami, 1997: As Dwayne recovers from an injury, he makes a life-changing decision. Upon returning to the WWF, Dwayne takes a major risk on the mic and with his character. In 2033, President Taft turns to Dwayne for help in a crisis.",
+    "production_code": "",
+    "runtime": 22,
+    "season_number": 3,
+    "show_id": 97754,
+    "still_path": null,
+    "vote_average": 0.0,
+    "vote_count": 0
+  },
+  "networks": [
+    {
+      "id": 6,
+      "name": "NBC",
+      "logo_path": "/nGRVQlfmPBmfkNgCFpx5m7luTxG.png",
+      "origin_country": "US"
+    }
+  ],
+  "number_of_episodes": 31,
+  "number_of_seasons": 3,
+  "origin_country": ["US"],
+  "original_language": "en",
+  "original_name": "Young Rock",
+  "overview": "As Dwayne Johnson runs for president in 2032, he takes a comedic look back at his extraordinary life through the outrageous stories of his family and youth that shaped him into the man he is today. He explores his childhood years living amid influential wrestling icons while his dad rose to fame in the business, his rebellious teenage years attending high school in Pennsylvania, and his football years teamed up with powerhouse players at the University of Miami. In his telling, Johnson explains that while his experiences have been larger than life, he remains a down-to-earth guy who still relates to the American people.",
+  "popularity": 60.21,
+  "poster_path": "/7lwptAIpQuuLG5tOrjtmAhFfu24.jpg",
+  "production_companies": [
+    {
+      "id": 26727,
+      "logo_path": "/jeTxdjXhzgKZyLr3l9MllkTn3fy.png",
+      "name": "Universal Television",
+      "origin_country": "US"
+    },
+    {
+      "id": 66393,
+      "logo_path": null,
+      "name": "Fierce Baby Productions",
+      "origin_country": ""
+    },
+    {
+      "id": 73669,
+      "logo_path": "/7tmSGstK3KwgcDIuBYLTAayjit9.png",
+      "name": "Seven Bucks Productions",
+      "origin_country": "US"
+    },
+    {
+      "id": 150064,
+      "logo_path": null,
+      "name": "Grit & Superstition",
+      "origin_country": ""
+    }
+  ],
+  "production_countries": [
+    {
+      "iso_3166_1": "US",
+      "name": "United States of America"
+    }
+  ],
+  "seasons": [
+    {
+      "air_date": "2021-12-15",
+      "episode_count": 1,
+      "id": 236152,
+      "name": "Specials",
+      "overview": "",
+      "poster_path": null,
+      "season_number": 0
+    },
+    {
+      "air_date": "2021-02-16",
+      "episode_count": 11,
+      "id": 140728,
+      "name": "Season 1",
+      "overview": "",
+      "poster_path": "/hUmSMg5KHJkgeOk9AvbTINYOuEf.jpg",
+      "season_number": 1
+    },
+    {
+      "air_date": "2022-03-15",
+      "episode_count": 12,
+      "id": 219374,
+      "name": "Season 2",
+      "overview": "",
+      "poster_path": "/7lwptAIpQuuLG5tOrjtmAhFfu24.jpg",
+      "season_number": 2
+    },
+    {
+      "air_date": "2022-11-04",
+      "episode_count": 8,
+      "id": 299111,
+      "name": "Season 3",
+      "overview": "",
+      "poster_path": "/y7ta5bQKCPR0c4mKfFoGxFOejp.jpg",
+      "season_number": 3
+    }
+  ],
+  "spoken_languages": [
+    {
+      "english_name": "English",
+      "iso_639_1": "en",
+      "name": "English"
+    }
+  ],
+  "status": "Returning Series",
+  "tagline": "A comedy about a little kid who dreamed big.",
+  "type": "Scripted",
+  "vote_average": 7.0,
+  "vote_count": 201
+}

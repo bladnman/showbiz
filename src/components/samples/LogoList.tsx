@@ -1,36 +1,22 @@
 import { Box, ImageList, ImageListItem, ImageListItemBar } from "@mui/material";
-import { ShowType } from "../../TMDB/types";
-import { useShowLogos } from "../../TMDB/hooks/useApi";
-import LoadingTile from "../LoadingTile";
-import NotFoundTile from "../NotFoundTile";
+import { useBaseImageUrl } from "../../TMDB/hooks/useApi";
+import { ShowImage } from "../../TMDB/types";
 import SampleHeader from "./SampleHeader";
 
-export default function LogoList({
-  id,
-  type,
-}: {
-  id: string | number;
-  type: ShowType;
-}) {
-  const [logos, isLoading, error] = useShowLogos(id, type, {
-    includeImageLanguage: ["null", "en"],
-  });
+export default function LogoList({ images }: { images?: ShowImage[] | null }) {
+  const baseImgUrl = useBaseImageUrl();
 
-  if (isLoading) return <LoadingTile />;
-  if (!logos) return <NotFoundTile />;
-  if (error) return <NotFoundTile />;
+  if (!images) return null;
+  if (images.length < 1) return null;
 
   return (
     <Box>
-      <SampleHeader title={"Logos"} total={logos.length} />
+      <SampleHeader title={"Logos"} total={images.length} />
 
       <ImageList cols={3} gap={12} variant="standard">
-        {logos.map((item) => (
+        {images.map((item) => (
           <ImageListItem key={item.filePath}>
-            <img
-              src={`https://image.tmdb.org/t/p/original${item.filePath}`}
-              loading="lazy"
-            />
+            <img src={`${baseImgUrl}${item.filePath}`} loading="lazy" />
             <ImageListItemBar
               title={item.voteAverage}
               subtitle={`Votes: ${item.voteCount}`}

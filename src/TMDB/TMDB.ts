@@ -20,7 +20,7 @@ import {
   Person,
   Query,
   OptionsBag,
-  TvShow,
+  Tv,
   ShowType,
   Show,
   SearchMultiResults,
@@ -29,14 +29,24 @@ import {
 } from "./types";
 import deepMapKeys from "deep-map-keys";
 import extractKey from "./utils/extractKey";
+import { getObjectType, populateType } from "./utils/duckTyping";
 
 export default class TMDB {
   apiKey: string;
   language: string;
+  isLocalDev: boolean;
+  devServerUrl: string | null;
 
-  constructor(apiKey: string, language: string = "en") {
+  constructor(
+    apiKey: string,
+    language: string = "en",
+    isLocalDev: boolean = false,
+    devServerUrl: string | null = null
+  ) {
     this.apiKey = apiKey;
     this.language = language;
+    this.isLocalDev = isLocalDev;
+    this.devServerUrl = devServerUrl;
   }
 
   //                          _    ___     _       _
@@ -45,14 +55,7 @@ export default class TMDB {
   // |_  |___|_|_|___|_| |__,|_|  |_| |___|_| |___|_|_|___|_|
   // |___|
   async get<T>(resource: string, parameters: any): Promise<T> | never {
-    let url = `https://api.themoviedb.org/3/${resource}`;
-    if (url.indexOf("?") < 0) {
-      url += "?";
-    }
-    url += `&${new URLSearchParams(parameters).toString()}`;
-    url += `&api_key=${this.apiKey}`;
-
-    console.log(`🐽 [TMDB] url`, url);
+    const url = this.buildUrl(resource, parameters);
 
     //  ___     _       _
     // |  _|___| |_ ___| |_
@@ -62,7 +65,6 @@ export default class TMDB {
     const data = await srvcResponse.json();
     const statusCode = srvcResponse.status ?? 500;
 
-    // console.log(`🐽 [TMDB] srvcResponse`, srvcResponse);
     //  ___ ___ ___ ___ ___ ___
     // | -_|  _|  _| . |  _|_ -|
     // |___|_| |_| |___|_| |___|
@@ -81,6 +83,30 @@ export default class TMDB {
 
     return deepMapKeys(data, camelCase) as T;
   }
+  get baseApiUrl(): string {
+    const isDev = this.devServerUrl !== null && this.isLocalDev;
+    if (isDev && this.devServerUrl) {
+      return this.devServerUrl;
+    }
+    return `https://api.themoviedb.org/3`;
+  }
+  get baseImageUrl(): string {
+    const isDev = this.devServerUrl !== null && this.isLocalDev;
+    if (isDev && this.devServerUrl) {
+      return this.devServerUrl;
+    }
+    return `https://image.tmdb.org/t/p/original`;
+  }
+  buildUrl(resource: string, parameters: any): string {
+    let url = `${this.baseApiUrl}/${resource}`;
+    if (url.indexOf("?") < 0) {
+      url += "?";
+    }
+    url += `&${new URLSearchParams(parameters).toString()}`;
+    url += `&api_key=${this.apiKey}`;
+
+    return url;
+  }
 
   //      _
   //  ___| |_ ___ _ _ _ ___
@@ -89,6 +115,7 @@ export default class TMDB {
   async getMovie(id: number | string, options?: OptionsBag): Promise<Movie> {
     const movie = await this.get<Movie>(`movie/${id}`, options);
 
+    populateType(movie);
     return {
       ...movie,
 
@@ -99,9 +126,10 @@ export default class TMDB {
       runtime: movie.runtime || null,
     };
   }
-  async getTvShow(id: number | string, options?: OptionsBag): Promise<TvShow> {
-    const tvShow = await this.get<TvShow>(`tv/${id}`, options);
-    return tvShow;
+  async getTv(id: number | string, options?: OptionsBag): Promise<Tv> {
+    const tv = await this.get<Tv>(`tv/${id}`, options);
+    populateType(tv);
+    return tv;
   }
 
   //  _
@@ -207,6 +235,7 @@ export default class TMDB {
       language: this.language,
     });
 
+    populateType(person);
     return person;
   }
   async getCompany(companyId: number): Promise<Company> {
@@ -214,6 +243,7 @@ export default class TMDB {
       language: this.language,
     });
 
+    populateType(company);
     return company;
   }
 
@@ -221,43 +251,6 @@ export default class TMDB {
   //  ___ ___ ___ ___ ___| |_
   // |_ -| -_| .'|  _|  _|   |
   // |___|___|__,|_| |___|_|_|
-  async findId(
-    resourceType: "movie" | "person",
-    externalSource: "imdb",
-    externalId: string
-  ): Promise<number> {
-    if (resourceType !== "movie" && resourceType !== "person") {
-      throw new Unimplemented();
-    }
-
-    if (externalSource !== "imdb") {
-      throw new Unimplemented();
-    }
-
-    const result = await this.get<FinditResults>("find/" + externalId, {
-      external_source: externalSource + "_id",
-    });
-
-    let results;
-
-    if (resourceType === "movie") {
-      results = result.movieResults ?? [];
-    } else if (resourceType === "person") {
-      results = result.personResults ?? [];
-    } else {
-      throw new Error("Unexpected state.");
-    }
-
-    if (results.length === 0) {
-      throw new NotFoundError();
-    }
-
-    if (results.length > 1) {
-      throw new UnexpectedResponseError();
-    }
-
-    return Number(results[0].id);
-  }
   async search(
     query: string,
     options?: OptionsBag & { type: ShowType }
@@ -269,7 +262,12 @@ export default class TMDB {
       : `search/multi?query=${query}`;
 
     const response = await this.get<SearchMultiResults>(endpoint, options);
-    return response?.results ?? [];
+    const results = response?.results ?? [];
+
+    // populate object types
+    results.forEach((item) => populateType(item));
+
+    return results;
   }
   async findShowById(
     id: string,

@@ -7,6 +7,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import Spacer from "../Spacer";
 
 type BottomCardProps = {
   imageUrl: string;
@@ -46,6 +47,8 @@ export default function BottomCard({
               alignItems={"center"}
             >
               <ItemRating rating={rating} />
+
+              <Box flexGrow={1} />
 
               <Typography variant="caption" color="text.secondary">
                 {metaDescription}

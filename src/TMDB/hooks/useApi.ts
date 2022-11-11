@@ -1,17 +1,26 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import useMegaStore from "../../store/MegaStore";
-import FindByIdRoute from "../../routes/FindByIdRoute/FindByIdRoute";
 import {
   ApiFn,
-  OptionsBag,
-  Movie,
-  TvShow,
-  ShowType,
-  ShowImage,
-  Show,
   ExternalSource,
+  Movie,
+  OptionsBag,
   Person,
+  Show,
+  ShowImage,
+  ShowImageCollection,
+  ShowType,
+  Tv,
 } from "../types";
+
+export function useBaseImageUrl() {
+  const tmdb = useMegaStore((state) => state.tmdb);
+  return tmdb.baseImageUrl;
+}
+export function useBaseApiImageUrl() {
+  const tmdb = useMegaStore((state) => state.tmdb);
+  return tmdb.baseApiUrl;
+}
 
 //                          _    ___     _       _
 //  ___ ___ ___ ___ ___ ___| |  |  _|___| |_ ___| |_ ___ ___
@@ -66,9 +75,9 @@ export function useMovie(id?: number | string) {
   const tmdb = useMegaStore((state) => state.tmdb);
   return useApi<Movie>(tmdb.getMovie.bind(tmdb), id);
 }
-export function useTvShow(id?: number | string) {
+export function useTv(id?: number | string) {
   const tmdb = useMegaStore((state) => state.tmdb);
-  return useApi<TvShow>(tmdb.getTvShow.bind(tmdb), id);
+  return useApi<Tv>(tmdb.getTv.bind(tmdb), id);
 }
 
 //  _
@@ -105,6 +114,17 @@ export function useShowLogos(
 ) {
   const tmdb = useMegaStore((state) => state.tmdb);
   return useApi<ShowImage[]>(tmdb.getShowLogos.bind(tmdb), id, {
+    ...options,
+    type,
+  });
+}
+export function useShowImages(
+  id: number | string,
+  type: ShowType,
+  options?: OptionsBag
+) {
+  const tmdb = useMegaStore((state) => state.tmdb);
+  return useApi<ShowImageCollection>(tmdb.getShowImages.bind(tmdb), id, {
     ...options,
     type,
   });

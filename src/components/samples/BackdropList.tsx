@@ -1,37 +1,25 @@
-import { useTheme } from "@emotion/react";
 import { Box, ImageList, ImageListItem, ImageListItemBar } from "@mui/material";
-import { ShowType } from "../../TMDB/types";
-import { useShowBackdrops } from "../../TMDB/hooks/useApi";
-import LoadingTile from "../LoadingTile";
-import NotFoundTile from "../NotFoundTile";
+import { useBaseImageUrl } from "../../TMDB/hooks/useApi";
+import { ShowImage } from "../../TMDB/types";
 import SampleHeader from "./SampleHeader";
 
 export default function BackdropList({
-  id,
-  type,
+  images,
 }: {
-  id: string | number;
-  type: ShowType;
+  images?: ShowImage[] | null;
 }) {
-  const theme = useTheme();
-  const [posters, isLoading, error] = useShowBackdrops(id, type, {
-    includeImageLanguage: ["null", "en"],
-  });
+  const baseImgUrl = useBaseImageUrl();
 
-  if (isLoading) return <LoadingTile />;
-  if (!posters) return <NotFoundTile />;
-  if (error) return <NotFoundTile />;
+  if (!images) return null;
+  if (images.length < 1) return null;
 
   return (
     <Box>
-      <SampleHeader title={"Backdrops"} total={posters.length} />
+      <SampleHeader title={"Backdrops"} total={images.length} />
       <ImageList cols={4} gap={12} variant="standard">
-        {posters.map((item) => (
+        {images.map((item) => (
           <ImageListItem key={item.filePath}>
-            <img
-              src={`https://image.tmdb.org/t/p/original${item.filePath}`}
-              loading="lazy"
-            />
+            <img src={`${baseImgUrl}${item.filePath}`} loading="lazy" />
             <ImageListItemBar
               title={item.voteAverage}
               subtitle={`Votes: ${item.voteCount}`}
