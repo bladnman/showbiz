@@ -23,7 +23,7 @@ export default function PersonCard({ person }: { person: Person }) {
 
   return (
     <BottomCard
-      imageUrl={`${baseImgUrl}${person.profilePath}`}
+      imagePosterUrl={`${baseImgUrl}${person.profilePath}`}
       title={person.name}
       description={description}
     />

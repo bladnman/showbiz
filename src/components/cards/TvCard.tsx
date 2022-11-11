@@ -21,7 +21,8 @@ export default function TvCard({ show }: { show: Tv }) {
   if (!show.name) return null;
   return (
     <BottomCard
-      imageUrl={`${baseImgUrl}${show.backdropPath}`}
+      imagePosterUrl={`${baseImgUrl}${show.posterPath}`}
+      imageBackdropUrl={`${baseImgUrl}${show.backdropPath}`}
       title={show.name}
       description={show.overview}
       rating={rating}

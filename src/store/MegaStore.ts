@@ -10,7 +10,7 @@ export interface MegaStore {
   searchType: string;
 }
 
-const IS_LOCAL_DEV = false;
+const IS_LOCAL_DEV = true;
 
 const useMegaStore = create<MegaStore>()(
   devtools(

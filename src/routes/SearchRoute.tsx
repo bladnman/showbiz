@@ -63,9 +63,9 @@ function SearchResultList() {
   if (error) return <NotFoundTile />;
   return (
     <Box>
-      <Grid container spacing={3}>
+      <Grid container spacing={2}>
         {shows.map((show) => (
-          <Grid item key={show.id}>
+          <Grid item xs={12} sm={6} md={4} key={show.id}>
             <TopCard item={show} onClick={onClick} />
           </Grid>
         ))}
