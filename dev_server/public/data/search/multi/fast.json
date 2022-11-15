@@ -3,23 +3,6 @@
   "results": [
     {
       "adult": false,
-      "backdrop_path": null,
-      "genre_ids": [28, 80, 53],
-      "id": 385687,
-      "media_type": "movie",
-      "original_language": "en",
-      "original_title": "Fast X",
-      "overview": "The tenth installment in the Fast Saga.",
-      "popularity": 79.703,
-      "poster_path": "/zWJHY9QYzEcXmQ7BUg0qJxSICzd.jpg",
-      "release_date": "2023-05-18",
-      "title": "Fast X",
-      "video": false,
-      "vote_average": 0,
-      "vote_count": 0
-    },
-    {
-      "adult": false,
       "backdrop_path": "/hpgda6P9GutvdkDX5MUJ92QG9aj.jpg",
       "genre_ids": [28, 12, 35],
       "id": 384018,

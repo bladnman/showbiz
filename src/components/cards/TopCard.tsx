@@ -4,14 +4,14 @@ import { Movie, Person, Tv } from "../../TMDB/types";
 import MovieCard from "./MovieCard";
 import PersonCard from "./PersonCard";
 import TvCard from "./TvCard";
+import { CardProps } from "./types";
 
 export default function TopCard({
   item,
   onClick,
-}: {
-  item: Movie | Tv | Person;
-  onClick?: (item: Movie | Tv | Person) => void;
-}) {
+  height,
+  expanded = false,
+}: CardProps) {
   const handleClick = useRef(() => {
     console.log(`🐽 [TopCard] item`, item);
 
@@ -19,9 +19,16 @@ export default function TopCard({
   }).current;
 
   const renderCard = useCallback(() => {
-    if (item.isMovie) return <MovieCard show={item as Movie} />;
-    if (item.isTv) return <TvCard show={item as Tv} />;
-    if (item.isPerson) return <PersonCard person={item as Person} />;
+    if (item.isMovie)
+      return (
+        <MovieCard item={item as Movie} expanded={expanded} height={height} />
+      );
+    if (item.isTv)
+      return <TvCard item={item as Tv} expanded={expanded} height={height} />;
+    if (item.isPerson)
+      return (
+        <PersonCard item={item as Person} expanded={expanded} height={height} />
+      );
     return null;
   }, [item]);
 

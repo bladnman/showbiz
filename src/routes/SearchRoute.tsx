@@ -66,7 +66,7 @@ function SearchResultList() {
       <Grid container spacing={2}>
         {shows.map((show) => (
           <Grid item xs={12} sm={6} md={4} key={show.id}>
-            <TopCard item={show} onClick={onClick} />
+            <TopCard item={show} onClick={onClick} height={"20vh"} />
           </Grid>
         ))}
       </Grid>

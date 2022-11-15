@@ -12,5 +12,5 @@ export default function TvTesterRoute() {
   if (error) return <NotFoundTile />;
   if (!show) return <NotFoundTile />;
 
-  return <ShowTester show={show} />;
+  return <ShowTester show={show} expanded={true} />;
 }

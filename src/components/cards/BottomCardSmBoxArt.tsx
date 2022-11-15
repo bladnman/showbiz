@@ -9,7 +9,7 @@ import {
 import ItemRating from "../ItemRating";
 import { BottomCardProps } from "./BottomCard";
 
-export default function BottomCardXs({
+export default function BottomCardSmBoxArt({
   imagePosterUrl,
   imageBackdropUrl,
   title,
@@ -20,17 +20,31 @@ export default function BottomCardXs({
   if (!imagePosterUrl || !title) return null;
 
   return (
-    <Box maxHeight="350" height="350">
+    <Box>
       <Card>
         <Stack direction="column">
           <Box>
-            <CardMedia component="img" image={imageBackdropUrl} />
+            <CardMedia
+              component="img"
+              src={imageBackdropUrl}
+              width={"100%"}
+              style={{ height: "12em" }}
+            />
           </Box>
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
               {title}
             </Typography>
-            <Typography variant="body2" color="text.secondary">
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              sx={{
+                display: "-webkit-box",
+                overflow: "hidden",
+                WebkitBoxOrient: "vertical",
+                WebkitLineClamp: 3,
+              }}
+            >
               {description}
             </Typography>
 

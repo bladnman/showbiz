@@ -8,49 +8,57 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/system";
 import ItemRating from "../ItemRating";
-import { BottomCardProps } from "./BottomCard";
+import { BottomCardProps } from "./types";
 const panelShowAniMs = 200;
 const panelHideAniMs = 100;
-const StyledCard = styled(Card)(() => {
+const StyledCard = styled(Card)(({ expanded }: { expanded: boolean }) => {
+  const collapsedHeight = 0;
+  const expandedHeight = "4.6em";
+  const collapsedBgColor = "#00000044";
+  const expandedBgColor = "#000000aa";
+  console.log(`🐽 [BottomCardBGImage] expanded`, expanded);
   return {
     ".meta-panel": {
-      backgroundColor: "#00000044",
+      backgroundColor: expanded ? expandedBgColor : collapsedBgColor,
       transition: `background ${panelHideAniMs}ms ease-in-out`,
     },
     ".description": {
-      height: 0,
+      height: expanded ? expandedHeight : collapsedHeight,
       overflow: "hidden",
       transition: `height ${panelHideAniMs}ms ease-in-out`,
     },
     ":hover": {
       ".meta-panel": {
         transition: `background ${panelShowAniMs}ms ease-in-out`,
-        backgroundColor: "#000000aa",
+        backgroundColor: expandedBgColor,
       },
       ".description": {
-        height: "4.6em",
+        height: expandedHeight,
         transition: `height ${panelShowAniMs}ms ease-in-out`,
       },
     },
   };
 });
 
-export default function BottomCardXs({
-  imagePosterUrl,
-  imageBackdropUrl,
-  title,
-  description,
-  rating,
-  metaDescription,
-}: BottomCardProps) {
+export default function BottomCardBGImage(props: BottomCardProps) {
+  const {
+    imagePosterUrl,
+    imageBackdropUrl,
+    title,
+    description,
+    rating,
+    metaDescription,
+    expanded,
+  } = props;
+  const height = props.height ?? "30vh";
   if (!imagePosterUrl || !title) return null;
   return (
-    <Box sx={{ height: "56vw" }}>
-      <StyledCard>
+    <Box sx={{ height: height }}>
+      <StyledCard expanded={expanded ?? false}>
         <div
           style={{
             position: "relative",
-            height: "56vw",
+            height: height,
             overflow: "hidden",
           }}
         >
@@ -58,7 +66,7 @@ export default function BottomCardXs({
             component="img"
             src={imageBackdropUrl}
             width={"100%"}
-            style={{ position: "absolute", height: "56vw" }}
+            style={{ position: "absolute", height: height }}
           />
 
           <Stack

@@ -8,7 +8,11 @@ import LogoList from "./samples/LogoList";
 import PosterList from "./samples/PosterList";
 import SeasonList from "./samples/SeasonList";
 
-export default function ShowTester({ show }: { show: Movie | Tv }) {
+type Props = {
+  show: Movie | Tv;
+  expanded?: boolean;
+};
+export default function ShowTester({ show, expanded }: Props) {
   if (!show.id) return null;
   if (!show.objectType) return null;
 
@@ -37,7 +41,7 @@ export default function ShowTester({ show }: { show: Movie | Tv }) {
 
   return (
     <Box>
-      <TopCard item={show} />
+      <TopCard item={show} height={"40vh"} expanded={expanded} />
 
       <SeasonList show={show} />
       {renderImageLists()}

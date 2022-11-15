@@ -2,30 +2,33 @@ import { useMemo } from "react";
 import { useBaseImageUrl } from "../../TMDB/hooks/useApi";
 import { Person } from "../../TMDB/types";
 import BottomCard from "./BottomCard";
+import { CardProps } from "./types";
 
-export default function PersonCard({ person }: { person: Person }) {
-  if (!person) return null;
-  if (!person.name) return null;
+export default function PersonCard(props: CardProps) {
+  const { height, expanded } = props;
+  const item = props.item as Person;
+  if (!item) return null;
+  if (!item.name) return null;
 
   const baseImgUrl = useBaseImageUrl();
 
   const description = useMemo(() => {
-    if (person.biography) {
-      return person.biography;
+    if (item.biography) {
+      return item.biography;
     }
-    if (person.knownFor) {
-      const titles = person.knownFor.map(
-        (item: any) => item.title ?? item.name
-      );
+    if (item.knownFor) {
+      const titles = item.knownFor.map((item: any) => item.title ?? item.name);
       return `Known for: ${titles.join(", ")}`;
     }
-  }, [person]);
+  }, [item]);
 
   return (
     <BottomCard
-      imagePosterUrl={`${baseImgUrl}${person.profilePath}`}
-      title={person.name}
+      imagePosterUrl={`${baseImgUrl}${item.profilePath}`}
+      title={item.name}
       description={description}
+      height={height}
+      expanded={expanded}
     />
   );
 }

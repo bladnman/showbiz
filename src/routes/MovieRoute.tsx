@@ -22,7 +22,6 @@ export default function MovieRoute() {
       </Box>
     );
   }, [movie]);
-
   return (
     <Box>
       <Box>

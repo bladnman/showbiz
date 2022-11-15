@@ -4,28 +4,33 @@ import { Movie } from "../../TMDB/types";
 import { fLeft } from "../../utils/MU";
 import useBreakSize from "../../utils/useBreakSize";
 import BottomCard from "./BottomCard";
+import { CardProps } from "./types";
 
-export default function MovieCard({ show }: { show: Movie }) {
-  if (!show) return null;
+export default function MovieCard(props: CardProps) {
+  const { height, expanded } = props;
+  const item = props.item as Movie;
+  if (!item) return null;
   const baseImgUrl = useBaseImageUrl();
   const { isGtXs } = useBreakSize();
 
-  const rating = (show.voteAverage ?? 0) / 2;
-  const year = fLeft(show.releaseDate, "-");
+  const rating = (item.voteAverage ?? 0) / 2;
+  const year = fLeft(item.releaseDate, "-");
 
   const imgUrl = useMemo(
-    () => (isGtXs ? show.backdropPath : show.posterPath),
+    () => (isGtXs ? item.backdropPath : item.posterPath),
     [isGtXs]
   );
-  if (!show.title) return null;
+  if (!item.title) return null;
   return (
     <BottomCard
-      imagePosterUrl={`${baseImgUrl}${show.posterPath}`}
-      imageBackdropUrl={`${baseImgUrl}${show.backdropPath}`}
-      title={show.title}
-      description={show.overview}
+      imagePosterUrl={`${baseImgUrl}${item.posterPath}`}
+      imageBackdropUrl={`${baseImgUrl}${item.backdropPath}`}
+      title={item.title}
+      description={item.overview}
       rating={rating}
       metaDescription={year ? `Released: ${year}` : null}
+      height={height}
+      expanded={expanded}
     />
   );
 }
