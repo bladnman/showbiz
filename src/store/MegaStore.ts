@@ -12,7 +12,7 @@ export interface MegaStore {
   detailItem: ShowbizItem | null;
 }
 
-const IS_LOCAL_DEV = true;
+const IS_LOCAL_DEV = false; // start dev-server if true
 
 const useMegaStore = create<MegaStore>()(
   devtools(
