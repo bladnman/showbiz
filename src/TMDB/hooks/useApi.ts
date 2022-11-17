@@ -12,6 +12,7 @@ import {
   ShowType,
   Tv,
 } from "../types";
+import convertToItem, { ShowbizItem } from "../utils/convertToItem";
 
 export function useBaseImageUrl() {
   const tmdb = useMegaStore((state) => state.tmdb);
@@ -30,7 +31,7 @@ export function useBaseApiImageUrl() {
 type UseApiResponse<T> = [T | null | undefined, boolean, any | undefined];
 export default function useApi<T>(
   fn: ApiFn,
-  queryValue?: number | string,
+  queryValue: number | string | null,
   options?: OptionsBag
 ): UseApiResponse<T> {
   const [data, setData] = useState<T | null | undefined>();
@@ -43,7 +44,7 @@ export default function useApi<T>(
 
       try {
         const data = await fn(queryValue, options);
-        setData(data as T);
+        setData(convert(data) as T);
         setIsLoading(false);
       } catch (error: any) {
         // NOT FOUND
@@ -66,18 +67,27 @@ export default function useApi<T>(
 
   return [data, isLoading, error];
 }
+function convert(data: any) {
+  if (!data) return null;
+
+  // list
+  if (Array.isArray(data)) return data.map((item) => convertToItem(item));
+
+  // single
+  return convertToItem(data);
+}
 
 //      _
 //  ___| |_ ___ _ _ _ ___
 // |_ -|   | . | | | |_ -|
 // |___|_|_|___|_____|___|
-export function useMovie(id?: number | string) {
+export function useMovie(id: number | string | null) {
   const tmdb = useMegaStore((state) => state.tmdb);
-  return useApi<Movie>(tmdb.getMovie.bind(tmdb), id);
+  return useApi<ShowbizItem>(tmdb.getMovie.bind(tmdb), id);
 }
-export function useTv(id?: number | string) {
+export function useTv(id: number | string | null) {
   const tmdb = useMegaStore((state) => state.tmdb);
-  return useApi<Tv>(tmdb.getTv.bind(tmdb), id);
+  return useApi<ShowbizItem>(tmdb.getTv.bind(tmdb), id);
 }
 
 //  _
@@ -134,12 +144,12 @@ export function useShowImages(
 //  ___ ___ ___ ___ ___| |_
 // |_ -| -_| .'|  _|  _|   |
 // |___|___|__,|_| |___|_|_|
-export function useSearch(query?: string, options?: OptionsBag) {
+export function useSearch(query: string | null, options?: OptionsBag) {
   const tmdb = useMegaStore((state) => state.tmdb);
-  return useApi<Show[]>(tmdb.search.bind(tmdb), query, options);
+  return useApi<ShowbizItem[]>(tmdb.search.bind(tmdb), query, options);
 }
 export function useFindShowById(
-  id: number | string | undefined,
+  id: number | string | null,
   externalSource: ExternalSource | undefined,
   options?: OptionsBag
 ) {

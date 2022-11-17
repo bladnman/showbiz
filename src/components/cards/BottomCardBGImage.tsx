@@ -11,34 +11,39 @@ import ItemRating from "../ItemRating";
 import { BottomCardProps } from "./types";
 const panelShowAniMs = 200;
 const panelHideAniMs = 100;
-const StyledCard = styled(Card)(({ expanded }: { expanded: boolean }) => {
-  const collapsedHeight = 0;
-  const expandedHeight = "4.6em";
-  const collapsedBgColor = "#00000044";
-  const expandedBgColor = "#000000aa";
-  console.log(`🐽 [BottomCardBGImage] expanded`, expanded);
-  return {
-    ".meta-panel": {
-      backgroundColor: expanded ? expandedBgColor : collapsedBgColor,
-      transition: `background ${panelHideAniMs}ms ease-in-out`,
-    },
-    ".description": {
-      height: expanded ? expandedHeight : collapsedHeight,
-      overflow: "hidden",
-      transition: `height ${panelHideAniMs}ms ease-in-out`,
-    },
-    ":hover": {
+type StyledCardProps = {
+  expanded: boolean;
+  maxDescLines: number;
+};
+const StyledCard = styled(Card)(
+  ({ expanded, maxDescLines }: StyledCardProps) => {
+    const collapsedHeight = 0;
+    const expandedHeight = `${maxDescLines + 1}.6em`;
+    const collapsedBgColor = "#00000044";
+    const expandedBgColor = "#000000aa";
+    return {
       ".meta-panel": {
-        transition: `background ${panelShowAniMs}ms ease-in-out`,
-        backgroundColor: expandedBgColor,
+        backgroundColor: expanded ? expandedBgColor : collapsedBgColor,
+        transition: `background ${panelHideAniMs}ms ease-in-out`,
       },
       ".description": {
-        height: expandedHeight,
-        transition: `height ${panelShowAniMs}ms ease-in-out`,
+        height: expanded ? expandedHeight : collapsedHeight,
+        overflow: "hidden",
+        transition: `height ${panelHideAniMs}ms ease-in-out`,
       },
-    },
-  };
-});
+      ":hover": {
+        ".meta-panel": {
+          transition: `background ${panelShowAniMs}ms ease-in-out`,
+          backgroundColor: expandedBgColor,
+        },
+        ".description": {
+          height: expandedHeight,
+          transition: `height ${panelShowAniMs}ms ease-in-out`,
+        },
+      },
+    };
+  }
+);
 
 export default function BottomCardBGImage(props: BottomCardProps) {
   const {
@@ -49,12 +54,13 @@ export default function BottomCardBGImage(props: BottomCardProps) {
     rating,
     metaDescription,
     expanded,
+    maxDescLines = 3,
   } = props;
   const height = props.height ?? "30vh";
   if (!imagePosterUrl || !title) return null;
   return (
     <Box sx={{ height: height }}>
-      <StyledCard expanded={expanded ?? false}>
+      <StyledCard expanded={expanded ?? false} maxDescLines={maxDescLines}>
         <div
           style={{
             position: "relative",
@@ -95,7 +101,7 @@ export default function BottomCardBGImage(props: BottomCardProps) {
                     display: "-webkit-box",
                     overflow: "hidden",
                     WebkitBoxOrient: "vertical",
-                    WebkitLineClamp: 3,
+                    WebkitLineClamp: maxDescLines,
                   }}
                 >
                   {description}

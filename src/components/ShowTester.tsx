@@ -10,9 +10,8 @@ import SeasonList from "./samples/SeasonList";
 
 type Props = {
   show: Movie | Tv;
-  expanded?: boolean;
 };
-export default function ShowTester({ show, expanded }: Props) {
+export default function ShowTester({ show }: Props) {
   if (!show.id) return null;
   if (!show.objectType) return null;
 
@@ -41,13 +40,10 @@ export default function ShowTester({ show, expanded }: Props) {
 
   return (
     <Box>
-      <TopCard item={show} height={"40vh"} expanded={expanded} />
+      <TopCard item={show} height={"40vh"} expanded={true} maxDescLines={6} />
 
       <SeasonList show={show} />
       {renderImageLists()}
-      {/* <LogoList id={show.id} type={show.objectType} />
-      <PosterList id={show.id} type={show.objectType} />
-      <BackdropList id={show.id} type={show.objectType} /> */}
     </Box>
   );
 }

@@ -5,7 +5,7 @@ import { useBaseImageUrl } from "../../TMDB/hooks/useApi";
 import { CardProps } from "./types";
 
 export default function TvCard(props: CardProps) {
-  const { height, expanded } = props;
+  const { height, expanded, maxDescLines } = props;
   const item = props.item as Tv;
   if (!item) return null;
 
@@ -32,6 +32,7 @@ export default function TvCard(props: CardProps) {
       metaDescription={metaDescription}
       height={height}
       expanded={expanded}
+      maxDescLines={maxDescLines}
     />
   );
 }

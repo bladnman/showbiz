@@ -7,7 +7,7 @@ import BottomCard from "./BottomCard";
 import { CardProps } from "./types";
 
 export default function MovieCard(props: CardProps) {
-  const { height, expanded } = props;
+  const { height, expanded, maxDescLines } = props;
   const item = props.item as Movie;
   if (!item) return null;
   const baseImgUrl = useBaseImageUrl();
@@ -31,6 +31,7 @@ export default function MovieCard(props: CardProps) {
       metaDescription={year ? `Released: ${year}` : null}
       height={height}
       expanded={expanded}
+      maxDescLines={maxDescLines}
     />
   );
 }

@@ -5,7 +5,7 @@ import BottomCard from "./BottomCard";
 import { CardProps } from "./types";
 
 export default function PersonCard(props: CardProps) {
-  const { height, expanded } = props;
+  const { height, expanded, maxDescLines } = props;
   const item = props.item as Person;
   if (!item) return null;
   if (!item.name) return null;
@@ -29,6 +29,7 @@ export default function PersonCard(props: CardProps) {
       description={description}
       height={height}
       expanded={expanded}
+      maxDescLines={maxDescLines}
     />
   );
 }

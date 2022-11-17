@@ -1,13 +1,15 @@
 import create from "zustand";
 import { devtools } from "zustand/middleware";
 import TMDB from "../TMDB/TMDB";
+import { ShowbizItem } from "../TMDB/utils/convertToItem";
 
 export interface MegaStore {
   isLocalDev: boolean;
   appName: string;
   tmdb: TMDB;
-  searchQuery: string;
-  searchType: string;
+  searchQuery: string | null;
+  searchType: string | null;
+  detailItem: ShowbizItem | null;
 }
 
 const IS_LOCAL_DEV = true;
@@ -24,6 +26,8 @@ const useMegaStore = create<MegaStore>()(
           IS_LOCAL_DEV,
           `http://localhost:${import.meta.env.VITE_DEV_SERVER_PORT}`
         ),
+        searchQuery: null,
+        searchType: null,
       } as MegaStore)
   )
 );

@@ -1,6 +1,5 @@
 import { Box } from "@mui/material";
 import { useCallback, useRef } from "react";
-import { Movie, Person, Tv } from "../../TMDB/types";
 import MovieCard from "./MovieCard";
 import PersonCard from "./PersonCard";
 import TvCard from "./TvCard";
@@ -11,6 +10,7 @@ export default function TopCard({
   onClick,
   height,
   expanded = false,
+  maxDescLines = 3,
 }: CardProps) {
   const handleClick = useRef(() => {
     console.log(`🐽 [TopCard] item`, item);
@@ -21,13 +21,30 @@ export default function TopCard({
   const renderCard = useCallback(() => {
     if (item.isMovie)
       return (
-        <MovieCard item={item as Movie} expanded={expanded} height={height} />
+        <MovieCard
+          item={item}
+          expanded={expanded}
+          height={height}
+          maxDescLines={maxDescLines}
+        />
       );
     if (item.isTv)
-      return <TvCard item={item as Tv} expanded={expanded} height={height} />;
+      return (
+        <TvCard
+          item={item}
+          expanded={expanded}
+          height={height}
+          maxDescLines={maxDescLines}
+        />
+      );
     if (item.isPerson)
       return (
-        <PersonCard item={item as Person} expanded={expanded} height={height} />
+        <PersonCard
+          item={item}
+          expanded={expanded}
+          height={height}
+          maxDescLines={maxDescLines}
+        />
       );
     return null;
   }, [item]);
