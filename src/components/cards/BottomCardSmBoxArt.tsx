@@ -6,8 +6,9 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import { posterWidthtoHeightRatio } from "../../store/const";
 import ItemRating from "../ItemRating";
-import { BottomCardProps } from "./BottomCard";
+import { BottomCardProps } from "./types";
 
 export default function BottomCardSmBoxArt({
   imagePosterUrl,
@@ -19,6 +20,9 @@ export default function BottomCardSmBoxArt({
 }: BottomCardProps) {
   if (!imagePosterUrl || !title) return null;
 
+  const posterHeight = 300;
+  const posterWidth = posterHeight * posterWidthtoHeightRatio;
+
   return (
     <Box>
       <Card>
@@ -26,45 +30,11 @@ export default function BottomCardSmBoxArt({
           <Box>
             <CardMedia
               component="img"
-              src={imageBackdropUrl}
+              src={imagePosterUrl}
               width={"100%"}
               style={{ height: "12em" }}
             />
           </Box>
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
-              {title}
-            </Typography>
-            <Typography
-              variant="body2"
-              color="text.secondary"
-              sx={{
-                display: "-webkit-box",
-                overflow: "hidden",
-                WebkitBoxOrient: "vertical",
-                WebkitLineClamp: 3,
-              }}
-            >
-              {description}
-            </Typography>
-
-            <Box height={5} />
-
-            <Stack
-              direction="row"
-              gap={2}
-              justifyContent="space-between"
-              alignItems={"center"}
-            >
-              <ItemRating rating={rating} />
-
-              <Box flexGrow={1} />
-
-              <Typography variant="caption" color="text.secondary">
-                {metaDescription}
-              </Typography>
-            </Stack>
-          </CardContent>
         </Stack>
       </Card>
     </Box>

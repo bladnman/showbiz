@@ -8,6 +8,7 @@ import {
   Stack,
 } from "@mui/material";
 import { useRef } from "react";
+import { posterWidthtoHeightRatio } from "../../store/const";
 import useMegaStore from "../../store/MegaStore";
 import { setDetailItem } from "../../store/utils/itemUtils";
 import useBreakSize from "../../utils/useBreakSize";
@@ -22,11 +23,6 @@ export default function DetailDialog() {
     setDetailItem(null);
   }).current;
 
-  console.log(
-    `🐽 [DetailDialog] detailItem?.posterPath`,
-    detailItem?.posterPath
-  );
-  const posterWidthtoHeightRatio = 0.69;
   const posterHeight = 300;
   const posterWidth = posterHeight * posterWidthtoHeightRatio;
   return (
@@ -58,8 +54,6 @@ export default function DetailDialog() {
                 sx={{
                   width: `${posterWidth}px`,
                   height: `${posterHeight}px`,
-                  // backgroundColor: "white",
-                  // padding: "8px",
                   backgroundColor: "#000000aa",
                   padding: "5px",
                   borderRadius: "10px",

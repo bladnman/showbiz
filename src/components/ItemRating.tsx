@@ -1,6 +1,7 @@
 import { Rating } from "@mui/material";
 
-const ItemRating = ({ rating }: { rating?: number | null }) => {
+const ItemRating = (props: { rating?: number | null }) => {
+  const { rating, ...otherProps } = props;
   if (!rating) return null;
 
   return (
@@ -10,6 +11,7 @@ const ItemRating = ({ rating }: { rating?: number | null }) => {
       readOnly
       precision={0.25}
       size="small"
+      {...otherProps}
     />
   );
 };

@@ -1,40 +1,48 @@
-import {
-  Box,
-  Card,
-  CardContent,
-  CardMedia,
-  Stack,
-  Typography,
-} from "@mui/material";
-import { styled } from "@mui/system";
-import ItemRating from "../ItemRating";
-import StyledHoverCard from "./hover-card/StyledHoverCard";
-import { BottomCardProps } from "./types";
+import { Box, CardMedia, Stack, CardContent, Typography } from "@mui/material";
+import { useMemo } from "react";
+import { ShowbizItem } from "../../../TMDB/utils/convertToItem";
+import { fLeft } from "../../../utils/MU";
+import ItemRating from "../../ItemRating";
+import StyledHoverCard from "./StyledHoverCard";
+import { posterWidthtoHeightRatio } from "../../../store/const";
+import useBreakSize from "../../../utils/useBreakSize";
 
-export default function BottomCardXs({
-  imagePosterUrl,
-  imageBackdropUrl,
-  title,
-  description,
-  rating,
-  metaDescription,
-}: BottomCardProps) {
-  if (!imagePosterUrl || !title) return null;
+export default function HoverCard({ show }: { show: ShowbizItem }) {
+  const rating = (show.voteAverage ?? 0) / 2;
+  const year = show.releaseDate ? fLeft(show.releaseDate, "-") : null;
+  const metaDescription = useMemo(() => {
+    if (show.isTv) {
+      if (!show.numberOfEpisodes) return null;
+      let desc = `Episodes: ${show.numberOfEpisodes}`;
+      if (show.numberOfSeasons) {
+        desc = `Seasons: ${show.numberOfSeasons} | ${desc}`;
+      }
+      return desc;
+    } else if (show.isMovie) {
+      return year ? `Released: ${year}` : null;
+    }
+  }, [show]);
+  const { isGtXs } = useBreakSize();
+
+  // const height = "56vw";
+  const height = isGtXs ? 300 : 220;
+  const width = posterWidthtoHeightRatio * height;
+
   return (
-    <Box sx={{ height: "56vw" }}>
+    <Box sx={{ height: height, width: width }}>
       <StyledHoverCard>
         <div
           style={{
             position: "relative",
-            height: "56vw",
+            height: height,
             overflow: "hidden",
           }}
         >
           <CardMedia
             component="img"
-            src={imageBackdropUrl}
+            src={show.posterPath}
             width={"100%"}
-            style={{ position: "absolute", height: "56vw" }}
+            style={{ position: "absolute", height: height }}
           />
 
           <Stack
@@ -53,7 +61,7 @@ export default function BottomCardXs({
                 component="div"
                 sx={{ textShadow: "1px 1px 1px #000" }}
               >
-                {title}
+                {show.name}
               </Typography>
               <Box className="description">
                 <Typography
@@ -66,7 +74,7 @@ export default function BottomCardXs({
                     WebkitLineClamp: 3,
                   }}
                 >
-                  {description}
+                  {show.description}
                 </Typography>
               </Box>
 
@@ -77,9 +85,9 @@ export default function BottomCardXs({
                 alignItems={"center"}
                 marginTop={0}
               >
-                <ItemRating rating={rating} />
+                {/* <ItemRating rating={rating} />
 
-                <Box flexGrow={1} />
+                <Box flexGrow={1} /> */}
 
                 <Typography variant="caption" color="text.secondary">
                   {metaDescription}

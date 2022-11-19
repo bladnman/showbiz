@@ -2,6 +2,7 @@ import { Box } from "@mui/material";
 import { useCallback, useRef } from "react";
 import MovieCard from "./MovieCard";
 import PersonCard from "./PersonCard";
+import ShowCard from "./ShowCard";
 import TvCard from "./TvCard";
 import { CardProps } from "./types";
 
@@ -19,18 +20,9 @@ export default function TopCard({
   }).current;
 
   const renderCard = useCallback(() => {
-    if (item.isMovie)
+    if (item.isMovie || item.isTv)
       return (
-        <MovieCard
-          item={item}
-          expanded={expanded}
-          height={height}
-          maxDescLines={maxDescLines}
-        />
-      );
-    if (item.isTv)
-      return (
-        <TvCard
+        <ShowCard
           item={item}
           expanded={expanded}
           height={height}
