@@ -3,14 +3,12 @@ import useMegaStore from "../../store/MegaStore";
 import {
   ApiFn,
   ExternalSource,
-  Movie,
   OptionsBag,
   Person,
   Show,
   ShowImage,
   ShowImageCollection,
   ShowType,
-  Tv,
 } from "../types";
 import convertToItem, { ShowbizItem } from "../utils/convertToItem";
 
@@ -21,6 +19,11 @@ export function useBaseImageUrl() {
 export function useBaseApiImageUrl() {
   const tmdb = useMegaStore((state) => state.tmdb);
   return tmdb.baseApiUrl;
+}
+function getCleanedData(data: any) {
+  return convert(data).filter(
+    (i: ShowbizItem) => i.posterPath || i.backdropPath || i.profilePath
+  );
 }
 
 //                          _    ___     _       _
@@ -44,7 +47,7 @@ export default function useApi<T>(
 
       try {
         const data = await fn(queryValue, options);
-        setData(convert(data) as T);
+        setData(getCleanedData(data) as T);
         setIsLoading(false);
       } catch (error: any) {
         // NOT FOUND

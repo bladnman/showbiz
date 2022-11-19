@@ -1,5 +1,4 @@
 import { useMemo } from "react";
-import { useBaseImageUrl } from "../../TMDB/hooks/useApi";
 import { Movie } from "../../TMDB/types";
 import { fLeft } from "../../utils/MU";
 import useBreakSize from "../../utils/useBreakSize";
@@ -10,7 +9,6 @@ export default function MovieCard(props: CardProps) {
   const { height, expanded, maxDescLines } = props;
   const item = props.item as Movie;
   if (!item) return null;
-  const baseImgUrl = useBaseImageUrl();
   const { isGtXs } = useBreakSize();
 
   const rating = (item.voteAverage ?? 0) / 2;
@@ -23,8 +21,8 @@ export default function MovieCard(props: CardProps) {
   if (!item.title) return null;
   return (
     <BottomCard
-      imagePosterUrl={`${baseImgUrl}${item.posterPath}`}
-      imageBackdropUrl={`${baseImgUrl}${item.backdropPath}`}
+      imagePosterUrl={`${item.posterPath}`}
+      imageBackdropUrl={`${item.backdropPath}`}
       title={item.title}
       description={item.overview}
       rating={rating}

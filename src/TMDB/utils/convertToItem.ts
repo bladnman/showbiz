@@ -1,3 +1,4 @@
+import useMegaStore from "../../store/MegaStore";
 import {
   Movie,
   Tv,
@@ -93,8 +94,10 @@ export default function convertToItem(
     name: item.name ?? item.title,
     description: item.overview,
 
-    // posterPath: item.posterPath,
-    // backdropPath: item.backdropPath,
+    posterPath: hydrateUrl(item.posterPath),
+    backdropPath: hydrateUrl(item.backdropPath),
+    profilePath: hydrateUrl(item.profilePath),
+
     // voteAverage: item.voteAverage,
     // voteCount: item.voteCount,
     // spokenLanguages: item.spokenLanguages,
@@ -113,6 +116,17 @@ export default function convertToItem(
     // gender: item.gender,
     // knownFor: item.knownFor,
     // knownForDepartment: item.knownForDepartment,
-    // profilePath: item.profilePath,
   };
+}
+export function hydrateUrl(path: string | null | undefined): string | null {
+  if (!path) return null;
+  return `${getBaseImgUrl()}${path}`;
+}
+let baseImgUrl: string | null = null;
+function getBaseImgUrl() {
+  if (!baseImgUrl) {
+    const tmdb = useMegaStore.getState().tmdb;
+    baseImgUrl = tmdb.baseImageUrl;
+  }
+  return baseImgUrl;
 }
