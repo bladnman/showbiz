@@ -1,21 +1,31 @@
 import {
   Box,
+  Button,
   CardMedia,
   Dialog,
+  DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle,
   Stack,
 } from "@mui/material";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { posterWidthtoHeightRatio } from "../../store/const";
 import useMegaStore from "../../store/MegaStore";
 import { setDetailItem } from "../../store/utils/itemUtils";
 import useBreakSize from "../../utils/useBreakSize";
+import useStreamInfo from "../../StreamAPI/useStreamInfo";
 
 export default function DetailDialog() {
   const detailItem = useMegaStore((state) => state.detailItem);
+  const [isStreamEnabled, setIsStreamEnabled] = useState(false);
   const { isLtMd } = useBreakSize();
+  const streamInfo = useStreamInfo(isStreamEnabled, detailItem);
+  console.log(`🐽 [DetailDialog] streamInfo`, streamInfo);
+
+  useEffect(() => {
+    setIsStreamEnabled(false);
+  }, [detailItem]);
 
   //
   // HANDLERS
@@ -41,30 +51,35 @@ export default function DetailDialog() {
     >
       <DialogTitle>{detailItem?.name}</DialogTitle>
       <DialogContent sx={{ height: 400 }}>
-        <Stack direction="row" gap="50">
-          <DialogContentText>
-            <Box
-              sx={{
-                paddingRight: "25px",
-                float: "left",
-              }}
-            >
-              <CardMedia
-                component="img"
-                sx={{
-                  width: `${posterWidth}px`,
-                  height: `${posterHeight}px`,
-                  backgroundColor: "#000000aa",
-                  padding: "5px",
-                  borderRadius: "10px",
-                }}
-                src={`${detailItem?.posterPath ?? detailItem?.profilePath}`}
-              />
-            </Box>
-            {detailItem?.description}
-          </DialogContentText>
-        </Stack>
+        <Box
+          sx={{
+            paddingRight: "25px",
+            float: "left",
+          }}
+        >
+          <CardMedia
+            component="img"
+            sx={{
+              width: `${posterWidth}px`,
+              height: `${posterHeight}px`,
+              backgroundColor: "#000000aa",
+              padding: "5px",
+              borderRadius: "10px",
+            }}
+            src={`${detailItem?.posterPath ?? detailItem?.profilePath}`}
+          />
+        </Box>
+        {detailItem?.description}
       </DialogContent>
+      <DialogActions>
+        <Button
+          onClick={() => setIsStreamEnabled(true)}
+          disabled={isStreamEnabled}
+        >
+          Fetch Stream Info
+        </Button>
+        <Button onClick={handleClose}>Close</Button>
+      </DialogActions>
     </Dialog>
   );
 }
