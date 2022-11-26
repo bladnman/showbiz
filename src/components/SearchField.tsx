@@ -22,11 +22,14 @@ export default function SearchField({ onChange }: SearchFieldProps) {
     <TextField
       id="search-field"
       label="Search"
-      variant="outlined"
+      variant="standard"
       value={searchQuery || ""}
       onChange={(event) => {
         const newValue = event.target.value;
         handleChanges(newValue);
+      }}
+      sx={{
+        width: "100%",
       }}
     />
   );

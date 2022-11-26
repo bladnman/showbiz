@@ -1655,6 +1655,11 @@ magic-string@^0.26.7:
   dependencies:
     sourcemap-codec "^1.4.8"
 
+material-ui-confirm@^3.0.7:
+  version "3.0.7"
+  resolved "https://registry.yarnpkg.com/material-ui-confirm/-/material-ui-confirm-3.0.7.tgz#7111600f6bb144b040878e995c83165dab8114b7"
+  integrity sha512-HZkym2nYSdKAmcCVtj/N/ygwWz/mlbWLrLAY6oRxBvD4Z1JBEmBNC//4yGAiNKlR0/9BlC6GKdY5RnqUaTwSKA==
+
 minimatch@^3.1.1:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-3.1.2.tgz#19cd194bfd3e428f049a70817c038d89ab4be35b"
