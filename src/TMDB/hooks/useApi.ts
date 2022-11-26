@@ -21,9 +21,18 @@ export function useBaseApiImageUrl() {
   return tmdb.baseApiUrl;
 }
 function getCleanedData(data: any) {
-  return convert(data).filter(
-    (i: ShowbizItem) => i.posterPath || i.backdropPath || i.profilePath
-  );
+  const hasImage = (item: ShowbizItem) =>
+    item.posterPath || item.backdropPath || item.profilePath;
+
+  const convertedData = convert(data);
+
+  // filter list
+  if (Array.isArray(convertedData)) {
+    return convertedData.filter((item: ShowbizItem) => hasImage(item));
+  }
+
+  // verify single item has image
+  return hasImage(convertedData) ? convertedData : {};
 }
 
 //                          _    ___     _       _
@@ -91,6 +100,11 @@ export function useMovie(id: number | string | null) {
 export function useTv(id: number | string | null) {
   const tmdb = useMegaStore((state) => state.tmdb);
   return useApi<ShowbizItem>(tmdb.getTv.bind(tmdb), id);
+}
+export function useShow(show: ShowbizItem | null) {
+  const tmdb = useMegaStore((state) => state.tmdb);
+  const fn = show?.isMovie ? tmdb.getMovie.bind(tmdb) : tmdb.getTv.bind(tmdb);
+  return useApi<ShowbizItem>(fn, show?.id ?? null);
 }
 
 //  _

@@ -53,6 +53,7 @@ export type ShowbizItem = {
   spokenLanguages?: Language[];
   genreIds?: number[];
   genres?: Genre[];
+  imdbId?: string;
 
   // tv items
   seasons?: Season[];

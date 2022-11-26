@@ -15,13 +15,17 @@ import useMegaStore from "../../store/MegaStore";
 import { setDetailItem } from "../../store/utils/itemUtils";
 import useBreakSize from "../../utils/useBreakSize";
 import useStreamInfo from "../../StreamAPI/useStreamInfo";
+import { useShow } from "../../TMDB/hooks/useApi";
 
 export default function DetailDialog() {
   const detailItem = useMegaStore((state) => state.detailItem);
+  const [fullShow] = useShow(detailItem);
   const [isStreamEnabled, setIsStreamEnabled] = useState(false);
   const { isLtMd } = useBreakSize();
-  const streamInfo = useStreamInfo(isStreamEnabled, detailItem);
+  const streamInfo = useStreamInfo(isStreamEnabled, fullShow);
+
   console.log(`🐽 [DetailDialog] streamInfo`, streamInfo);
+  console.log(`🐽 [DetailDialog] fullShow`, fullShow);
 
   useEffect(() => {
     setIsStreamEnabled(false);
@@ -31,6 +35,9 @@ export default function DetailDialog() {
   // HANDLERS
   const handleClose = useRef(() => {
     setDetailItem(null);
+  }).current;
+  const handleFetchStreamInfo = useRef(() => {
+    setIsStreamEnabled(true);
   }).current;
 
   const posterHeight = 300;
@@ -72,10 +79,7 @@ export default function DetailDialog() {
         {detailItem?.description}
       </DialogContent>
       <DialogActions>
-        <Button
-          onClick={() => setIsStreamEnabled(true)}
-          disabled={isStreamEnabled}
-        >
+        <Button onClick={handleFetchStreamInfo} disabled={isStreamEnabled}>
           Fetch Stream Info
         </Button>
         <Button onClick={handleClose}>Close</Button>

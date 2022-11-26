@@ -15,8 +15,10 @@ export default function useStreamInfo(
 
     // time to do the pull
     const doFetch = async () => {
-      const fetchedInfo = await fetchStringInfo(show);
+      const fetchedInfo = await fetchStreamInfo(show);
       console.log(`🐽 [useStreamInfo] fetchedInfo`, fetchedInfo);
+      const fetchedOTTInfo = await fetchOTTStreamInfo(show);
+      console.log(`🐽 [useStreamInfo] fetchedOTTInfo`, fetchedOTTInfo);
       setInfo(fetchedInfo);
     };
     doFetch();
@@ -24,11 +26,11 @@ export default function useStreamInfo(
 
   return info;
 }
-async function fetchStringInfo(show: ShowbizItem): Promise<StreamInfo> {
+async function fetchStreamInfo(show: ShowbizItem): Promise<StreamInfo> {
   const options = {
     method: "GET",
     headers: {
-      "X-RapidAPI-Key": import.meta.env.VITE_STREAMING_KEY,
+      "X-RapidAPI-Key": import.meta.env.VITE_RAPID_API_KEY,
       "X-RapidAPI-Host": "streaming-availability.p.rapidapi.com",
     },
   };
@@ -41,6 +43,32 @@ async function fetchStringInfo(show: ShowbizItem): Promise<StreamInfo> {
     .then((response) => response.json())
     .then((response) => {
       return response.streamingInfo || ({} as StreamInfo);
+    })
+    .catch((err) => {
+      console.error(err);
+      return {} as StreamInfo;
+    });
+
+  return info;
+}
+async function fetchOTTStreamInfo(show: ShowbizItem): Promise<StreamInfo> {
+  if (!show.imdbId) return {} as StreamInfo;
+
+  const options = {
+    method: "GET",
+    headers: {
+      "X-RapidAPI-Key": import.meta.env.VITE_RAPID_API_KEY,
+      "X-RapidAPI-Host": "ott-details.p.rapidapi.com",
+    },
+  };
+
+  const info = await fetch(
+    `https://ott-details.p.rapidapi.com/gettitleDetails?imdbid=${show.imdbId}`,
+    options
+  )
+    .then((response) => response.json())
+    .then((response) => {
+      return response.streamingAvailability || ({} as StreamInfo);
     })
     .catch((err) => {
       console.error(err);
