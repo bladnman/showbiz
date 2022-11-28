@@ -6,3 +6,8 @@ export function setDetailItem(item: ShowbizItem | null) {
     detailItem: item,
   });
 }
+export function setSearchSelectedItem(item: ShowbizItem | null) {
+  useMegaStore.setState({
+    searchSelectedItem: item,
+  });
+}

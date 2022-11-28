@@ -1,5 +1,4 @@
 import { TextField } from "@mui/material";
-import { lowerCase } from "lodash";
 import { useRef } from "react";
 import useMegaStore from "../store/MegaStore";
 import { setSearchQuery } from "../store/utils/searchUtils";

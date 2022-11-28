@@ -1,21 +1,16 @@
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Typography,
-} from "@mui/material";
+import { Dialog, DialogContent } from "@mui/material";
 import { useRef } from "react";
+import { useMovie } from "../../../services/TMDB/hooks/useApi";
 import { setSearchMode } from "../../../store/utils/appUtils";
+import { IDS } from "../../../utils/CONST";
 import useBreakSize from "../../../utils/useBreakSize";
-import { useWindowSize } from "../../../hooks/useWindowSize";
-import { useBaseImageUrl } from "../../../services/TMDB/hooks/useApi";
 import DetailsView from "../../details/DetailsView";
+import useSearchSelectedShow from "../../details/hooks/useSearchSelectedShow";
+import SearchResultsGrid from "../../search/SearchResultsGrid";
 
 export default function SearchDialog({ isOpen = false }) {
   const { isLtMd } = useBreakSize();
-  const windowSize = useWindowSize();
+  const show = useSearchSelectedShow();
 
   //
   // HANDLERS
@@ -31,10 +26,10 @@ export default function SearchDialog({ isOpen = false }) {
       maxWidth={"lg"}
       fullWidth={true}
     >
-      <DetailsView />
-      <DialogActions>
-        <Button onClick={handleClose}>Close</Button>
-      </DialogActions>
+      <DetailsView show={show} />
+      <DialogContent>
+        <SearchResultsGrid />
+      </DialogContent>
     </Dialog>
   );
 }

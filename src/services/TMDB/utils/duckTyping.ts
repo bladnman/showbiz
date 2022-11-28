@@ -34,6 +34,12 @@ export function isMovieType(object: any): boolean {
   if ("runtime" in object) return true;
   return false;
 }
+export function isFullResults(object: any): boolean {
+  if (!object) return false;
+  if (!object["objectType"]) return false;
+  if ("genres" in object) return true;
+  return false;
+}
 export function getObjectType(object: any): ObjectType | null {
   if (!object) return null;
   if (isMovieType(object)) return "movie";

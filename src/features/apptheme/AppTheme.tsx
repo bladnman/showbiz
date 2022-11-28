@@ -8,9 +8,8 @@ declare module "@mui/material/styles" {
     select?: PaletteOptions["primary"];
   }
   interface TypographyVariants {
-    lineNumber?: React.CSSProperties;
-    fieldCaption?: React.CSSProperties;
-    appHeading?: React.CSSProperties;
+    // lineNumber?: React.CSSProperties;
+    red: React.CSSProperties;
   }
 }
 
@@ -18,9 +17,8 @@ declare module "@mui/material/styles" {
 // Update the Typography's variant prop options
 declare module "@mui/material/Typography" {
   interface TypographyPropsVariantOverrides {
-    lineNumber: true;
-    fieldCaption: true;
-    appHeading: true;
+    // lineNumber: true;
+    red: true;
   }
 }
 
@@ -57,6 +55,9 @@ const COLORS = {
 
 // BASIC THEME
 let theme = createTheme({
+  typography: {
+    fontFamily: ["Alegreya Sans SC", "san-serif"].join(","),
+  },
   palette: {
     mode: "dark",
     primary: {
@@ -95,18 +96,15 @@ theme = createTheme(theme, {
       main: "#ff1744",
     },
   },
+});
+
+//
+// EXTENSIONS -- oddly must always be added after
+// the default theme values
+theme = createTheme(theme, {
   typography: {
-    lineNumber: {
-      fontSize: 10,
-      opacity: 0.6,
-    },
-    fieldCaption: {
-      fontSize: 11,
-      opacity: 0.6,
-    },
-    appHeading: {
-      fontSize: 32,
-      fontFamily: ["Lobster", "serif"].join(","),
+    red: {
+      color: "red",
     },
   },
 });

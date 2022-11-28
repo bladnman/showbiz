@@ -739,6 +739,21 @@
   resolved "https://registry.yarnpkg.com/@firebase/webchannel-wrapper/-/webchannel-wrapper-0.8.1.tgz#5fbb3808677aa6b88bf79968237d3bb14595b1ba"
   integrity sha512-CJW8vxt6bJaBeco2VnlJjmCmAkrrtIdf0GGKvpAB4J5gw8Gi0rHb+qsgKp6LsyS5W6ALPLawLs7phZmw02dvLw==
 
+"@fontsource/alegreya-sans-sc@^4.5.10":
+  version "4.5.10"
+  resolved "https://registry.yarnpkg.com/@fontsource/alegreya-sans-sc/-/alegreya-sans-sc-4.5.10.tgz#77084a51a9cb15bf796f837f25ccab4218202c5f"
+  integrity sha512-JbrYBFg3jVCuSAw1+N5TChuiBzkWyR9R0SQd+3gFkRD4i9XfAtDSDQ1KmCz1Hye3GP6izl8hM5qgFG3Xonopow==
+
+"@fontsource/bowlby-one-sc@^4.5.9":
+  version "4.5.9"
+  resolved "https://registry.yarnpkg.com/@fontsource/bowlby-one-sc/-/bowlby-one-sc-4.5.9.tgz#db4d28a5ff0254fcfb30ee12a3c33a1458774b24"
+  integrity sha512-VL1ZtetCIkxOy+O20au4u9dRZOpO7QnFbJZwfa/FnxZ9p31r6ZRApAJ5q32HlwKwc5u/LpuD/V8SOttT61NfNw==
+
+"@fontsource/titan-one@^4.5.9":
+  version "4.5.9"
+  resolved "https://registry.yarnpkg.com/@fontsource/titan-one/-/titan-one-4.5.9.tgz#873c001e2cf3f702601440c706e1a9a33b735797"
+  integrity sha512-IfUQn5BO6rb0bVQkYxdJ2lX4/WlKqqIvKH8b5lAckzVljexTMN8v44OHYo3wHeoJQSNP5NXHAInl07pVD9A1Fg==
+
 "@grpc/grpc-js@^1.3.2":
   version "1.7.3"
   resolved "https://registry.yarnpkg.com/@grpc/grpc-js/-/grpc-js-1.7.3.tgz#f2ea79f65e31622d7f86d4b4c9ae38f13ccab99a"

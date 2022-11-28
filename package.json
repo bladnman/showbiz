@@ -12,6 +12,9 @@
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
+    "@fontsource/alegreya-sans-sc": "^4.5.10",
+    "@fontsource/bowlby-one-sc": "^4.5.9",
+    "@fontsource/titan-one": "^4.5.9",
     "@mui/icons-material": "^5.10.9",
     "@mui/material": "^5.10.12",
     "es6-error": "^4.1.1",

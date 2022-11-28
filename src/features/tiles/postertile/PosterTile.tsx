@@ -1,27 +1,45 @@
 import { Box } from "@mui/material";
-import { ShowPropOpt } from "../../../@types";
+import { useMemo } from "react";
+import { ShowPropOpt, Size } from "../../../@types";
+import { ShowbizItem } from "../../../services/TMDB/utils/convertToItem";
 import { posterWidthtoHeightRatio } from "../../../store/const";
-import useBreakSize from "../../../utils/useBreakSize";
 
-export default function PosterTile({ show }: ShowPropOpt) {
-  const { isGtXs } = useBreakSize();
-  const height = isGtXs ? 300 : 220;
-  const width = posterWidthtoHeightRatio * height;
+export default function PosterTile({
+  show,
+  height,
+  width,
+  onClick,
+}: ShowPropOpt & {
+  height?: number;
+  width?: number;
+  onClick?: (show: ShowbizItem) => void;
+}) {
+  const size = useMemo(() => {
+    const theSize = { width: width, height: height };
+    if (height) {
+      theSize.width = height * posterWidthtoHeightRatio;
+    } else if (width) {
+      theSize.height = width / posterWidthtoHeightRatio;
+    }
+    return theSize as Size;
+  }, [height, width]);
+
   return (
     <Box
       sx={{
-        height: height,
-        width: width,
+        height: size.height,
+        width: size.width,
         overflow: "hidden",
         backgroundColor: "#00000033",
       }}
       borderRadius={3}
+      onClick={() => onClick && show && onClick(show)}
     >
       <div
         style={{
           backgroundImage: `url('${show?.posterPath}')`,
           width: "100%",
-          height: height,
+          height: size.height,
           backgroundPosition: "center",
           backgroundSize: "cover",
         }}

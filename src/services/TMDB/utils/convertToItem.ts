@@ -57,6 +57,7 @@ export type ShowbizItem = {
 
   // tv items
   seasons?: Season[];
+  status?: "Returning Series" | "Canceled" | "Ended";
   networks?: Network[];
   lastAirDate?: string;
   firstAirDate?: string;

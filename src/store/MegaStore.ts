@@ -9,6 +9,7 @@ export interface MegaStore {
   tmdb: TMDB;
   searchQuery: string | null;
   searchType: string | null;
+  searchSelectedItem: ShowbizItem | null;
   detailItem: ShowbizItem | null;
   drawerWidthOpen: number;
   drawerWidth: number;

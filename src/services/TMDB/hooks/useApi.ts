@@ -41,7 +41,42 @@ function getCleanedData(data: any) {
 // |_  |___|_|_|___|_| |__,|_|  |_| |___|_| |___|_|_|___|_|
 // |___|
 type UseApiResponse<T> = [T | null | undefined, boolean, any | undefined];
-export default function useApi<T>(
+export async function fetchDataFromApiFn(
+  fn: ApiFn,
+  queryValue: number | string | null,
+  options?: OptionsBag
+) {
+  if (!queryValue) return null;
+  const data = await fn(queryValue, options);
+  return data;
+}
+type FetchFromApiResponse<T> = [T | null | undefined, any | undefined];
+export async function fetchFromApi<T>(
+  fn: ApiFn,
+  queryValue: number | string | null,
+  options?: OptionsBag
+): Promise<FetchFromApiResponse<T>> {
+  let data,
+    error = null;
+  if (queryValue) {
+    try {
+      data = getCleanedData(
+        await fetchDataFromApiFn(fn, queryValue, options)
+      ) as T;
+    } catch (er: any) {
+      // NOT FOUND
+      if (er?.name === "NotFoundError") {
+        console.warn("That show does not exist");
+      } else {
+        console.error(`There was an error fetching the show`, error);
+      }
+      error = er;
+    }
+  }
+  return [data, error];
+}
+
+export function useApi<T>(
   fn: ApiFn,
   queryValue: number | string | null,
   options?: OptionsBag
@@ -51,24 +86,12 @@ export default function useApi<T>(
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
+    if (!queryValue) return;
     const doFetch = async () => {
-      if (!queryValue) return;
-
-      try {
-        const data = await fn(queryValue, options);
-        setData(getCleanedData(data) as T);
-        setIsLoading(false);
-      } catch (error: any) {
-        // NOT FOUND
-        if (error?.name === "NotFoundError") {
-          console.warn("That movie does not exist");
-        } else {
-          console.error(`There was an error fetching the movie`, error);
-        }
-        setIsLoading(false);
-        setData(null);
-        setError(error);
-      }
+      const [data, error] = await fetchFromApi(fn, queryValue, options);
+      setData(data as T);
+      setError(error);
+      setIsLoading(false);
     };
 
     setIsLoading(true);
@@ -97,14 +120,30 @@ export function useMovie(id: number | string | null) {
   const tmdb = useMegaStore((state) => state.tmdb);
   return useApi<ShowbizItem>(tmdb.getMovie.bind(tmdb), id);
 }
+export async function fetchMovie(id: number | string | null) {
+  const tmdb = useMegaStore.getState().tmdb;
+  const [data, error] = await fetchFromApi(tmdb.getMovie.bind(tmdb), id);
+  return [data, error];
+}
 export function useTv(id: number | string | null) {
   const tmdb = useMegaStore((state) => state.tmdb);
   return useApi<ShowbizItem>(tmdb.getTv.bind(tmdb), id);
+}
+export async function fetchTv(id: number | string | null) {
+  const tmdb = useMegaStore.getState().tmdb;
+  const [data, error] = await fetchFromApi(tmdb.getTv.bind(tmdb), id);
+  return [data, error];
 }
 export function useShow(show: ShowbizItem | null) {
   const tmdb = useMegaStore((state) => state.tmdb);
   const fn = show?.isMovie ? tmdb.getMovie.bind(tmdb) : tmdb.getTv.bind(tmdb);
   return useApi<ShowbizItem>(fn, show?.id ?? null);
+}
+export async function fetchShow(show: ShowbizItem | null) {
+  const tmdb = useMegaStore.getState().tmdb;
+  const fn = show?.isMovie ? tmdb.getMovie.bind(tmdb) : tmdb.getTv.bind(tmdb);
+  const [data, error] = await fetchFromApi(fn, show?.id ?? null);
+  return [data, error];
 }
 
 //  _

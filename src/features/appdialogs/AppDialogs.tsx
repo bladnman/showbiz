@@ -10,15 +10,12 @@ const AppDialogs = () => {
     isDetailOpen = false;
 
   // STATE MACHINE for dialogs
-  if (!!detailItem) {
-    isDetailOpen = true;
-  } else if (isSearchMode) {
+  if (isSearchMode) {
     isSearchOpen = true;
   }
 
   return (
     <>
-      <DetailDialog isOpen={isDetailOpen} />
       <SearchDialog isOpen={isSearchOpen} />
     </>
   );
