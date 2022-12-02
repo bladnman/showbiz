@@ -1,17 +1,44 @@
 import MenuIcon from "@mui/icons-material/Menu";
 import {
   AppBar,
-  Box,
+  AppBarProps,
   createTheme,
   IconButton,
   Stack,
-  ThemeProvider,
   Toolbar,
   Typography,
 } from "@mui/material";
 import { useCallback } from "react";
 import useMegaStore from "../../store/MegaStore";
 import { toggleDrawer } from "../../store/utils/appUtils";
+import { styled } from "@mui/material/styles";
+import { DRAWER_WIDTH_OPEN } from "../../store/const";
+
+interface MyAppBarProps extends AppBarProps {
+  open?: boolean;
+}
+
+const MyAppBar = styled(AppBar, {
+  shouldForwardProp: (prop: string) => prop !== "open",
+})<MyAppBarProps>(({ theme, open }) => {
+  const transitionDrawShow = theme.transitions.create(["margin", "width"], {
+    easing: theme.transitions.easing.easeOut,
+    duration: theme.transitions.duration.enteringScreen,
+  });
+  const transitionDrawHide = theme.transitions.create(["margin", "width"], {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  });
+
+  return {
+    transition: transitionDrawHide,
+    ...(open && {
+      width: `calc(100% - ${DRAWER_WIDTH_OPEN}px)`,
+      marginLeft: `${DRAWER_WIDTH_OPEN}px`,
+      transition: transitionDrawShow,
+    }),
+  };
+});
 
 export default function AppToolbar() {
   const drawerWidth = useMegaStore((state) => state.drawerWidth);
@@ -29,33 +56,27 @@ export default function AppToolbar() {
     },
   });
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar
-        position="fixed"
-        sx={{
-          width: `calc(100% - ${finalDrawerWidth}px)`,
-          ml: `${finalDrawerWidth}px`,
-        }}
-      >
-        <Toolbar>
-          <Stack direction={"row"} flexGrow={1} alignItems="center">
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="open drawer"
-              sx={{ mr: 1, ...(isDrawerOpen && { display: "none" }) }}
-              onClick={onMenuClick}
-            >
-              <MenuIcon />
-            </IconButton>
-          </Stack>
-          <ThemeProvider theme={darkTheme}>
-            {/* <QuickMatchField /> */}
-            <Box width={"1em"} flexShrink={0} />
-          </ThemeProvider>
-        </Toolbar>
-      </AppBar>
-    </Box>
+    <MyAppBar
+      position={"fixed"}
+      color={"transparent"}
+      open={isDrawerOpen}
+      elevation={0}
+    >
+      <Toolbar>
+        <Stack direction={"row"} flexGrow={1} alignItems="center">
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="open drawer"
+            sx={{ ml: 0, mr: 1, ...(isDrawerOpen && { display: "none" }) }}
+            onClick={onMenuClick}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant={"h6"}>Showbiz time</Typography>
+        </Stack>
+      </Toolbar>
+    </MyAppBar>
   );
 }

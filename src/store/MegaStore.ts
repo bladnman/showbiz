@@ -2,6 +2,7 @@ import create from "zustand";
 import { devtools } from "zustand/middleware";
 import TMDB from "../services/TMDB/TMDB";
 import { ShowbizItem } from "../services/TMDB/utils/convertToItem";
+import {DRAWER_WIDTH_OPEN} from "./const";
 
 export interface MegaStore {
   isLocalDev: boolean;
@@ -19,7 +20,6 @@ export interface MegaStore {
 }
 
 const IS_LOCAL_DEV = false; // start dev-server if true
-const DRAWER_WIDTH_OPEN = 350;
 
 const useMegaStore = create<MegaStore>()(
   devtools(
@@ -37,6 +37,7 @@ const useMegaStore = create<MegaStore>()(
         searchType: null,
         drawerWidthOpen: DRAWER_WIDTH_OPEN,
         drawerWidth: DRAWER_WIDTH_OPEN,
+        drawerWidthClosed: 0,
         isDrawerOpen: true,
         isSearchMode: true,
       } as MegaStore)
