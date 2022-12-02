@@ -749,6 +749,11 @@
   resolved "https://registry.yarnpkg.com/@fontsource/bowlby-one-sc/-/bowlby-one-sc-4.5.9.tgz#db4d28a5ff0254fcfb30ee12a3c33a1458774b24"
   integrity sha512-VL1ZtetCIkxOy+O20au4u9dRZOpO7QnFbJZwfa/FnxZ9p31r6ZRApAJ5q32HlwKwc5u/LpuD/V8SOttT61NfNw==
 
+"@fontsource/teko@^4.5.9":
+  version "4.5.9"
+  resolved "https://registry.yarnpkg.com/@fontsource/teko/-/teko-4.5.9.tgz#fa960c83943cd42e077ec396a9524db04bb6f244"
+  integrity sha512-dU6kD7Zxutjf2uWNFhuquJuVVEuahW7S/Fv6otnHvOrG1J7pOEKexPQVkNdZQALgjdyJqLi5BZC87E1m7fk3pw==
+
 "@fontsource/titan-one@^4.5.9":
   version "4.5.9"
   resolved "https://registry.yarnpkg.com/@fontsource/titan-one/-/titan-one-4.5.9.tgz#873c001e2cf3f702601440c706e1a9a33b735797"

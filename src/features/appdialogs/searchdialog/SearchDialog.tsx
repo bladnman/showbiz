@@ -1,15 +1,13 @@
-import { Dialog, DialogContent } from "@mui/material";
-import { useRef } from "react";
-import { useMovie } from "../../../services/TMDB/hooks/useApi";
-import { setSearchMode } from "../../../store/utils/appUtils";
-import { IDS } from "../../../utils/CONST";
+import {Dialog, DialogContent} from "@mui/material";
+import {useRef} from "react";
+import {setSearchMode} from "../../../store/utils/appUtils";
 import useBreakSize from "../../../utils/useBreakSize";
 import DetailsView from "../../details/DetailsView";
 import useSearchSelectedShow from "../../details/hooks/useSearchSelectedShow";
 import SearchResultsGrid from "../../search/SearchResultsGrid";
 
 export default function SearchDialog({ isOpen = false }) {
-  const { isLtMd } = useBreakSize();
+  const { isLtLg } = useBreakSize();
   const show = useSearchSelectedShow();
 
   //
@@ -22,7 +20,7 @@ export default function SearchDialog({ isOpen = false }) {
     <Dialog
       onClose={handleClose}
       open={isOpen}
-      fullScreen={isLtMd}
+      fullScreen={isLtLg}
       maxWidth={"lg"}
       fullWidth={true}
     >

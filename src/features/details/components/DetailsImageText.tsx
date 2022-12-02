@@ -10,7 +10,7 @@ export default function DetailsImageText({
       component="span"
       sx={{
         textShadow:
-          "2px 2px 0px rgba(0,0,0,0.55), 7px 6px 0px rgba(0,0,0,0.15)",
+          "1px 1px 2px rgba(0,0,0,0.65)",
         ...sx,
       }}
     >

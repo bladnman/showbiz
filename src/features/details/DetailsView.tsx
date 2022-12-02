@@ -17,6 +17,7 @@ import DetailsSearchField from "./components/DetailsSearchField";
 import DetailsShowTitle from "./components/DetailsShowTitle";
 import DetailsYearTag from "./components/DetailsYearTag";
 import DetailsSeasonEpisodeCount from "./components/DetailsSeasonEpisodeCount";
+import DetailsBoxOffice from "./components/DetailsBoxOffice";
 
 export default function DetailsView({ show }: ShowPropOpt) {
   const windowSize = useWindowSize();
@@ -52,8 +53,9 @@ export default function DetailsView({ show }: ShowPropOpt) {
             {/* POSTER TILE */}
             <Box paddingX={2} display="flex" flexDirection={"column"}>
               <Box
-                paddingTop={`${(backdropHeight * 0.8) / 2}px`}
+                paddingTop={`${(backdropHeight * 0.3) / 2}px`}
                 paddingBottom={`${(backdropHeight * 0.0) / 2}px`}
+                height={"6em"}
               >
                 <DetailsRatingDisplay show={show} />
               </Box>
@@ -66,7 +68,6 @@ export default function DetailsView({ show }: ShowPropOpt) {
             <Stack direction={"column"} flexGrow={1}>
               <Stack
                 direction={"column"}
-                justifyContent="space-between"
                 flexShrink={0}
                 flexGrow={1}
                 paddingRight={10}
@@ -100,6 +101,7 @@ export default function DetailsView({ show }: ShowPropOpt) {
                     >
                       <DetailsGenreList show={show} />
                       <DetailsDuration show={show} />
+                      <DetailsBoxOffice show={show} />
                     </Stack>
                   </Stack>
                 </Box>

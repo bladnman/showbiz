@@ -24,6 +24,8 @@ export default function PosterTile({
     return theSize as Size;
   }, [height, width]);
 
+  const posterUrl = show?.posterPath ?? show?.profilePath;
+
   return (
     <Box
       sx={{
@@ -37,7 +39,7 @@ export default function PosterTile({
     >
       <div
         style={{
-          backgroundImage: `url('${show?.posterPath}')`,
+          backgroundImage: `url('${posterUrl}')`,
           width: "100%",
           height: size.height,
           backgroundPosition: "center",

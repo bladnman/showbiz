@@ -9,6 +9,7 @@ import Typography from "@mui/material/Typography";
 import "@fontsource/alegreya-sans-sc";
 import "@fontsource/bowlby-one-sc";
 import "@fontsource/titan-one";
+import "@fontsource/teko";
 
 export const TypoSmallCapsLight = styled(Typography)(({ theme }) => ({
   fontFamily: ["Alegreya Sans SC", "san-serif"].join(","),
@@ -21,4 +22,7 @@ export const TypoSmallCapsBlack = styled(Typography)(({ theme }) => ({
 export const TypoScore = styled(Typography)(({ theme }) => ({
   fontFamily: ["Titan One", "san-serif"].join(","),
   fontSize: "5em",
+}));
+export const TypoRevenue = styled(Typography)(({ theme }) => ({
+  fontFamily: ["Teko", "san-serif"].join(","),
 }));

@@ -10,7 +10,7 @@ const StyledText = styled(TypoScore)(() => ({
 
   fontSize: "4em",
 
-  /** INTERSTING OUTLINED TEXT */
+  /** INTERESTING OUTLINED TEXT */
   "-webkit-text-fill-color": "#ffffff",
   "-webkit-text-stroke-width": "4px",
   "-webkit-text-stroke-color": "green",

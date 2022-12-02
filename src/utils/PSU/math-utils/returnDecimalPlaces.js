@@ -6,10 +6,10 @@ module.exports = function returnDecimalPlaces (value, decimalsToReturn) {
 	decimalsToReturn    = decimalsToReturn || 0;
 
 	// 'toFixed' rounds, we are avoiding that by adding another digit of precision
-	var fixedValue      = value.toFixed(++decimalsToReturn);
+	let fixedValue      = value.toFixed(++decimalsToReturn);
 
 	// then dropping that digit
-	var ret             = fixedValue.slice(0, fixedValue.length-1);
+	let ret             = fixedValue.slice(0, fixedValue.length-1);
 
 	// and the leading '+' is to convert back to a number
 	return +ret; // convert to number

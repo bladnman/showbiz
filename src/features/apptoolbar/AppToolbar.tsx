@@ -49,18 +49,6 @@ export default function AppToolbar() {
             >
               <MenuIcon />
             </IconButton>
-
-            <Typography
-              noWrap
-              flexGrow={1}
-              variant="appHeading"
-              sx={{
-                display: { xs: "none", sm: "block" },
-                ...(isDrawerOpen && { display: "none" }),
-              }}
-            >
-              {appName}
-            </Typography>
           </Stack>
           <ThemeProvider theme={darkTheme}>
             {/* <QuickMatchField /> */}
