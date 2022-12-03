@@ -2,7 +2,7 @@ import create from "zustand";
 import { devtools } from "zustand/middleware";
 import TMDB from "../services/TMDB/TMDB";
 import { ShowbizItem } from "../services/TMDB/utils/convertToItem";
-import {DRAWER_WIDTH_OPEN} from "./const";
+import { DRAWER_WIDTH_OPEN } from "./const";
 
 export interface MegaStore {
   isLocalDev: boolean;
@@ -26,7 +26,7 @@ const useMegaStore = create<MegaStore>()(
     () =>
       ({
         isLocalDev: IS_LOCAL_DEV,
-        appName: "Showbiz",
+        appName: "⭐️ Showbiz",
         tmdb: new TMDB(
           import.meta.env.VITE_TMDB_KEY,
           "en",

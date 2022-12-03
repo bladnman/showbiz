@@ -1,10 +1,9 @@
-
-export const COLORS_DARK = {
-    bg_back: "#2d2f36",
-    bg_front: "#40464f", // +1
-    gray: "#BFC0C0",
-    white: "#FFFFFF",
-    orange: "#EF8354",
+export const COLORS = {
+  bg_back: "#2d2f36",
+  bg_front: "#40464f", // +1
+  dim: "#BFC0C0",
+  bright: "#f4f4f4",
+  callout: "#ff8e35",
 };
 export const BREAKPOINTS = {
   xs: 0,

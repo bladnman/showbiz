@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import useMegaStore from "../../store/MegaStore";
-import { COLORS_DARK } from "../apptheme/theme_const";
+import { COLORS } from "../apptheme/theme_const";
 import { toggleDrawer } from "../../store/utils/appUtils";
 import { styled } from "@mui/material/styles";
 import { DRAWER_WIDTH_OPEN } from "../../store/const";
@@ -22,7 +22,7 @@ const MainBody = styled("main", {
 
   return {
     flexGrow: 1,
-    backgroundColor: COLORS_DARK.bg_back,
+    backgroundColor: COLORS.bg_back,
     padding: theme.spacing(3),
     transition: transitionDrawHide,
     marginLeft: 0,

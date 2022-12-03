@@ -3,17 +3,15 @@ import { useMemo } from "react";
 import { ShowPropOpt, SxPropOpt } from "../../../@types";
 import { TypoScore } from "../../apptypo/apptypo";
 import { styled } from "@mui/material/styles";
+import { COLORS } from "../../apptheme/theme_const";
 
 const StyledText = styled(TypoScore)(() => ({
-  // textShadow: "2px 2px 0px rgba(0,0,0,0.55), 7px 6px 0px rgba(0,0,0,0.15)",
-  // "-webkit-text-stroke": "1px #606060",
-
   fontSize: "4em",
 
   /** INTERESTING OUTLINED TEXT */
-  "-webkit-text-fill-color": "#ffffff",
-  "-webkit-text-stroke-width": "4px",
-  "-webkit-text-stroke-color": "green",
+  WebkitTextStrokeWidth: "4px",
+  WebkitTextFillColor: COLORS.callout,
+  WebkitTextStrokeColor: COLORS.bg_back,
 }));
 
 export default function DetailsRatingDisplay({
@@ -23,7 +21,9 @@ export default function DetailsRatingDisplay({
   const rating = useMemo(() => {
     if (!show || !show.voteAverage) return null;
 
-    return ~~(show.voteAverage * 10) / 10;
+    const cleanRating = ~~(show.voteAverage * 10) / 10;
+    if (`${cleanRating}`.indexOf(".") > -1) return cleanRating;
+    return `${cleanRating}.0`;
   }, [show]);
 
   if (!rating) return null;

@@ -1,12 +1,10 @@
-import { DialogContent, Typography } from "@mui/material";
+import { DialogContent } from "@mui/material";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import { Stack } from "@mui/system";
 import { ShowPropOpt } from "../../@types";
 import BoxAbsolute from "../../components/box/BoxAbsolute";
 import BoxRelative from "../../components/box/BoxRelative";
 import { useWindowSize } from "../../hooks/useWindowSize";
-import { ShowbizItem } from "../../services/TMDB/utils/convertToItem";
 import DetailsBackdropImage from "./components/DetailsBackdropImage";
 import DetailsDescriptionText from "./components/DetailsDescriptionText";
 import DetailsDuration from "./components/DetailsDuration";
@@ -18,6 +16,7 @@ import DetailsShowTitle from "./components/DetailsShowTitle";
 import DetailsYearTag from "./components/DetailsYearTag";
 import DetailsSeasonEpisodeCount from "./components/DetailsSeasonEpisodeCount";
 import DetailsBoxOffice from "./components/DetailsBoxOffice";
+import DetailsAddButton from "./components/DetailsAddButton";
 
 export default function DetailsView({ show }: ShowPropOpt) {
   const windowSize = useWindowSize();
@@ -52,15 +51,11 @@ export default function DetailsView({ show }: ShowPropOpt) {
             {/* left-side */}
             {/* POSTER TILE */}
             <Box paddingX={2} display="flex" flexDirection={"column"}>
-              <Box
-                paddingTop={`${(backdropHeight * 0.3) / 2}px`}
-                paddingBottom={`${(backdropHeight * 0.0) / 2}px`}
-                height={"6em"}
-              >
+              <Box paddingTop={`${backdropHeight * 0.3}px`} height={"6em"}>
                 <DetailsRatingDisplay show={show} />
               </Box>
               <DetailsPosterTile show={show} width={200} />
-              <Button>Add</Button>
+              <DetailsAddButton show={show} />
             </Box>
 
             {/* right-side */}

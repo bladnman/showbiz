@@ -5,15 +5,14 @@ import AppDrawer from "./appdrawer/AppDrawer";
 import AppSnackShop from "./appsnacks/AppSnackShop";
 import AppToolbar from "./apptoolbar/AppToolbar";
 import AppTheme from "./apptheme/AppTheme";
-import {Box, CssBaseline} from "@mui/material";
+import { Box } from "@mui/material";
 
 export default function MainUI() {
   return (
     <AppTheme>
       <ConfirmProvider>
         <AppSnackShop />
-        <Box sx={{ display: 'flex' }}>
-          <CssBaseline />
+        <Box sx={{ display: "flex" }}>
           <AppToolbar />
           <AppDrawer />
           <AppBody />

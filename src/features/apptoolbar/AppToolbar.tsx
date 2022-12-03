@@ -13,6 +13,7 @@ import useMegaStore from "../../store/MegaStore";
 import { toggleDrawer } from "../../store/utils/appUtils";
 import { styled } from "@mui/material/styles";
 import { DRAWER_WIDTH_OPEN } from "../../store/const";
+import ToolbarSearch from "./components/ToolbarSearch";
 
 interface MyAppBarProps extends AppBarProps {
   open?: boolean;
@@ -44,17 +45,16 @@ export default function AppToolbar() {
   const drawerWidth = useMegaStore((state) => state.drawerWidth);
   const isDrawerOpen = useMegaStore((state) => state.isDrawerOpen);
   const appName = useMegaStore((state) => state.appName);
-
   const finalDrawerWidth = isDrawerOpen ? drawerWidth : 0;
   const onMenuClick = useCallback(() => {
     toggleDrawer();
   }, []);
-
   const darkTheme = createTheme({
     palette: {
       mode: "dark",
     },
   });
+
   return (
     <MyAppBar
       position={"fixed"}
@@ -63,7 +63,12 @@ export default function AppToolbar() {
       elevation={0}
     >
       <Toolbar>
-        <Stack direction={"row"} flexGrow={1} alignItems="center">
+        <Stack
+          direction={"row"}
+          flexGrow={1}
+          alignItems="center"
+          justifyContent={"space-between"}
+        >
           <IconButton
             size="large"
             edge="start"
@@ -74,7 +79,8 @@ export default function AppToolbar() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant={"h6"}>Showbiz time</Typography>
+          <Typography variant={"h6"}>{appName}</Typography>
+          <ToolbarSearch />
         </Stack>
       </Toolbar>
     </MyAppBar>

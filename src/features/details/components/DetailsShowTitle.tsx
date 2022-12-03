@@ -7,7 +7,9 @@ import { TypoSmallCapsBlack } from "../../apptypo/apptypo";
 
 const StyledText = styled(TypoSmallCapsBlack)(() => ({
   textShadow: "2px 2px 0px rgba(0,0,0,0.55), 7px 6px 0px rgba(0,0,0,0.15)",
-  "-webkit-text-stroke": "1px #606060",
+  // "-webkit-text-stroke": "1px #606060",
+  WebkitTextStrokeWidth: "1px",
+  WebkitTextStrokeColor: "#606060",
   lineHeight: "1.0em",
 
   // textShadow:

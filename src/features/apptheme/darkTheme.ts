@@ -1,6 +1,6 @@
-import {createTheme} from "@mui/material/styles";
+import { createTheme } from "@mui/material/styles";
 import React from "react";
-import {BREAKPOINTS, COLORS_DARK} from "./theme_const";
+import { BREAKPOINTS, COLORS } from "./theme_const";
 
 // DECLARE STYLES
 // add extras to the `styles` module
@@ -8,6 +8,7 @@ declare module "@mui/material/styles" {
   interface PaletteOptions {
     select?: PaletteOptions["primary"];
   }
+
   interface TypographyVariants {
     red: React.CSSProperties;
   }
@@ -21,34 +22,35 @@ declare module "@mui/material/Typography" {
   }
 }
 
+const { palette } = createTheme();
 let theme = createTheme({
   palette: {
     mode: "dark",
     background: {
-      default: COLORS_DARK.bg_back,
-    }
+      default: COLORS.bg_back,
+    },
   },
   breakpoints: {
-    values: BREAKPOINTS
+    values: BREAKPOINTS,
   },
   components: {
     MuiDrawer: {
       styleOverrides: {
         paper: {
-          backgroundColor: COLORS_DARK.bg_front,
-        }
-      }
+          backgroundColor: COLORS.bg_front,
+        },
+      },
     },
     MuiAppBar: {
       styleOverrides: {
         colorPrimary: {
-          backgroundColor: COLORS_DARK.bg_front,
+          backgroundColor: COLORS.bg_front,
         },
         root: {
-          backgroundColor: COLORS_DARK.bg_front,
-        }
-      }
-    }
+          backgroundColor: COLORS.bg_front,
+        },
+      },
+    },
   },
 });
 //
