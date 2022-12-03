@@ -1,6 +1,6 @@
 import { Box, Divider, Drawer, IconButton, Typography } from "@mui/material";
-import useMegaStore from "../../store/MegaStore";
-import { toggleDrawer } from "../../store/utils/appUtils";
+import useMegaStore from "../../../store/MegaStore";
+import { toggleDrawer } from "../../../store/utils/appUtils";
 import { styled } from "@mui/material/styles";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 

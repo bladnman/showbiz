@@ -17,6 +17,7 @@ export interface MegaStore {
   drawerWidthClosed: number;
   isDrawerOpen: boolean;
   isSearchMode: boolean;
+  shows: ShowbizItem[];
 }
 
 const IS_LOCAL_DEV = false; // start dev-server if true
@@ -40,13 +41,11 @@ const useMegaStore = create<MegaStore>()(
         drawerWidthClosed: 0,
         isDrawerOpen: true,
         isSearchMode: true,
+        shows: [] as ShowbizItem[],
       } as MegaStore)
   )
 );
 //@ts-expect-error -- for development externalizing the store
 window["useMegaStore"] = useMegaStore;
-console.warn(
-  "The store is externalized for development mode under the name 'useMegaStore' here."
-);
 
 export default useMegaStore;

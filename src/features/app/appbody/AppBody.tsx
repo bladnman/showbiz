@@ -1,10 +1,11 @@
-import { Box, Typography } from "@mui/material";
-import useMegaStore from "../../store/MegaStore";
+import { Box } from "@mui/material";
+import useMegaStore from "../../../store/MegaStore";
 import { COLORS } from "../apptheme/theme_const";
-import { toggleDrawer } from "../../store/utils/appUtils";
+import { toggleDrawer } from "../../../store/utils/appUtils";
 import { styled } from "@mui/material/styles";
-import { DRAWER_WIDTH_OPEN } from "../../store/const";
+import { DRAWER_WIDTH_OPEN } from "../../../store/const";
 import { DrawerHeader } from "../appdrawer/AppDrawer";
+import ShowGrid from "../../../components/ShowGrid";
 
 const MainBody = styled("main", {
   shouldForwardProp: (prop) => prop !== "open",
@@ -35,11 +36,12 @@ const MainBody = styled("main", {
 const AppBody = () => {
   const isDrawerOpen = useMegaStore((state) => state.isDrawerOpen);
   const drawerWidth = useMegaStore((state) => state.drawerWidth);
+  const shows = useMegaStore((state) => state.shows);
   return (
     <MainBody open={isDrawerOpen}>
       <Box onClick={() => toggleDrawer()}>
         <DrawerHeader />
-        <Typography>Hiya... I'm the body</Typography>
+        <ShowGrid shows={shows} />
       </Box>
     </MainBody>
   );

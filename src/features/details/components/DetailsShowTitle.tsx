@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { ShowPropOpt, SxPropOpt } from "../../../@types";
-import { TypoSmallCapsBlack } from "../../apptypo/apptypo";
+import { TypoSmallCapsBlack } from "../../app/apptypo/apptypo";
 
 /** https://html-css-js.com/css/generator/text-shadow/ */
 

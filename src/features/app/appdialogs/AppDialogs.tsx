@@ -1,5 +1,4 @@
-import useMegaStore from "../../store/MegaStore";
-import DetailDialog from "./detailsdialog/DetailDialog";
+import useMegaStore from "../../../store/MegaStore";
 import SearchDialog from "./searchdialog/SearchDialog";
 
 const AppDialogs = () => {

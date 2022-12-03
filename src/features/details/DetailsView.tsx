@@ -16,7 +16,7 @@ import DetailsShowTitle from "./components/DetailsShowTitle";
 import DetailsYearTag from "./components/DetailsYearTag";
 import DetailsSeasonEpisodeCount from "./components/DetailsSeasonEpisodeCount";
 import DetailsBoxOffice from "./components/DetailsBoxOffice";
-import DetailsAddButton from "./components/DetailsAddButton";
+import DetailsCtaGroup from "./components/details-cta-group/DetailsCtaGroup";
 
 export default function DetailsView({ show }: ShowPropOpt) {
   const windowSize = useWindowSize();
@@ -55,7 +55,7 @@ export default function DetailsView({ show }: ShowPropOpt) {
                 <DetailsRatingDisplay show={show} />
               </Box>
               <DetailsPosterTile show={show} width={200} />
-              <DetailsAddButton show={show} />
+              <DetailsCtaGroup show={show} />
             </Box>
 
             {/* right-side */}

@@ -1,9 +1,9 @@
 import { Box } from "@mui/material";
 import { useMemo } from "react";
 import { ShowPropOpt, SxPropOpt } from "../../../@types";
-import { TypoScore } from "../../apptypo/apptypo";
+import { TypoScore } from "../../app/apptypo/apptypo";
 import { styled } from "@mui/material/styles";
-import { COLORS } from "../../apptheme/theme_const";
+import { COLORS } from "../../app/apptheme/theme_const";
 
 const StyledText = styled(TypoScore)(() => ({
   fontSize: "4em",

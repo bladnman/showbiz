@@ -1,10 +1,10 @@
-import {Dialog, DialogContent} from "@mui/material";
-import {useRef} from "react";
-import {setSearchMode} from "../../../store/utils/appUtils";
-import useBreakSize from "../../../utils/useBreakSize";
-import DetailsView from "../../details/DetailsView";
-import useSearchSelectedShow from "../../details/hooks/useSearchSelectedShow";
-import SearchResultsGrid from "../../search/SearchResultsGrid";
+import { Dialog, DialogContent } from "@mui/material";
+import { useRef } from "react";
+import { setSearchMode } from "../../../../store/utils/appUtils";
+import useBreakSize from "../../../../utils/useBreakSize";
+import DetailsView from "../../../details/DetailsView";
+import useSearchSelectedShow from "../../../details/hooks/useSearchSelectedShow";
+import SearchResultsGrid from "../../../search/SearchResultsGrid";
 
 export default function SearchDialog({ isOpen = false }) {
   const { isLtLg } = useBreakSize();

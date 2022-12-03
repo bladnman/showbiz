@@ -9,10 +9,10 @@ import {
   Typography,
 } from "@mui/material";
 import { useCallback } from "react";
-import useMegaStore from "../../store/MegaStore";
-import { toggleDrawer } from "../../store/utils/appUtils";
+import useMegaStore from "../../../store/MegaStore";
+import { toggleDrawer } from "../../../store/utils/appUtils";
 import { styled } from "@mui/material/styles";
-import { DRAWER_WIDTH_OPEN } from "../../store/const";
+import { DRAWER_WIDTH_OPEN } from "../../../store/const";
 import ToolbarSearch from "./components/ToolbarSearch";
 
 interface MyAppBarProps extends AppBarProps {

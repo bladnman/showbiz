@@ -2,7 +2,7 @@ import React from "react";
 import { alpha, Box, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import SearchIcon from "@mui/icons-material/Search";
-import { toggleSearchMode } from "../../../store/utils/appUtils";
+import { toggleSearchMode } from "../../../../store/utils/appUtils";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",

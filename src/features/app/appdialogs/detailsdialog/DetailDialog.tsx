@@ -8,12 +8,12 @@ import {
   DialogTitle,
 } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
-import useStreamInfo from "../../../services/StreamAPI/useStreamInfo";
-import { useShow } from "../../../services/TMDB/hooks/useApi";
-import { posterWidthtoHeightRatio } from "../../../store/const";
-import useMegaStore from "../../../store/MegaStore";
-import { setDetailItem } from "../../../store/utils/itemUtils";
-import useBreakSize from "../../../utils/useBreakSize";
+import useStreamInfo from "../../../../services/StreamAPI/useStreamInfo";
+import { useShow } from "../../../../services/TMDB/hooks/useApi";
+import { posterWidthtoHeightRatio } from "../../../../store/const";
+import useMegaStore from "../../../../store/MegaStore";
+import { setDetailItem } from "../../../../store/utils/itemUtils";
+import useBreakSize from "../../../../utils/useBreakSize";
 
 export default function DetailDialog({ isOpen = false }) {
   const detailItem = useMegaStore((state) => state.detailItem);
