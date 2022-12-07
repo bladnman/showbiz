@@ -9,8 +9,7 @@ export default function DetailsImageText({
     <Typography
       component="span"
       sx={{
-        textShadow:
-          "1px 1px 2px rgba(0,0,0,0.65)",
+        textShadow: "1px 1px 2px rgba(0,0,0,0.65)",
         ...sx,
       }}
     >

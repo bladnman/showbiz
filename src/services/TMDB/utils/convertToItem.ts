@@ -9,6 +9,7 @@ import {
   Network,
   Season,
 } from "../types";
+import { ShowbizItem } from "../../../@types";
 
 type commonSearchFields = {
   // backdropPath; //
@@ -36,47 +37,6 @@ type uncommonSearchFields = {
   // profile_path;
 };
 
-export type ShowbizItem = {
-  // common
-  isMovie: boolean;
-  isTv: boolean;
-  isPerson: boolean;
-  id: number;
-  name: string;
-
-  // optional
-  description?: string;
-  posterPath?: string;
-  backdropPath?: string;
-  voteAverage?: number;
-  voteCount?: number;
-  spokenLanguages?: Language[];
-  genreIds?: number[];
-  genres?: Genre[];
-  imdbId?: string;
-
-  // tv items
-  seasons?: Season[];
-  status?: "Returning Series" | "Canceled" | "Ended";
-  networks?: Network[];
-  lastAirDate?: string;
-  firstAirDate?: string;
-  numberOfEpisodes?: number;
-  numberOfSeasons?: number;
-
-  // movie items
-  budget?: number;
-  releaseDate?: string;
-  revenue?: number;
-  runtime?: number;
-
-  // person items
-  gender?: string;
-  knownFor?: ShowbizItem[];
-  knownForDepartment?: string[];
-  profilePath?: string;
-};
-
 export default function convertToItem(
   tmdbObject: Movie | Tv | Person | null | undefined
 ): ShowbizItem | any {
@@ -95,6 +55,7 @@ export default function convertToItem(
     id: item.id,
     name: item.name ?? item.title,
     description: item.overview,
+    collections: item.collections ?? [],
 
     posterPath: hydrateUrl(item.posterPath),
     backdropPath: hydrateUrl(item.backdropPath),
@@ -120,11 +81,14 @@ export default function convertToItem(
     // knownForDepartment: item.knownForDepartment,
   };
 }
+
 export function hydrateUrl(path: string | null | undefined): string | null {
   if (!path) return null;
   return `${getBaseImgUrl()}${path}`;
 }
+
 let baseImgUrl: string | null = null;
+
 function getBaseImgUrl() {
   if (!baseImgUrl) {
     const tmdb = useMegaStore.getState().tmdb;

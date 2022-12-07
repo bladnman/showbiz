@@ -13,7 +13,6 @@ const UseAppInitializer = () => {
     // load all save shows
     async function fetch() {
       const savedShows = await fetchSavedShows();
-      console.log(`[🐽](useAppInitializer) 💾 LOADED: savedShows`, savedShows);
       setShows(savedShows);
       setInitialized(true);
     }

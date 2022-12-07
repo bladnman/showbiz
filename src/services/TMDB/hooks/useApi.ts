@@ -10,16 +10,20 @@ import {
   ShowImageCollection,
   ShowType,
 } from "../types";
-import convertToItem, { ShowbizItem } from "../utils/convertToItem";
+import convertToItem from "../utils/convertToItem";
+import { ShowbizItem } from "../../../@types";
+import { Timestamp } from "firebase/firestore";
 
 export function useBaseImageUrl() {
   const tmdb = useMegaStore((state) => state.tmdb);
   return tmdb.baseImageUrl;
 }
+
 export function useBaseApiImageUrl() {
   const tmdb = useMegaStore((state) => state.tmdb);
   return tmdb.baseApiUrl;
 }
+
 function getCleanedData(data: any) {
   const hasImage = (item: ShowbizItem) =>
     item.posterPath || item.backdropPath || item.profilePath;
@@ -41,6 +45,7 @@ function getCleanedData(data: any) {
 // |_  |___|_|_|___|_| |__,|_|  |_| |___|_| |___|_|_|___|_|
 // |___|
 type UseApiResponse<T> = [T | null | undefined, boolean, any | undefined];
+
 export async function fetchDataFromApiFn(
   fn: ApiFn,
   queryValue: number | string | null,
@@ -50,7 +55,9 @@ export async function fetchDataFromApiFn(
   const data = await fn(queryValue, options);
   return data;
 }
+
 type FetchFromApiResponse<T> = [T | null | undefined, any | undefined];
+
 export async function fetchFromApi<T>(
   fn: ApiFn,
   queryValue: number | string | null,
@@ -102,6 +109,7 @@ export function useApi<T>(
 
   return [data, isLoading, error];
 }
+
 function convert(data: any) {
   if (!data) return null;
 
@@ -116,34 +124,53 @@ function convert(data: any) {
 //  ___| |_ ___ _ _ _ ___
 // |_ -|   | . | | | |_ -|
 // |___|_|_|___|_____|___|
-export function useMovie(id: number | string | null) {
+export function useApiMovie(id: number | string | null) {
   const tmdb = useMegaStore((state) => state.tmdb);
   return useApi<ShowbizItem>(tmdb.getMovie.bind(tmdb), id);
 }
-export async function fetchMovie(id: number | string | null) {
+
+export async function fetchApiMovie(id: number | string | null) {
   const tmdb = useMegaStore.getState().tmdb;
   const [data, error] = await fetchFromApi(tmdb.getMovie.bind(tmdb), id);
   return [data, error];
 }
-export function useTv(id: number | string | null) {
+
+export function useApiTv(id: number | string | null) {
   const tmdb = useMegaStore((state) => state.tmdb);
   return useApi<ShowbizItem>(tmdb.getTv.bind(tmdb), id);
 }
-export async function fetchTv(id: number | string | null) {
+
+export async function fetchApiTv(id: number | string | null) {
   const tmdb = useMegaStore.getState().tmdb;
   const [data, error] = await fetchFromApi(tmdb.getTv.bind(tmdb), id);
   return [data, error];
 }
-export function useShow(show: ShowbizItem | null) {
+
+export function useApiShow(show?: ShowbizItem | null) {
   const tmdb = useMegaStore((state) => state.tmdb);
   const fn = show?.isMovie ? tmdb.getMovie.bind(tmdb) : tmdb.getTv.bind(tmdb);
-  return useApi<ShowbizItem>(fn, show?.id ?? null);
+  const [pulledShow, isLoading, error] = useApi<ShowbizItem>(
+    fn,
+    show?.id ?? null
+  );
+  addHydrationDate(pulledShow);
+
+  return [pulledShow, isLoading, error];
 }
-export async function fetchShow(show: ShowbizItem | null) {
+
+export async function fetchApiShow(show: ShowbizItem | null) {
   const tmdb = useMegaStore.getState().tmdb;
   const fn = show?.isMovie ? tmdb.getMovie.bind(tmdb) : tmdb.getTv.bind(tmdb);
   const [data, error] = await fetchFromApi(fn, show?.id ?? null);
+  addHydrationDate(data);
   return [data, error];
+}
+
+function addHydrationDate(item: any) {
+  if (item) {
+    // item.lastHydrationDate = new Date();
+    item.lastHydrationDate = Timestamp.fromDate(new Date());
+  }
 }
 
 //  _
@@ -151,7 +178,7 @@ export async function fetchShow(show: ShowbizItem | null) {
 // | |     | .'| . | -_|_ -|
 // |_|_|_|_|__,|_  |___|___|
 //             |___|
-export function useShowPosters(
+export function useApiShowPosters(
   id: number | string,
   type: ShowType,
   options?: OptionsBag
@@ -162,7 +189,8 @@ export function useShowPosters(
     type,
   });
 }
-export function useShowBackdrops(
+
+export function useApiShowBackdrops(
   id: number | string,
   type: ShowType,
   options?: OptionsBag
@@ -173,7 +201,8 @@ export function useShowBackdrops(
     type,
   });
 }
-export function useShowLogos(
+
+export function useApiShowLogos(
   id: number | string,
   type: ShowType,
   options?: OptionsBag
@@ -184,7 +213,8 @@ export function useShowLogos(
     type,
   });
 }
-export function useShowImages(
+
+export function useApiShowImages(
   id: number | string,
   type: ShowType,
   options?: OptionsBag
@@ -200,11 +230,13 @@ export function useShowImages(
 //  ___ ___ ___ ___ ___| |_
 // |_ -| -_| .'|  _|  _|   |
 // |___|___|__,|_| |___|_|_|
-export function useSearch(query: string | null, options?: OptionsBag) {
+// https://developers.themoviedb.org/3/search/multi-search
+export function useApiSearch(query: string | null, options?: OptionsBag) {
   const tmdb = useMegaStore((state) => state.tmdb);
   return useApi<ShowbizItem[]>(tmdb.search.bind(tmdb), query, options);
 }
-export function useFindShowById(
+
+export function useApiFindShowById(
   id: number | string | null,
   externalSource: ExternalSource | undefined,
   options?: OptionsBag

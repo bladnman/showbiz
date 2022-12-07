@@ -9,15 +9,15 @@ import {
 } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import useStreamInfo from "../../../../services/StreamAPI/useStreamInfo";
-import { useShow } from "../../../../services/TMDB/hooks/useApi";
 import { posterWidthtoHeightRatio } from "../../../../store/const";
 import useMegaStore from "../../../../store/MegaStore";
 import { setDetailItem } from "../../../../store/utils/itemUtils";
 import useBreakSize from "../../../../utils/useBreakSize";
+import useFullShow from "../../../../hooks/useFullShow";
 
 export default function DetailDialog({ isOpen = false }) {
   const detailItem = useMegaStore((state) => state.detailItem);
-  const [fullShow] = useShow(detailItem);
+  const fullShow = useFullShow(detailItem);
   const [isStreamEnabled, setIsStreamEnabled] = useState(false);
   const { isLtMd } = useBreakSize();
   const streamInfo = useStreamInfo(isStreamEnabled, fullShow);

@@ -69,3 +69,46 @@ export function returnDecimalPlaces(value: number, decimalsToReturn: number) {
   // and the leading '+' is to convert back to a number
   return +ret; // convert to number
 }
+
+export function secSince(date?: Date): number {
+  return ~~secondsDiff(date, new Date());
+}
+
+export function minSince(date?: Date): number {
+  return ~~(secondsDiff(date, new Date()) / 60);
+}
+
+export function hourSince(date?: Date): number {
+  return ~~(minSince(date) / 60);
+}
+
+export function daysSince(date?: Date): number {
+  return ~~(hourSince(date) / 24);
+}
+
+function secondsDiff(startDate?: Date, endDate?: Date): number {
+  if (!startDate || !endDate) return 0;
+  try {
+    const startMs = millsFromDate(startDate);
+    const endMs = millsFromDate(endDate);
+    return Math.max(0, Math.floor(Math.abs(endMs - startMs) / 1000));
+  } catch (er) {}
+
+  return 0;
+}
+
+export function secondsFromDate(date: Date) {
+  try {
+    return ~~(date.getTime() / 1000);
+  } catch (e) {}
+
+  return 0;
+}
+
+export function millsFromDate(date: Date) {
+  try {
+    return date.getTime();
+  } catch (e) {}
+
+  return 0;
+}

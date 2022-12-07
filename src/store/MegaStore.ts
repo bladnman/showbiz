@@ -1,7 +1,7 @@
 import create from "zustand";
 import { devtools } from "zustand/middleware";
+import { ShowbizItem } from "../@types";
 import TMDB from "../services/TMDB/TMDB";
-import { ShowbizItem } from "../services/TMDB/utils/convertToItem";
 import { DRAWER_WIDTH_OPEN } from "./const";
 
 export interface MegaStore {
@@ -34,7 +34,7 @@ const useMegaStore = create<MegaStore>()(
           IS_LOCAL_DEV,
           `http://localhost:${import.meta.env.VITE_DEV_SERVER_PORT}`
         ),
-        searchQuery: null,
+        searchQuery: "griz",
         searchType: null,
         drawerWidthOpen: DRAWER_WIDTH_OPEN,
         drawerWidth: DRAWER_WIDTH_OPEN,

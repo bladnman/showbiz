@@ -1,10 +1,10 @@
 import { ShowPropOpt } from "../../../../@types";
 import DetailsAddButton from "./DetailsAddButton";
 import { isShowInList } from "../../../../store/utils/itemUtils";
-import useMegaStore from "../../../../store/MegaStore";
+import useShows from "../../../../hooks/useShows";
 
 export default function DetailsCtaGroup({ show = null }: ShowPropOpt) {
-  const shows = useMegaStore((state) => state.shows);
+  const shows = useShows();
   const isSaved = isShowInList(show, shows);
   return <DetailsAddButton show={show} />;
 }

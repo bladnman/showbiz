@@ -1,7 +1,6 @@
 import { Box } from "@mui/material";
 import { useMemo } from "react";
-import { ShowPropOpt, Size } from "../../../@types";
-import { ShowbizItem } from "../../../services/TMDB/utils/convertToItem";
+import { ShowbizItem, ShowPropOpt, Size } from "../../../@types";
 import { posterWidthtoHeightRatio } from "../../../store/const";
 
 export default function PosterTile({

@@ -1,10 +1,10 @@
 import { Box, Grid } from "@mui/material";
 import { useEffect, useMemo } from "react";
+import { ShowbizItem } from "../../@types";
 import LoadingTile from "../../components/LoadingTile";
 import NotFoundTile from "../../components/NotFoundTile";
 import { useWindowSize } from "../../hooks/useWindowSize";
-import { useSearch } from "../../services/TMDB/hooks/useApi";
-import { ShowbizItem } from "../../services/TMDB/utils/convertToItem";
+import { useApiSearch } from "../../services/TMDB/hooks/useApi";
 import useMegaStore from "../../store/MegaStore";
 import { setSearchSelectedItem } from "../../store/utils/itemUtils";
 import useBreakSize from "../../utils/useBreakSize";
@@ -32,16 +32,7 @@ export default function SearchResultsGrid() {
     return usableWidth / numberOfColumns;
   }, [windowSize, numberOfColumns]);
 
-  // update url and page title
-  // useEffect(() => {
-  //   window.history.replaceState(
-  //     null,
-  //     `Search: ${searchType} ${searchQuery}`,
-  //     `/search/${searchQuery}`
-  //   );
-  // }, [searchQuery, searchType]);
-
-  const [shows, isLoading, error] = useSearch(searchQuery, {
+  const [shows, isLoading, error] = useApiSearch(searchQuery, {
     type: searchType,
   });
 

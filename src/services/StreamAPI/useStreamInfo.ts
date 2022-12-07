@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ShowbizItem } from "../TMDB/utils/convertToItem";
+import { ShowbizItem } from "../../@types";
 
 export default function useStreamInfo(
   enabled: boolean,
@@ -26,6 +26,7 @@ export default function useStreamInfo(
 
   return info;
 }
+
 async function fetchStreamInfo(show: ShowbizItem): Promise<StreamInfo> {
   const options = {
     method: "GET",
@@ -51,6 +52,7 @@ async function fetchStreamInfo(show: ShowbizItem): Promise<StreamInfo> {
 
   return info;
 }
+
 async function fetchOTTStreamInfo(show: ShowbizItem): Promise<StreamInfo> {
   if (!show.imdbId) return {} as StreamInfo;
 
