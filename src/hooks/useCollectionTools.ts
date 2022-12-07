@@ -1,32 +1,26 @@
-import {useEffect, useMemo, useState} from "react";
-import {ShowbizItem} from "../@types";
-import useFullShow from "./useFullShow";
-import useShows from "./useShows";
-import {addCollection, getAllCollections} from "../store/utils/itemUtils";
+import { useMemo } from "react";
+import {
+  addCollection,
+  getAllCollections,
+  removeCollection,
+  toggleCollection,
+} from "../store/utils/itemUtils";
+import useShowTools from "./useShowTools";
 
-export default function useCollectionTools(withShow?: ShowbizItem | null) {
-  const shows = useShows();
-  const show = useFullShow(withShow);
+export default function useCollectionTools() {
+  const { shows } = useShowTools();
+
   const collections = useMemo(() => {
     return getAllCollections(shows);
   }, [shows]);
 
-  const [showCollections, setShowCollections] = useState<string[]>();
-
-  useEffect(() => {
-    console.log(
-      `[🐽](useCollectionTools) 💾 SETTING show?.collections`,
-      show?.collections
-    );
-    setShowCollections(show?.collections ?? []);
-  }, [show]);
-
   return useMemo(
     () => ({
       collections,
-      showCollections,
       addCollection,
+      removeCollection,
+      toggleCollection,
     }),
-    [collections, showCollections, addCollection]
+    [collections]
   );
 }

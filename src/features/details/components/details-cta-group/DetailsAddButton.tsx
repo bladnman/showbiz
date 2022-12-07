@@ -27,11 +27,11 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import MdiIcon from "@mdi/react";
 import { mdiTagMultiple as TagIcon } from "@mdi/js";
 import DetailsCollectionMenu from "../details-collection-menu/DetailsCollectionMenu";
-import useShows from "../../../../hooks/useShows";
+import useShowTools from "../../../../hooks/useShowTools";
 // import { mdiBookPlusMultiple as TagIcon } from "@mdi/js";
 
 const DetailsAddButton = ({ show = null }: ShowPropOpt) => {
-  const shows = useShows();
+  const { shows } = useShowTools();
   const isSaved = isShowInList(show, shows);
 
   const popupState = usePopupState({

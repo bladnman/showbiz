@@ -6,38 +6,21 @@ import Button from "@mui/material/Button";
 import { COLORS } from "../../../app/apptheme/theme_const";
 import MdiIcon from "@mdi/react";
 import { mdiCheckCircle as AcceptIcon } from "@mdi/js";
-import { showContainsCollection } from "../../../../store/utils/itemUtils";
+import {
+  showContainsCollection,
+  toggleCollection,
+} from "../../../../store/utils/itemUtils";
 import useShowTools from "../../../../hooks/useShowTools";
 import useCollectionTools from "../../../../hooks/useCollectionTools";
 
 type MenuProps = {
   onClose: () => void;
 } & ShowProp;
-export default function DetailsCollectionMenu({
-  onClose,
-  show: withShow,
-}: MenuProps) {
+export default function DetailsCollectionMenu({ onClose, show }: MenuProps) {
   const [fieldValue, setFieldValue] = useState("");
-  const { show, shows, addShow, updateShows } = useShowTools(withShow);
-  const { collections, showCollections, addCollection } =
-    useCollectionTools(show);
+  const { shows, addShow, updateShows } = useShowTools();
+  const { collections, toggleCollection, addCollection } = useCollectionTools();
 
-  useEffect(
-    () => console.log(`[🐽](DetailsCollectionMenu) 🧑‍🤝‍🧑 shows changed!`),
-    [shows]
-  );
-  useEffect(
-    () => console.log(`[🐽](DetailsCollectionMenu) collections`, collections),
-    [collections]
-  );
-  useEffect(
-    () =>
-      console.log(
-        `[🐽](DetailsCollectionMenu) showCollections`,
-        showCollections
-      ),
-    [showCollections]
-  );
   const doAddCollection = useCallback(
     (value: string | undefined | null) => {
       if (!value || !show) return;
@@ -47,8 +30,18 @@ export default function DetailsCollectionMenu({
     },
     [show, setFieldValue, addShow, updateShows]
   );
+  const doToggleCollection = useCallback(
+    (value: string | undefined | null) => {
+      if (!value || !show) return;
+      toggleCollection(show, value);
+      addShow(show);
+      setFieldValue(""); // clears ui field
+    },
+    [show, setFieldValue, addShow, updateShows]
+  );
 
   if (!show) return null;
+
   return (
     <Box minWidth={300} padding={1}>
       <Stack direction="row">
@@ -90,7 +83,7 @@ export default function DetailsCollectionMenu({
 
       {collections.map((collection) => (
         <MenuItemForShow
-          onClose={onClose}
+          onClick={doToggleCollection}
           collection={collection}
           isSelected={showContainsCollection(show, collection, shows)}
           key={collection}
@@ -103,12 +96,12 @@ export default function DetailsCollectionMenu({
 type MenuItemProps = {
   isSelected: boolean;
   collection: string;
-  onClose?: () => void;
+  onClick?: (value: string | undefined | null) => void;
 };
 
-function MenuItemForShow({ isSelected, collection, onClose }: MenuItemProps) {
+function MenuItemForShow({ isSelected, collection, onClick }: MenuItemProps) {
   return (
-    <MenuItem onClick={onClose}>
+    <MenuItem onClick={() => onClick && onClick(collection)}>
       <Stack direction={"row"}>
         <Box pr={1} sx={{ width: "2em" }}>
           {isSelected ? <MdiIcon path={AcceptIcon} size={1} /> : null}

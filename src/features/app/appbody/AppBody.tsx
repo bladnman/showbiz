@@ -6,7 +6,7 @@ import { styled } from "@mui/material/styles";
 import { DRAWER_WIDTH_OPEN } from "../../../store/const";
 import { DrawerHeader } from "../appdrawer/AppDrawer";
 import ShowGrid from "../../../components/ShowGrid";
-import useShows from "../../../hooks/useShows";
+import useShowTools from "../../../hooks/useShowTools";
 
 const MainBody = styled("main", {
   shouldForwardProp: (prop) => prop !== "open",
@@ -37,7 +37,7 @@ const MainBody = styled("main", {
 const AppBody = () => {
   const isDrawerOpen = useMegaStore((state) => state.isDrawerOpen);
   const drawerWidth = useMegaStore((state) => state.drawerWidth);
-  const shows = useShows();
+  const { shows } = useShowTools();
   return (
     <MainBody open={isDrawerOpen}>
       <Box onClick={() => toggleDrawer()}>

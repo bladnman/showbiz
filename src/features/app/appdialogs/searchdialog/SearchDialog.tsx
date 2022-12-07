@@ -3,12 +3,14 @@ import { useRef } from "react";
 import { setSearchMode } from "../../../../store/utils/appUtils";
 import useBreakSize from "../../../../utils/useBreakSize";
 import DetailsView from "../../../details/DetailsView";
-import useSearchSelectedShow from "../../../../hooks/useSearchSelectedShow";
 import SearchResultsGrid from "../../../search/SearchResultsGrid";
+import useMegaStore from "../../../../store/MegaStore";
+import useHydratedShow from "../../../../hooks/useHydratedShow";
 
 export default function SearchDialog({ isOpen = false }) {
   const { isLtLg } = useBreakSize();
-  const show = useSearchSelectedShow();
+  const searchSelectedItem = useMegaStore((state) => state.searchSelectedItem);
+  const show = useHydratedShow(searchSelectedItem);
 
   //
   // HANDLERS

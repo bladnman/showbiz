@@ -13,17 +13,17 @@ import { posterWidthtoHeightRatio } from "../../../../store/const";
 import useMegaStore from "../../../../store/MegaStore";
 import { setDetailItem } from "../../../../store/utils/itemUtils";
 import useBreakSize from "../../../../utils/useBreakSize";
-import useFullShow from "../../../../hooks/useFullShow";
+import useHydratedShow from "../../../../hooks/useHydratedShow";
 
 export default function DetailDialog({ isOpen = false }) {
   const detailItem = useMegaStore((state) => state.detailItem);
-  const fullShow = useFullShow(detailItem);
+  const show = useHydratedShow(detailItem);
   const [isStreamEnabled, setIsStreamEnabled] = useState(false);
   const { isLtMd } = useBreakSize();
-  const streamInfo = useStreamInfo(isStreamEnabled, fullShow);
+  const streamInfo = useStreamInfo(isStreamEnabled, show);
 
   console.log(`🐽 [DetailDialog] streamInfo`, streamInfo);
-  console.log(`🐽 [DetailDialog] fullShow`, fullShow);
+  console.log(`🐽 [DetailDialog] fullShow`, show);
 
   useEffect(() => {
     setIsStreamEnabled(false);

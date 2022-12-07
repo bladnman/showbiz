@@ -31,12 +31,17 @@ export function getShowFromList(
 export function addShow(show?: ShowbizItem | null) {
   if (!show) return;
   const shows = useMegaStore.getState().shows;
+  const isAlreadySaved = isShowInList(show, shows);
 
-  // only do work if this show is unknown?
-  if (!isShowInList(show, shows)) {
-    saveShowToCloud(show);
+  // add to/update cloud
+  saveShowToCloud(show).catch();
+
+  // push to local list
+  if (!isAlreadySaved) {
     shows.push(show);
   }
+
+  // notify : something internal could have changed
   setShows(shows);
 }
 
@@ -55,6 +60,7 @@ export function removeShow(show?: ShowbizItem | null) {
       console.error("Problem deleting from cloud!", er)
     );
   }
+
   setShows(shows.filter((item) => item.id !== show.id));
 }
 
@@ -128,6 +134,21 @@ export function addCollection(show: ShowbizItem, collectionName: string) {
   const set = new Set<string>(show.collections);
   set.add(collectionName.toLowerCase());
   show.collections = Array.from(set).sort();
+}
+
+export function removeCollection(show: ShowbizItem, collectionName: string) {
+  const set = new Set<string>(show.collections);
+  set.delete(collectionName.toLowerCase());
+  show.collections = Array.from(set).sort();
+}
+
+export function toggleCollection(show: ShowbizItem, collectionName: string) {
+  const set = new Set<string>(show.collections);
+  if (set.has(collectionName.toLowerCase())) {
+    removeCollection(show, collectionName);
+  } else {
+    addCollection(show, collectionName);
+  }
 }
 
 export function overlayMissingKeys(ontoObject: any, fromObject: any) {
