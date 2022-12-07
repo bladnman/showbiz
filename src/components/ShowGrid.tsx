@@ -6,7 +6,13 @@ import NotFoundTile from "./NotFoundTile";
 import useBreakSize from "../utils/useBreakSize";
 import { ShowbizItem } from "../@types";
 
-export default function ShowGrid({ shows }: { shows: ShowbizItem[] }) {
+export default function ShowGrid({
+  shows,
+  onClick,
+}: {
+  shows?: ShowbizItem[] | null;
+  onClick?: (show: ShowbizItem) => void;
+}) {
   const windowSize = useWindowSize();
   const { isXs, isSm, isMd, isLg, isXl } = useBreakSize();
 
@@ -26,8 +32,8 @@ export default function ShowGrid({ shows }: { shows: ShowbizItem[] }) {
     return usableWidth / numberOfColumns;
   }, [windowSize, numberOfColumns]);
 
-  const onClick = (show: ShowbizItem) => {
-    console.log(`[🐽](ShowGrid) show`, show);
+  const handleClick = (show: ShowbizItem) => {
+    onClick && onClick(show);
   };
 
   if (!shows || !shows.length) return <NotFoundTile />;
@@ -46,7 +52,7 @@ export default function ShowGrid({ shows }: { shows: ShowbizItem[] }) {
               show={show}
               key={show.id}
               width={tileWidth}
-              onClick={onClick}
+              onClick={handleClick}
             />
           </Grid>
         ))}

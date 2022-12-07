@@ -4,7 +4,7 @@ import { styled } from "@mui/material/styles";
 import SearchIcon from "@mui/icons-material/Search";
 import { toggleSearchMode } from "../../../../store/utils/appUtils";
 
-const Search = styled("div")(({ theme }) => ({
+const SearchStyled = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
   backgroundColor: alpha(theme.palette.common.white, 0.15),
@@ -45,14 +45,14 @@ const StyledInputBase = styled(Box)(({ theme }) => ({
 function ToolbarSearch() {
   const handleSearchClick = () => toggleSearchMode();
   return (
-    <Search onClick={handleSearchClick}>
+    <SearchStyled onClick={handleSearchClick}>
       <SearchIconWrapper>
         <SearchIcon />
       </SearchIconWrapper>
       <StyledInputBase>
         <Typography>Search…</Typography>
       </StyledInputBase>
-    </Search>
+    </SearchStyled>
   );
 }
 

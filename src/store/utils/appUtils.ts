@@ -1,4 +1,5 @@
 import useMegaStore from "../MegaStore";
+import { showSearchFor } from "./itemUtils";
 
 export function toggleDrawer() {
   const { isDrawerOpen, drawerWidthOpen, drawerWidthClosed } =
@@ -9,11 +10,14 @@ export function toggleDrawer() {
     drawerWidth: !isDrawerOpen ? drawerWidthOpen : drawerWidthClosed,
   });
 }
+
 export function toggleSearchMode() {
-  setSearchMode(!useMegaStore.getState().isSearchMode);
+  // setSearchMode(!useMegaStore.getState().isDetailsOpen);
+  showSearchFor(null);
 }
+
 export function setSearchMode(isEnabled: boolean) {
   useMegaStore.setState({
-    isSearchMode: isEnabled,
+    isDetailsOpen: isEnabled,
   });
 }

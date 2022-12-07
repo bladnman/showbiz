@@ -1,15 +1,12 @@
 import { Autocomplete, Box, MenuItem, TextField } from "@mui/material";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { ShowProp } from "../../../../@types";
 import { Stack } from "@mui/system";
 import Button from "@mui/material/Button";
 import { COLORS } from "../../../app/apptheme/theme_const";
 import MdiIcon from "@mdi/react";
 import { mdiCheckCircle as AcceptIcon } from "@mdi/js";
-import {
-  showContainsCollection,
-  toggleCollection,
-} from "../../../../store/utils/itemUtils";
+import { showContainsCollection } from "../../../../store/utils/itemUtils";
 import useShowTools from "../../../../hooks/useShowTools";
 import useCollectionTools from "../../../../hooks/useCollectionTools";
 
@@ -20,25 +17,32 @@ export default function DetailsCollectionMenu({ onClose, show }: MenuProps) {
   const [fieldValue, setFieldValue] = useState("");
   const { shows, addShow, updateShows } = useShowTools();
   const { collections, toggleCollection, addCollection } = useCollectionTools();
+  const inputFieldRef = useRef<HTMLInputElement>();
 
-  const doAddCollection = useCallback(
-    (value: string | undefined | null) => {
-      if (!value || !show) return;
-      addCollection(show, value);
-      addShow(show);
-      setFieldValue(""); // clears ui field
-    },
-    [show, setFieldValue, addShow, updateShows]
-  );
+  const focusOnField = () => {
+    setFieldValue(""); // clears ui field
+    inputFieldRef.current?.focus();
+  };
+  const getFieldValue = () => inputFieldRef.current?.value;
+  const doAddCollection = useCallback(() => {
+    const value = getFieldValue();
+    if (!value || !show) return;
+    addCollection(show, value);
+    addShow(show);
+    focusOnField();
+  }, [show, setFieldValue, addShow, updateShows]);
   const doToggleCollection = useCallback(
     (value: string | undefined | null) => {
       if (!value || !show) return;
       toggleCollection(show, value);
       addShow(show);
-      setFieldValue(""); // clears ui field
+      focusOnField();
     },
     [show, setFieldValue, addShow, updateShows]
   );
+  useEffect(() => {
+    inputFieldRef.current?.focus();
+  }, []);
 
   if (!show) return null;
 
@@ -56,14 +60,17 @@ export default function DetailsCollectionMenu({ onClose, show }: MenuProps) {
             renderInput={(params) => (
               <TextField
                 {...params}
-                label="Add new collection"
-                onKeyDown={(event: any) => {
+                label="Add to a collection"
+                onKeyDown={(event) => {
+                  // only acting on the "enter" key
                   if (event.code.toLowerCase() !== "enter") return;
-                  const value = event.target.value as string | undefined;
-                  doAddCollection(value);
+                  doAddCollection();
                 }}
                 onChange={(newValue) => {
                   setFieldValue(newValue.target.value);
+                }}
+                InputProps={{
+                  inputRef: inputFieldRef,
                 }}
               />
             )}
@@ -76,6 +83,7 @@ export default function DetailsCollectionMenu({ onClose, show }: MenuProps) {
             color: COLORS.bg_back,
             // backgroundColor: isSaved ? COLORS.warn : COLORS.callout,
           }}
+          onClick={() => doAddCollection()}
         >
           <MdiIcon path={AcceptIcon} size={1} />
         </Button>

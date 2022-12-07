@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import useMegaStore from "../../../store/MegaStore";
 import {
   ApiFn,
@@ -24,7 +24,7 @@ export function useBaseApiImageUrl() {
   return tmdb.baseApiUrl;
 }
 
-function getCleanedData(data: any) {
+export function getCleanedData(data: any) {
   const hasImage = (item: ShowbizItem) =>
     item.posterPath || item.backdropPath || item.profilePath;
 
@@ -146,26 +146,6 @@ export async function fetchApiTv(id: number | string | null) {
   return [data, error];
 }
 
-export function useApiShow(show?: ShowbizItem | null) {
-  const tmdb = useMegaStore((state) => state.tmdb);
-  const fn = show?.isMovie ? tmdb.getMovie.bind(tmdb) : tmdb.getTv.bind(tmdb);
-  const [pulledShow, isLoading, error] = useApi<ShowbizItem>(
-    fn,
-    show?.id ?? null
-  );
-  addHydrationDate(pulledShow);
-
-  return [pulledShow, isLoading, error];
-}
-
-export async function fetchApiShow(show: ShowbizItem | null) {
-  const tmdb = useMegaStore.getState().tmdb;
-  const fn = show?.isMovie ? tmdb.getMovie.bind(tmdb) : tmdb.getTv.bind(tmdb);
-  const [data, error] = await fetchFromApi(fn, show?.id ?? null);
-  addHydrationDate(data);
-  return [data, error];
-}
-
 function addHydrationDate(item: any) {
   if (item) {
     // item.lastHydrationDate = new Date();
@@ -226,11 +206,16 @@ export function useApiShowImages(
   });
 }
 
-//                      _
-//  ___ ___ ___ ___ ___| |_
-// |_ -| -_| .'|  _|  _|   |
-// |___|___|__,|_| |___|_|_|
-// https://developers.themoviedb.org/3/search/multi-search
+/**
+ * ```
+ *                      _
+ *  ___ ___ ___ ___ ___| |_
+ * |_ -| -_| .'|  _|  _|   |
+ * |___|___|__,|_| |___|_|_|
+ * ```
+ * Perform a new search
+ * https://developers.themoviedb.org/3/search/multi-search
+ */
 export function useApiSearch(query: string | null, options?: OptionsBag) {
   const tmdb = useMegaStore((state) => state.tmdb);
   return useApi<ShowbizItem[]>(tmdb.search.bind(tmdb), query, options);
@@ -246,4 +231,24 @@ export function useApiFindShowById(
     ...options,
     externalSource,
   });
+}
+
+export function useApiShow(show?: ShowbizItem | null) {
+  const tmdb = useMegaStore((state) => state.tmdb);
+  const fn = show?.isMovie ? tmdb.getMovie.bind(tmdb) : tmdb.getTv.bind(tmdb);
+  const [pulledShow, isLoading, error] = useApi<ShowbizItem>(
+    fn,
+    show?.id ?? null
+  );
+  addHydrationDate(pulledShow);
+
+  return [pulledShow, isLoading, error];
+}
+
+export async function fetchApiShow(show: ShowbizItem | null) {
+  const tmdb = useMegaStore.getState().tmdb;
+  const fn = show?.isMovie ? tmdb.getMovie.bind(tmdb) : tmdb.getTv.bind(tmdb);
+  const [data, error] = await fetchFromApi(fn, show?.id ?? null);
+  addHydrationDate(data);
+  return [data, error];
 }

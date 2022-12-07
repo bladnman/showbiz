@@ -9,8 +9,8 @@ import useHydratedShow from "../../../../hooks/useHydratedShow";
 
 export default function SearchDialog({ isOpen = false }) {
   const { isLtLg } = useBreakSize();
-  const searchSelectedItem = useMegaStore((state) => state.searchSelectedItem);
-  const show = useHydratedShow(searchSelectedItem);
+  const detailItem = useMegaStore((state) => state.detailItem);
+  const show = useHydratedShow(detailItem);
 
   //
   // HANDLERS

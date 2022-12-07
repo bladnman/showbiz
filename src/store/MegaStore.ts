@@ -10,13 +10,13 @@ export interface MegaStore {
   tmdb: TMDB;
   searchQuery: string | null;
   searchType: string | null;
-  searchSelectedItem: ShowbizItem | null;
   detailItem: ShowbizItem | null;
+  similarToShow: ShowbizItem | null;
   drawerWidthOpen: number;
   drawerWidth: number;
   drawerWidthClosed: number;
   isDrawerOpen: boolean;
-  isSearchMode: boolean;
+  isDetailsOpen: boolean;
   shows: ShowbizItem[];
 }
 
@@ -40,7 +40,7 @@ const useMegaStore = create<MegaStore>()(
         drawerWidth: DRAWER_WIDTH_OPEN,
         drawerWidthClosed: 0,
         isDrawerOpen: true,
-        isSearchMode: true,
+        isDetailsOpen: true,
         shows: [] as ShowbizItem[],
       } as MegaStore)
   )

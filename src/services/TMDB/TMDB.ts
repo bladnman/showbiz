@@ -83,6 +83,7 @@ export default class TMDB {
 
     return deepMapKeys(data, camelCase) as T;
   }
+
   get baseApiUrl(): string {
     const isDev = this.devServerUrl !== null && this.isLocalDev;
     if (isDev && this.devServerUrl) {
@@ -90,6 +91,7 @@ export default class TMDB {
     }
     return `https://api.themoviedb.org/3`;
   }
+
   get baseImageUrl(): string {
     const isDev = this.devServerUrl !== null && this.isLocalDev;
     if (isDev && this.devServerUrl) {
@@ -97,6 +99,7 @@ export default class TMDB {
     }
     return `https://image.tmdb.org/t/p/original`;
   }
+
   buildUrl(resource: string, parameters: any): string {
     let url = `${this.baseApiUrl}/${resource}`;
     if (url.indexOf("?") < 0) {
@@ -126,6 +129,7 @@ export default class TMDB {
       runtime: movie.runtime || null,
     };
   }
+
   async getTv(id: number | string, options?: OptionsBag): Promise<Tv> {
     const tv = await this.get<Tv>(`tv/${id}`, options);
     populateType(tv);
@@ -170,6 +174,7 @@ export default class TMDB {
       }
     );
   }
+
   async getShowPosters(
     id: number | string,
     options: OptionsBag & { type: ShowType }
@@ -180,6 +185,7 @@ export default class TMDB {
     const images = await this.getShowImages(id, options);
     return images.posters ?? [];
   }
+
   async getShowBackdrops(
     id: number | string,
     options: OptionsBag & { type: ShowType }
@@ -190,6 +196,7 @@ export default class TMDB {
     const images = await this.getShowImages(id, options);
     return images.backdrops ?? [];
   }
+
   async getShowLogos(
     id: number | string,
     options: OptionsBag & { type: ShowType }
@@ -200,6 +207,7 @@ export default class TMDB {
     const images = await this.getShowImages(id, options);
     return images.logos ?? [];
   }
+
   async getMovieVideos(movieId: number): Promise<MovieVideo[]> {
     const movieVideoCollection = await this.get<MovieVideoCollection>(
       "movie/" + movieId + "/videos",
@@ -223,6 +231,7 @@ export default class TMDB {
 
     return Credits.cast ?? [];
   }
+
   async getCrewCredits(movieId: number): Promise<CrewCredit[]> {
     const Credits = await this.get<Credits>("movie/" + movieId + "/credits", {
       language: this.language,
@@ -230,6 +239,7 @@ export default class TMDB {
 
     return Credits.crew ?? [];
   }
+
   async getPerson(personId: number): Promise<Person> {
     const person = await this.get<Person>("person/" + personId, {
       language: this.language,
@@ -238,6 +248,7 @@ export default class TMDB {
     populateType(person);
     return person;
   }
+
   async getCompany(companyId: number): Promise<Company> {
     const company = await this.get<Company>("company/" + companyId, {
       language: this.language,
@@ -269,6 +280,7 @@ export default class TMDB {
 
     return results;
   }
+
   async findShowById(
     id: string,
     options?: OptionsBag & { type: ShowType }
@@ -284,5 +296,21 @@ export default class TMDB {
     });
     const shows = [...response.movieResults, ...response.tvResults];
     return shows.length ? shows[0] : null;
+  }
+
+  async searchSimilar(
+    id: number,
+    options?: OptionsBag & { type: ShowType }
+  ): Promise<Show[]> {
+    const type = extractKey("type", options ?? {}) as ShowType | undefined;
+    const endpoint = `${type}/${id}/similar`;
+
+    const response = await this.get<SearchMultiResults>(endpoint, options);
+    const results = response?.results ?? [];
+
+    // populate object types
+    results.forEach((item) => populateType(item));
+
+    return results;
   }
 }

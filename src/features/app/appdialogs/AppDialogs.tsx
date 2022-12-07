@@ -1,21 +1,13 @@
 import useMegaStore from "../../../store/MegaStore";
 import SearchDialog from "./searchdialog/SearchDialog";
+import DetailsDialog from "./detailsdialog/DetailDialog";
 
 const AppDialogs = () => {
-  const isSearchMode = useMegaStore((state) => state.isSearchMode);
-  const detailItem = useMegaStore((state) => state.detailItem);
-
-  let isSearchOpen,
-    isDetailOpen = false;
-
-  // STATE MACHINE for dialogs
-  if (isSearchMode) {
-    isSearchOpen = true;
-  }
+  const isDetailsOpen = useMegaStore((state) => state.isDetailsOpen);
 
   return (
     <>
-      <SearchDialog isOpen={isSearchOpen} />
+      <DetailsDialog isOpen={isDetailsOpen} />
     </>
   );
 };

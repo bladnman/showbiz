@@ -5,6 +5,7 @@ import {
 } from "../../services/firestore/utils/fire_utils";
 import useMegaStore from "../MegaStore";
 import { keys } from "lodash";
+import { setSearchQuery } from "./searchUtils";
 
 export function isShowInList(show: ShowbizItem | null, shows: ShowbizItem[]) {
   return !!getShowFromList(show, shows);
@@ -91,9 +92,30 @@ export function setDetailItem(item: ShowbizItem | null) {
   });
 }
 
-export function setSearchSelectedItem(item: ShowbizItem | null) {
+export function setIsDetailsOpen(isOpen: boolean) {
   useMegaStore.setState({
-    searchSelectedItem: item,
+    isDetailsOpen: isOpen,
+  });
+}
+
+export function showSimilarShows(show: ShowbizItem | null) {
+  if (!show) return;
+  setSimilarToShow(show);
+  setDetailItem(show);
+  setIsDetailsOpen(true);
+}
+
+export function showSearchFor(keyword: string | null) {
+  // if (!keyword) return;
+  setSimilarToShow(null);
+  setDetailItem(null);
+  setSearchQuery(keyword);
+  setIsDetailsOpen(true);
+}
+
+export function setSimilarToShow(show: ShowbizItem | null) {
+  useMegaStore.setState({
+    similarToShow: show,
   });
 }
 
@@ -167,4 +189,8 @@ export function updateObject(targetObject: any, fromObject: any) {
     targetObject[key] = value;
   }
   return targetObject;
+}
+
+export function mergeObjects(object1: any, object2: any) {
+  return { ...object1, ...object2 };
 }

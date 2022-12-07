@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import { useMemo } from "react";
 import { ShowbizItem, ShowPropOpt, Size } from "../../../@types";
-import { posterWidthtoHeightRatio } from "../../../store/const";
+import { posterWidthToHeightRatio } from "../../../store/const";
 
 export default function PosterTile({
   show,
@@ -16,9 +16,9 @@ export default function PosterTile({
   const size = useMemo(() => {
     const theSize = { width: width, height: height };
     if (height) {
-      theSize.width = height * posterWidthtoHeightRatio;
+      theSize.width = height * posterWidthToHeightRatio;
     } else if (width) {
-      theSize.height = width / posterWidthtoHeightRatio;
+      theSize.height = width / posterWidthToHeightRatio;
     }
     return theSize as Size;
   }, [height, width]);

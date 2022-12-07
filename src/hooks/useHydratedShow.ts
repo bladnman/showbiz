@@ -2,12 +2,14 @@ import { useEffect, useState } from "react";
 import { ShowbizItem } from "../@types";
 import {
   getShowFromList,
+  mergeObjects,
   updateObject,
   updateShows,
 } from "../store/utils/itemUtils";
-import { minSince } from "../utils/MU";
+import { minSince, secSince } from "../utils/MU";
 import { fetchApiShow } from "../services/TMDB/hooks/useApi";
 import { saveShowToCloud } from "../services/firestore/utils/fire_utils";
+import { REFRESH_DETAILS_SEC } from "../store/const";
 
 /**
  * ```
@@ -23,15 +25,21 @@ export default function useHydratedShow(withShow?: ShowbizItem | null) {
   const [show, setShow] = useState(withShow);
 
   useEffect(() => {
-    if (!withShow) return;
+    if (!withShow) {
+      // clear previous show if there was one
+      if (show) {
+        setShow(null);
+      }
+      return;
+    }
 
     const doFetch = async () => {
       let finalShow: ShowbizItem;
       const listShow = getShowFromList(withShow);
-      const minSinceHydration = minSince(listShow?.lastHydrationDate?.toDate());
+      const secSinceHydration = secSince(listShow?.lastHydrationDate?.toDate());
 
       // API PULL NEEDED
-      if (!listShow || minSinceHydration > 30) {
+      if (!listShow || secSinceHydration > REFRESH_DETAILS_SEC) {
         const sourceShow = listShow ?? withShow; // we want to use listShow if possible
 
         // PULL FROM API : hydrate
@@ -39,7 +47,8 @@ export default function useHydratedShow(withShow?: ShowbizItem | null) {
         const [tmdbShow] = await fetchApiShow(sourceShow);
 
         // MERGE & UPDATE LIST? : this will update the data in the list if there was a listShow
-        finalShow = updateObject(sourceShow, tmdbShow);
+        finalShow = mergeObjects(tmdbShow, sourceShow); // move user data onto tmdb show
+        finalShow = updateObject(sourceShow, finalShow); // update "listShow" if there was one
 
         if (listShow) {
           // UPDATE CLOUD? : if this was in the cloud already
