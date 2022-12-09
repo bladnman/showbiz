@@ -1,18 +1,15 @@
 import { useMemo } from "react";
 import {
   addCollection,
-  getAllCollections,
   removeCollection,
   toggleCollection,
 } from "../store/utils/itemUtils";
 import useShowTools from "./useShowTools";
+import useCollections from "./useCollections";
 
 export default function useCollectionTools() {
   const { shows } = useShowTools();
-
-  const collections = useMemo(() => {
-    return getAllCollections(shows);
-  }, [shows]);
+  const collections = useCollections(shows);
 
   return useMemo(
     () => ({

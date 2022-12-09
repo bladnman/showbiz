@@ -91,9 +91,23 @@ export function setShows(shows: ShowbizItem[]) {
 }
 
 export function setBodyShows(shows: ShowbizItem[]) {
-  useMegaStore.setState({
-    bodyShows: [...shows],
-  });
+  const curBodyShows = useMegaStore.getState().bodyShows;
+
+  // verify something has changed
+  const hasChanged = (() => {
+    if (!curBodyShows) return true;
+    if (shows.length !== curBodyShows.length) return true;
+    for (let i = 0; i < shows.length; i++) {
+      if (shows[i] !== curBodyShows[i]) return true;
+    }
+    return false;
+  })();
+
+  if (hasChanged) {
+    useMegaStore.setState({
+      bodyShows: [...shows],
+    });
+  }
 }
 
 export function setDetailItem(item: ShowbizItem | null) {
@@ -163,6 +177,8 @@ export function showContainsGenre(show: ShowbizItem, genre: string) {
 }
 
 export function getAllGenres(shows: ShowbizItem[]): string[] {
+  if (!shows?.length) return [];
+
   const set = new Set<string>();
   shows.forEach(
     (show) => show.genres && show.genres.forEach((genre) => set.add(genre.name))

@@ -1,10 +1,8 @@
 import { useMemo } from "react";
-import { getAllDecades, getAllGenres } from "../store/utils/itemUtils";
-import useShowTools from "./useShowTools";
+import { getAllDecades } from "../store/utils/itemUtils";
+import { ShowbizItem } from "../@types";
 
-export default function useDecades() {
-  const { shows } = useShowTools();
-
+export default function useDecades(shows: ShowbizItem[]) {
   return useMemo(() => {
     return getAllDecades(shows);
   }, [shows]);

@@ -4,8 +4,8 @@ import { useFilter } from "./useFilter";
 import useDecades from "../../../../hooks/useDecades";
 import { getReleaseDecade } from "../../../../services/TMDB/utils/yearUtils";
 
-export function useDecadeFilter(): Filter {
-  const decades = useDecades();
+export function useDecadeFilter(shows: ShowbizItem[]): Filter {
+  const decades = useDecades(shows);
 
   const filterFn = (show: ShowbizItem, filterValue: string) => {
     return getReleaseDecade(show) === parseInt(filterValue);
