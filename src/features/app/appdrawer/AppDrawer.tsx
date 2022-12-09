@@ -15,6 +15,9 @@ import {
 import { getReleaseDecade } from "../../../services/TMDB/utils/yearUtils";
 import { useCallback, useEffect, useState } from "react";
 import { ShowbizItem } from "../../../@types";
+import { useFilter } from "./hooks/useFilter";
+import { useCollectionsFilter } from "./hooks/useCollectionsFilter";
+import { useDecadeFilter } from "./hooks/useDecadeFilter";
 
 export const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
@@ -36,32 +39,16 @@ export default function AppDrawer() {
   const genres = useGenres();
   const decades = useDecades();
 
-  const handleClick = useCallback(
-    (value: string, title?: string) => {
-      if (value.toUpperCase() === "ALL SHOWS") {
-        setFilters(new Set());
-      } else {
-        const filter = `${title}_${value}`;
-        if (filters.has(filter)) {
-          filters.delete(filter);
-        } else {
-          filters.add(filter);
-        }
-        setFilters(new Set(filters));
-      }
-    },
-
-    [shows, filters]
-  );
+  const collectionsFilter = useCollectionsFilter();
+  const decadeFilter = useDecadeFilter();
 
   useEffect(() => {
-    console.log(`[🐽](AppDrawer) filters`, filters);
-    if (filters.size < 1) {
-      setBodyShows(shows);
-    } else {
-      setBodyShows(getFilteredShows(filters, shows));
-    }
-  }, [filters, shows]);
+    const filteredShowsSet = getFilterSet(
+      [collectionsFilter.filteredShowsSet, decadeFilter.filteredShowsSet],
+      shows
+    );
+    setBodyShows(Array.from(filteredShowsSet));
+  }, [collectionsFilter.filteredShowsSet, decadeFilter.filteredShowsSet]);
 
   return (
     <Drawer
@@ -85,32 +72,44 @@ export default function AppDrawer() {
       </DrawerHeader>
       <Divider />
       <Box paddingTop={3} p={2} role={"presentation"}>
-        <DrawerList
-          items={["All Shows"]}
-          onClick={handleClick}
-          filters={filters}
-        />
-        <DrawerList
-          items={collections}
-          title="Collections"
-          onClick={handleClick}
-          filters={filters}
-        />
-        <DrawerList
-          items={genres}
-          title="Genres"
-          onClick={handleClick}
-          filters={filters}
-        />
-        <DrawerList
-          items={decades}
-          title="Decades"
-          onClick={handleClick}
-          filters={filters}
-        />
+        {/*<DrawerList*/}
+        {/*  items={["All Shows"]}*/}
+        {/*  onClick={handleClick}*/}
+        {/*  filters={filters}*/}
+        {/*/>*/}
+        <DrawerList filter={collectionsFilter} />
+        <DrawerList filter={decadeFilter} />
+        {/*<DrawerList*/}
+        {/*  items={genres}*/}
+        {/*  title="Genres"*/}
+        {/*  onClick={handleClick}*/}
+        {/*  filters={filters}*/}
+        {/*/>*/}
+        {/*<DrawerList*/}
+        {/*  items={decades}*/}
+        {/*  title="Decades"*/}
+        {/*  onClick={handleClick}*/}
+        {/*  filters={filters}*/}
+        {/*/>*/}
       </Box>
     </Drawer>
   );
+}
+
+function getFilterSet(
+  sets: Set<ShowbizItem>[],
+  shows: ShowbizItem[]
+): Set<ShowbizItem> {
+  const anyIsFiltered = sets.some((set) => set.size < shows.length);
+  if (!anyIsFiltered) return new Set(shows);
+
+  let outSet = new Set<ShowbizItem>();
+  sets.forEach((set) => {
+    if (set.size < shows.length) {
+      outSet = new Set([...outSet, ...set]);
+    }
+  });
+  return outSet;
 }
 
 function getFilteredShows(filters: Set<string>, shows: ShowbizItem[]) {

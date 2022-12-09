@@ -64,3 +64,10 @@ type KeyboardEvent = React.KeyboardEvent<
 type KidProps = {
   children?: React.ReactNode;
 };
+type Filter = {
+  items: string[];
+  filteredShowsSet: Set<ShowbizItem>;
+  title: string | null;
+  onClick: (item: string, title?: string) => void;
+  filters: Set<string>;
+};

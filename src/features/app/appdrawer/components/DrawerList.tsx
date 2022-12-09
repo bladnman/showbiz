@@ -5,18 +5,16 @@ import { mdiCircleSmall, mdiTagMultiple as TagIcon } from "@mdi/js";
 import MdiIcon from "@mdi/react";
 import React from "react";
 import { COLORS } from "../../apptheme/theme_const";
+import { Filter } from "../../../../@types";
 
-type Props = {
-  items: string[];
-  title?: string;
-  onClick?: (item: string, title?: string) => void;
-  filters?: Set<string>;
+type DrawerListData = {
+  filter: Filter;
 };
-export default function DrawerList({ items, title, onClick, filters }: Props) {
+export default function DrawerList({ filter }: { filter: Filter }) {
+  const { items, onClick, filters, title } = filter;
   const isInFilter = (value: string) => {
-    return false;
-    // if (!value || !filters || !title) return false;
-    // return filters.has(`${title}_${value}`);
+    if (!value || !filters || !title) return false;
+    return filters.has(value);
   };
   return (
     <Stack>
@@ -26,7 +24,7 @@ export default function DrawerList({ items, title, onClick, filters }: Props) {
       {items.map((item, idx) => (
         <Button
           style={{ justifyContent: "flex-start" }}
-          onClick={() => onClick && onClick(item, title)}
+          onClick={() => onClick && onClick(item)}
           key={`${item}_${idx}`}
           size={"small"}
           startIcon={
