@@ -21,3 +21,9 @@ export function setSearchMode(isEnabled: boolean) {
     isDetailsOpen: isEnabled,
   });
 }
+
+export function setBodyGroupBy(value?: string) {
+  useMegaStore.setState({
+    bodyGroupBy: value,
+  });
+}

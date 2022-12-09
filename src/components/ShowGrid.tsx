@@ -1,5 +1,5 @@
 import { Box, Grid } from "@mui/material";
-import { useMemo } from "react";
+import { MouseEvent, useMemo } from "react";
 import { useWindowSize } from "../hooks/useWindowSize";
 import PosterTile from "../features/tiles/postertile/PosterTile";
 import NotFoundTile from "./NotFoundTile";
@@ -11,7 +11,7 @@ export default function ShowGrid({
   onClick,
 }: {
   shows?: ShowbizItem[] | null;
-  onClick?: (show: ShowbizItem) => void;
+  onClick?: (show: ShowbizItem, event?: MouseEvent<HTMLDivElement>) => void;
 }) {
   const windowSize = useWindowSize();
   const { isXs, isSm, isMd, isLg, isXl } = useBreakSize();
@@ -32,10 +32,6 @@ export default function ShowGrid({
     return usableWidth / numberOfColumns;
   }, [windowSize, numberOfColumns]);
 
-  const handleClick = (show: ShowbizItem) => {
-    onClick && onClick(show);
-  };
-
   if (!shows || !shows.length) return <NotFoundTile />;
   return (
     <Box>
@@ -52,7 +48,7 @@ export default function ShowGrid({
               show={show}
               key={show.id}
               width={tileWidth}
-              onClick={handleClick}
+              onClick={onClick}
             />
           </Grid>
         ))}

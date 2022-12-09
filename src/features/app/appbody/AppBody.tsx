@@ -1,15 +1,11 @@
 import { Box } from "@mui/material";
 import useMegaStore from "../../../store/MegaStore";
 import { COLORS } from "../apptheme/theme_const";
-import { toggleDrawer } from "../../../store/utils/appUtils";
 import { styled } from "@mui/material/styles";
 import { DRAWER_WIDTH_OPEN } from "../../../store/const";
 import { DrawerHeader } from "../appdrawer/AppDrawer";
-import ShowGrid from "../../../components/ShowGrid";
-import { useCallback } from "react";
-import { ShowbizItem } from "../../../@types";
-import { showSimilarShows } from "../../../store/utils/itemUtils";
-import useBodyShows from "../../../hooks/useBodyShows";
+import BodyGrid from "./components/BodyGrid";
+import BodyToolbar from "./components/BodyToolbar";
 
 const MainBodyStyled = styled("main", {
   shouldForwardProp: (prop) => prop !== "open",
@@ -39,17 +35,13 @@ const MainBodyStyled = styled("main", {
 });
 const AppBody = () => {
   const isDrawerOpen = useMegaStore((state) => state.isDrawerOpen);
-  const drawerWidth = useMegaStore((state) => state.drawerWidth);
-  const shows = useBodyShows();
-  const handleShowClick = useCallback((show: ShowbizItem) => {
-    console.log(`[🐽](AppBody) show`, show);
-    showSimilarShows(show);
-  }, []);
+
   return (
     <MainBodyStyled open={isDrawerOpen}>
-      <Box onClick={() => toggleDrawer()}>
+      <Box>
         <DrawerHeader />
-        <ShowGrid shows={shows} onClick={handleShowClick} />
+        <BodyToolbar sx={{ marginBottom: "1em" }} />
+        <BodyGrid />
       </Box>
     </MainBodyStyled>
   );

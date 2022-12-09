@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { useMemo } from "react";
+import { MouseEvent, useMemo } from "react";
 import { ShowbizItem, ShowPropOpt, Size } from "../../../@types";
 import { posterWidthToHeightRatio } from "../../../store/const";
 
@@ -11,7 +11,7 @@ export default function PosterTile({
 }: ShowPropOpt & {
   height?: number;
   width?: number;
-  onClick?: (show: ShowbizItem) => void;
+  onClick?: (show: ShowbizItem, event?: MouseEvent<HTMLDivElement>) => void;
 }) {
   const size = useMemo(() => {
     const theSize = { width: width, height: height };
@@ -25,6 +25,7 @@ export default function PosterTile({
 
   const posterUrl = show?.posterPath ?? show?.profilePath;
 
+  if (!show) return null;
   return (
     <Box
       sx={{
@@ -34,7 +35,7 @@ export default function PosterTile({
         backgroundColor: "#00000033",
       }}
       borderRadius={3}
-      onClick={() => onClick && show && onClick(show)}
+      onClick={(event) => onClick && onClick(show, event)}
     >
       <div
         style={{

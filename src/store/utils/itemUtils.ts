@@ -143,7 +143,7 @@ export function setSimilarToShow(show: ShowbizItem | null) {
   });
 }
 
-export function getAllCollections(shows: ShowbizItem[]): string[] {
+export function getAllCollections(shows?: ShowbizItem[]): string[] {
   if (!shows || shows.length === 0) return [];
   const set = new Set<string>();
   shows.forEach(
@@ -176,7 +176,15 @@ export function showContainsGenre(show: ShowbizItem, genre: string) {
   return !!foundItem;
 }
 
-export function getAllGenres(shows: ShowbizItem[]): string[] {
+export function showsWithGenre(shows: ShowbizItem[], value: string) {
+  return shows?.filter((show) => showContainsGenre(show, value)) ?? [];
+}
+
+export function showsWithCollection(shows: ShowbizItem[], value: string) {
+  return shows?.filter((show) => showContainsCollection(show, value)) ?? [];
+}
+
+export function getAllGenres(shows?: ShowbizItem[]): string[] {
   if (!shows?.length) return [];
 
   const set = new Set<string>();

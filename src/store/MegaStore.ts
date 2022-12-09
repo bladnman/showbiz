@@ -19,6 +19,7 @@ export interface MegaStore {
   isDetailsOpen: boolean;
   shows: ShowbizItem[];
   bodyShows: ShowbizItem[];
+  bodyGroupBy?: string;
 }
 
 const IS_LOCAL_DEV = false; // start dev-server if true
