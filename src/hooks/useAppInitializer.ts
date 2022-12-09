@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { fetchSavedShows } from "../services/firestore/utils/fire_utils";
-import { setShows } from "../store/utils/itemUtils";
+import { setBodyShows, setShows } from "../store/utils/itemUtils";
 
 const UseAppInitializer = () => {
   const startedRef = useRef(false); // de-bouncer to make sure fetching saved shows only starts once
@@ -14,6 +14,7 @@ const UseAppInitializer = () => {
     async function fetch() {
       const savedShows = await fetchSavedShows();
       setShows(savedShows);
+      setBodyShows(savedShows);
       setInitialized(true);
     }
 

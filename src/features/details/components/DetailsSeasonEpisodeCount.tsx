@@ -9,7 +9,7 @@ export default function DetailsSeasonEpisodeCount({
 
   return (
     <DetailsImageText
-      text={`s${show.numberOfSeasons} | e${show.numberOfEpisodes}`}
+      text={`${show.numberOfSeasons} seasons | ${show.numberOfEpisodes} episodes`}
     />
   );
 }

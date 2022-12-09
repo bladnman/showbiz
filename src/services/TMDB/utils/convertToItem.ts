@@ -55,7 +55,7 @@ export default function convertToItem(
     id: item.id,
     name: item.name ?? item.title,
     description: item.overview,
-    collections: item.collections ?? [],
+    collections: item.items ?? [],
 
     posterPath: hydrateUrl(item.posterPath),
     backdropPath: hydrateUrl(item.backdropPath),

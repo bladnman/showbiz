@@ -6,10 +6,10 @@ import { styled } from "@mui/material/styles";
 import { DRAWER_WIDTH_OPEN } from "../../../store/const";
 import { DrawerHeader } from "../appdrawer/AppDrawer";
 import ShowGrid from "../../../components/ShowGrid";
-import useShowTools from "../../../hooks/useShowTools";
 import { useCallback } from "react";
 import { ShowbizItem } from "../../../@types";
 import { showSimilarShows } from "../../../store/utils/itemUtils";
+import useBodyShows from "../../../hooks/useBodyShows";
 
 const MainBodyStyled = styled("main", {
   shouldForwardProp: (prop) => prop !== "open",
@@ -40,7 +40,7 @@ const MainBodyStyled = styled("main", {
 const AppBody = () => {
   const isDrawerOpen = useMegaStore((state) => state.isDrawerOpen);
   const drawerWidth = useMegaStore((state) => state.drawerWidth);
-  const { shows } = useShowTools();
+  const shows = useBodyShows();
   const handleShowClick = useCallback((show: ShowbizItem) => {
     console.log(`[🐽](AppBody) show`, show);
     showSimilarShows(show);

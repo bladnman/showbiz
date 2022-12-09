@@ -6,6 +6,10 @@ import {
 import useMegaStore from "../MegaStore";
 import { keys } from "lodash";
 import { setSearchQuery } from "./searchUtils";
+import {
+  getReleaseDecade,
+  getReleaseYear,
+} from "../../services/TMDB/utils/yearUtils";
 
 export function isShowInList(show: ShowbizItem | null, shows: ShowbizItem[]) {
   return !!getShowFromList(show, shows);
@@ -86,6 +90,12 @@ export function setShows(shows: ShowbizItem[]) {
   });
 }
 
+export function setBodyShows(shows: ShowbizItem[]) {
+  useMegaStore.setState({
+    bodyShows: [...shows],
+  });
+}
+
 export function setDetailItem(item: ShowbizItem | null) {
   useMegaStore.setState({
     detailItem: item,
@@ -144,11 +154,35 @@ export function collectionsForShow(show: ShowbizItem, shows?: ShowbizItem[]) {
   return getShowFromList(show, shows)?.collections ?? [];
 }
 
+export function showContainsGenre(show: ShowbizItem, genre: string) {
+  if (!show) return false;
+  const foundItem = show.genres?.find(
+    (showGenre) => showGenre.name.toLowerCase() === genre.toLowerCase()
+  );
+  return !!foundItem;
+}
+
 export function getAllGenres(shows: ShowbizItem[]): string[] {
   const set = new Set<string>();
   shows.forEach(
     (show) => show.genres && show.genres.forEach((genre) => set.add(genre.name))
   );
+  return Array.from(set).sort();
+}
+
+export function getAllDecades(shows: ShowbizItem[]): string[] {
+  if (!shows?.length) return [];
+
+  const set = new Set<string>();
+  shows.forEach((show) => set.add(`${getReleaseDecade(show)}`));
+  return Array.from(set).sort();
+}
+
+export function getAllYears(shows: ShowbizItem[]): string[] {
+  const set = new Set<string>();
+  shows
+    .filter((show) => !!getReleaseYear(show))
+    .forEach((show) => set.add(getReleaseYear(show) as string));
   return Array.from(set).sort();
 }
 
