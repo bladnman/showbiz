@@ -202,6 +202,22 @@ export function getAllDecades(shows: ShowbizItem[]): string[] {
   return Array.from(set).sort();
 }
 
+export function getShowType(show: ShowbizItem): "movie" | "tv" | null {
+  if (!show) return null;
+  return show.isMovie ? "movie" : show.isTv ? "tv" : null;
+}
+
+export function getAllShowTypes(shows: ShowbizItem[]): string[] {
+  if (!shows?.length) return [];
+
+  const set = new Set<string>();
+  shows.forEach((show) => {
+    const type = getShowType(show);
+    if (type) set.add(type);
+  });
+  return Array.from(set).sort();
+}
+
 export function getAllYears(shows: ShowbizItem[]): string[] {
   const set = new Set<string>();
   shows

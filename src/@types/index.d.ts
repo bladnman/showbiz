@@ -43,6 +43,7 @@ type ShowbizItem = {
   // synthesized
   isMovie: boolean;
   isTv: boolean;
+  itemType: "tv" | "movie" | "person" | null;
   isPerson: boolean;
   collections: string[];
   personalRating?: number;

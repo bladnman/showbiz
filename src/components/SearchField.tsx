@@ -1,5 +1,5 @@
 import { TextField } from "@mui/material";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import useMegaStore from "../store/MegaStore";
 import { setSearchQuery } from "../store/utils/searchUtils";
 
@@ -17,6 +17,12 @@ export default function SearchField({ onChange }: SearchFieldProps) {
     onChange && onChange(value);
   }).current;
 
+  const inputFieldRef = useRef<HTMLInputElement>();
+
+  useEffect(() => {
+    inputFieldRef.current?.focus();
+  }, []);
+
   return (
     <TextField
       id="search-field"
@@ -29,6 +35,9 @@ export default function SearchField({ onChange }: SearchFieldProps) {
       }}
       sx={{
         width: "100%",
+      }}
+      InputProps={{
+        inputRef: inputFieldRef,
       }}
     />
   );

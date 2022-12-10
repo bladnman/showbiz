@@ -1,5 +1,6 @@
 import { Box } from "@mui/material";
 import SearchField from "../../../components/SearchField";
+import { useRef } from "react";
 
 export default function DetailsSearchField(props: any) {
   return (

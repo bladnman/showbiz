@@ -51,6 +51,7 @@ export default function convertToItem(
     // HARD - MAP DESIRED ITEMS
     isMovie: Boolean(item.isMovie),
     isTv: Boolean(item.isTv),
+    itemType: item.isMovie ? "movie" : item.isTv ? "tv" : null,
     isPerson: Boolean(item.isPerson),
     id: item.id,
     name: item.name ?? item.title,
