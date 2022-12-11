@@ -1,3 +1,4 @@
+import React from "react";
 import { Box } from "@mui/material";
 import { MouseEvent, useMemo } from "react";
 import { ShowbizItem, ShowPropOpt, Size } from "../../../@types";

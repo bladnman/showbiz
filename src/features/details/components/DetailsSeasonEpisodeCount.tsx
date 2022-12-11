@@ -1,3 +1,4 @@
+import React from "react";
 import { ShowPropOpt, SxPropOpt } from "../../../@types";
 import DetailsImageText from "./DetailsImageText";
 

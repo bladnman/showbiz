@@ -11,20 +11,10 @@ import {
 import { Box, ButtonGroup, Menu } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
-//
-// group icons
-// import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-// import GroupIcon from "@mui/icons-material/Style";
-// import GroupIcon from "@mui/icons-material/CollectionsBookmark";
-// import GroupIcon from "@mui/icons-material/LocalOffer";
-// import GroupIcon from "@mui/icons-material/LocalOfferTwoTone";
-//
-// mdiIcons
 import MdiIcon from "@mdi/react";
 import { mdiTagMultiple as TagIcon } from "@mdi/js";
 import DetailsCollectionMenu from "../details-collection-menu/DetailsCollectionMenu";
 import useShowTools from "../../../../hooks/useShowTools";
-// import { mdiBookPlusMultiple as TagIcon } from "@mdi/js";
 
 const DetailsAddButton = ({ show = null }: ShowPropOpt) => {
   const { shows } = useShowTools();

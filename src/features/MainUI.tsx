@@ -1,3 +1,4 @@
+import React from "react";
 import AppBody from "./app/appbody/AppBody";
 import AppDialogs from "./app/appdialogs/AppDialogs";
 import AppDrawer from "./app/appdrawer/AppDrawer";

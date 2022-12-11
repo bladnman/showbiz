@@ -1,3 +1,4 @@
+import React from "react";
 import { ShowPropOpt } from "../../../@types";
 
 export default function DetailsBackdropImage({ show }: ShowPropOpt) {

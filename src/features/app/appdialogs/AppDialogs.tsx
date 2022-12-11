@@ -1,3 +1,4 @@
+import React from "react";
 import useMegaStore from "../../../store/MegaStore";
 import DetailsDialog from "./detailsdialog/DetailDialog";
 

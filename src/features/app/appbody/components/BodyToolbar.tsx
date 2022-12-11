@@ -1,3 +1,4 @@
+import React from "react";
 import { Stack } from "@mui/material";
 import { SxPropOpt } from "../../../../@types";
 import GroupByTool from "./GroupByTool";

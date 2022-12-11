@@ -1,6 +1,6 @@
-import { Dialog, DialogContent } from "@mui/material";
-import { useCallback, useEffect, useRef } from "react";
-import { setSearchMode } from "../../../../utils/appUtils";
+import React, {useCallback, useRef} from "react";
+import {Dialog, DialogContent} from "@mui/material";
+import {setSearchMode} from "../../../../utils/appUtils";
 import useBreakSize from "../../../../utils/useBreakSize";
 import DetailsView from "../../../details/DetailsView";
 import useMegaStore from "../../../../store/MegaStore";
