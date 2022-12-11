@@ -2,15 +2,14 @@ import { ShowbizItem } from "../../../../@types";
 import { useCollectionsFilter } from "./useCollectionsFilter";
 import { useDecadeFilter } from "./useDecadeFilter";
 import { useEffect } from "react";
-import { setBodyShows } from "../../../../store/utils/itemUtils";
+import { setBodyShows } from "../../../../utils/itemUtils";
 import { useGenreFilter } from "./useGenreFilter";
-import filterAllSetsOr from "../utils/filterAllSetsOr";
 import filterOrInSetAndBetween from "../utils/filterOrInSetAndBetween";
 import { useShowTypeFilter } from "./useShowTypeFilter";
 
-export function useDrawerFilters(shows: ShowbizItem[]) {
-  const collectionsFilter = useCollectionsFilter(shows);
+export function useDrawerFilters(shows: ShowbizItem[], collections: string[]) {
   const decadeFilter = useDecadeFilter(shows);
+  const collectionsFilter = useCollectionsFilter(shows, collections);
   const genreFilter = useGenreFilter(shows);
   const showTypeFilter = useShowTypeFilter(shows);
 

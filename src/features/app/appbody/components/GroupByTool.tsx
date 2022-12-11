@@ -1,6 +1,6 @@
 import { Button, ButtonGroup, Stack, Typography } from "@mui/material";
 import { SxPropOpt } from "../../../../@types";
-import { setBodyGroupBy } from "../../../../store/utils/appUtils";
+import { setBodyGroupBy } from "../../../../utils/appUtils";
 import useMegaStore from "../../../../store/MegaStore";
 import { mdiCircleSmall, mdiTagMultiple as TagIcon } from "@mdi/js";
 import MdiIcon from "@mdi/react";

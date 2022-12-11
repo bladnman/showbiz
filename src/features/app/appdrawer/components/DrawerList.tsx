@@ -1,7 +1,5 @@
 import { Box, Button, Stack, Typography } from "@mui/material";
-import useCollectionTools from "../../../../hooks/useCollectionTools";
-import CircleIcon from "@mui/icons-material/Circle";
-import { mdiCircleSmall, mdiTagMultiple as TagIcon } from "@mdi/js";
+import { mdiCircleSmall } from "@mdi/js";
 import MdiIcon from "@mdi/react";
 import React from "react";
 import { COLORS } from "../../apptheme/theme_const";

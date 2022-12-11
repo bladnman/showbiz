@@ -1,15 +1,18 @@
-import { ShowbizItem } from "../../@types";
+import { CustomDataItem, ShowbizItem } from "../@types";
 import {
-  deleteShowFromCloud,
-  saveShowToCloud,
-} from "../../services/firestore/utils/fire_utils";
-import useMegaStore from "../MegaStore";
+  fire_deleteShow,
+  fire_saveCustomData,
+  fire_saveShow,
+} from "../services/firestore/utils/fire_utils";
+import useMegaStore from "../store/MegaStore";
 import { keys } from "lodash";
 import { setSearchQuery } from "./searchUtils";
 import {
   getReleaseDecade,
   getReleaseYear,
-} from "../../services/TMDB/utils/yearUtils";
+} from "../services/TMDB/utils/yearUtils";
+import { Timestamp } from "firebase/firestore";
+import { showContainsCollection } from "./collectionUtils";
 
 export function isShowInList(show: ShowbizItem | null, shows: ShowbizItem[]) {
   return !!getShowFromList(show, shows);
@@ -39,7 +42,7 @@ export function addShow(show?: ShowbizItem | null) {
   const isAlreadySaved = isShowInList(show, shows);
 
   // add to/update cloud
-  saveShowToCloud(show).catch();
+  fire_saveShow(show).catch();
 
   // push to local list
   if (!isAlreadySaved) {
@@ -61,7 +64,7 @@ export function removeShow(show?: ShowbizItem | null) {
 
   // only do work if this show is known?
   if (isShowInList(show, shows)) {
-    deleteShowFromCloud(show).catch((er) =>
+    fire_deleteShow(show).catch((er) =>
       console.error("Problem deleting from cloud!", er)
     );
   }
@@ -87,6 +90,12 @@ export function updateShows() {
 export function setShows(shows: ShowbizItem[]) {
   useMegaStore.setState({
     shows: [...shows],
+  });
+}
+
+export function setCustomDataList(customDataList: CustomDataItem[]) {
+  useMegaStore.setState({
+    customDataList: [...customDataList],
   });
 }
 
@@ -141,31 +150,6 @@ export function setSimilarToShow(show: ShowbizItem | null) {
   useMegaStore.setState({
     similarToShow: show,
   });
-}
-
-export function getAllCollections(shows?: ShowbizItem[]): string[] {
-  if (!shows || shows.length === 0) return [];
-  const set = new Set<string>();
-  shows.forEach(
-    (show) =>
-      show.collections &&
-      show.collections.forEach((collection) => set.add(collection))
-  );
-  return Array.from(set).sort();
-}
-
-export function showContainsCollection(
-  show: ShowbizItem,
-  collection: string,
-  shows?: ShowbizItem[]
-): boolean {
-  shows = shows ?? useMegaStore.getState().shows;
-  return collectionsForShow(show, shows).includes(collection);
-}
-
-export function collectionsForShow(show: ShowbizItem, shows?: ShowbizItem[]) {
-  shows = shows ?? useMegaStore.getState().shows;
-  return getShowFromList(show, shows)?.collections ?? [];
 }
 
 export function showContainsGenre(show: ShowbizItem, genre: string) {
@@ -224,27 +208,6 @@ export function getAllYears(shows: ShowbizItem[]): string[] {
     .filter((show) => !!getReleaseYear(show))
     .forEach((show) => set.add(getReleaseYear(show) as string));
   return Array.from(set).sort();
-}
-
-export function addCollection(show: ShowbizItem, collectionName: string) {
-  const set = new Set<string>(show.collections);
-  set.add(collectionName.toLowerCase());
-  show.collections = Array.from(set).sort();
-}
-
-export function removeCollection(show: ShowbizItem, collectionName: string) {
-  const set = new Set<string>(show.collections);
-  set.delete(collectionName.toLowerCase());
-  show.collections = Array.from(set).sort();
-}
-
-export function toggleCollection(show: ShowbizItem, collectionName: string) {
-  const set = new Set<string>(show.collections);
-  if (set.has(collectionName.toLowerCase())) {
-    removeCollection(show, collectionName);
-  } else {
-    addCollection(show, collectionName);
-  }
 }
 
 export function overlayMissingKeys(ontoObject: any, fromObject: any) {

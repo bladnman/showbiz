@@ -1,7 +1,8 @@
 import { TextField } from "@mui/material";
 import { useEffect, useRef } from "react";
 import useMegaStore from "../store/MegaStore";
-import { setSearchQuery } from "../store/utils/searchUtils";
+import { setSearchQuery } from "../utils/searchUtils";
+import { setSimilarToShow } from "../utils/itemUtils";
 
 type SearchFieldProps = {
   onChange?: (value: string) => void;
@@ -11,6 +12,8 @@ export default function SearchField({ onChange }: SearchFieldProps) {
   // const searchType = useMegaStore((state) => state.searchType);
 
   const handleChanges = useRef((value: string) => {
+    // clear related search
+    setSimilarToShow(null);
     setSearchQuery(value);
 
     // if our owner wanted to hear about changes

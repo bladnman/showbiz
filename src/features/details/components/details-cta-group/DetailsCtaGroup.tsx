@@ -1,6 +1,6 @@
 import { ShowPropOpt } from "../../../../@types";
 import DetailsAddButton from "./DetailsAddButton";
-import { isShowInList } from "../../../../store/utils/itemUtils";
+import { isShowInList } from "../../../../utils/itemUtils";
 import useShowTools from "../../../../hooks/useShowTools";
 
 export default function DetailsCtaGroup({ show = null }: ShowPropOpt) {

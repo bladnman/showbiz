@@ -1,9 +1,9 @@
 import { useMemo } from "react";
-import { getAllCollections } from "../store/utils/itemUtils";
-import { ShowbizItem } from "../@types";
+import { CustomDataItem, ShowbizItem } from "../@types";
+import { getAllCollections } from "../utils/collectionUtils";
 
-export default function useCollections(shows: ShowbizItem[]) {
+export default function useCollections(customDataList: CustomDataItem[]) {
   return useMemo(() => {
-    return getAllCollections(shows);
-  }, [shows]);
+    return getAllCollections(customDataList);
+  }, [customDataList]);
 }

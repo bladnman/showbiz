@@ -6,9 +6,9 @@ import Button from "@mui/material/Button";
 import { COLORS } from "../../../app/apptheme/theme_const";
 import MdiIcon from "@mdi/react";
 import { mdiCheckCircle as AcceptIcon } from "@mdi/js";
-import { showContainsCollection } from "../../../../store/utils/itemUtils";
 import useShowTools from "../../../../hooks/useShowTools";
 import useCollectionTools from "../../../../hooks/useCollectionTools";
+import { showContainsCollection } from "../../../../utils/collectionUtils";
 
 type MenuProps = {
   onClose: () => void;
@@ -93,7 +93,7 @@ export default function DetailsCollectionMenu({ onClose, show }: MenuProps) {
         <MenuItemForShow
           onClick={doToggleCollection}
           collection={collection}
-          isSelected={showContainsCollection(show, collection, shows)}
+          isSelected={showContainsCollection(show, collection)}
           key={collection}
         />
       ))}

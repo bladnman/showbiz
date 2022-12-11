@@ -1,7 +1,7 @@
 import ShowGrid from "../../../../../components/ShowGrid";
 import { ShowbizItem } from "../../../../../@types";
 import useMegaStore from "../../../../../store/MegaStore";
-import { setDetailItem } from "../../../../../store/utils/itemUtils";
+import { setDetailItem } from "../../../../../utils/itemUtils";
 import useSimilarShows from "../../../../../services/TMDB/hooks/useSimilarShows";
 
 export default function DetailSimilarResultsGrid() {

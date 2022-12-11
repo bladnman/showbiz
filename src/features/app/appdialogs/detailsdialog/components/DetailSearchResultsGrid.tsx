@@ -3,7 +3,7 @@ import ShowGrid from "../../../../../components/ShowGrid";
 import { ShowbizItem } from "../../../../../@types";
 import useMegaStore from "../../../../../store/MegaStore";
 import { useApiSearch } from "../../../../../services/TMDB/hooks/useApi";
-import { setDetailItem } from "../../../../../store/utils/itemUtils";
+import { setDetailItem } from "../../../../../utils/itemUtils";
 
 export default function DetailSearchResultsGrid() {
   const searchQuery = useMegaStore((state) => state.searchQuery);

@@ -1,11 +1,12 @@
 import { Box, Divider, Drawer, IconButton } from "@mui/material";
 import useMegaStore from "../../../store/MegaStore";
-import { toggleDrawer } from "../../../store/utils/appUtils";
+import { toggleDrawer } from "../../../utils/appUtils";
 import { styled } from "@mui/material/styles";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import DrawerList from "./components/DrawerList";
 import { useDrawerFilters } from "./hooks/useDrawerFilters";
 import useShowTools from "../../../hooks/useShowTools";
+import useCollectionTools from "../../../hooks/useCollectionTools";
 
 export const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
@@ -20,8 +21,9 @@ export default function AppDrawer() {
   const drawerWidth = useMegaStore((state) => state.drawerWidth);
   const isDrawerOpen = useMegaStore((state) => state.isDrawerOpen);
   const { shows } = useShowTools();
+  const { collections } = useCollectionTools();
 
-  const filters = useDrawerFilters(shows);
+  const filters = useDrawerFilters(shows, collections);
 
   return (
     <Drawer

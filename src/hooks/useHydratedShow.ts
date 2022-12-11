@@ -5,10 +5,10 @@ import {
   mergeObjects,
   updateObject,
   updateShows,
-} from "../store/utils/itemUtils";
+} from "../utils/itemUtils";
 import { minSince, secSince } from "../utils/MU";
 import { fetchApiShow } from "../services/TMDB/hooks/useApi";
-import { saveShowToCloud } from "../services/firestore/utils/fire_utils";
+import { fire_saveShow } from "../services/firestore/utils/fire_utils";
 import { REFRESH_DETAILS_SEC } from "../store/const";
 
 /**
@@ -52,7 +52,7 @@ export default function useHydratedShow(withShow?: ShowbizItem | null) {
 
         if (listShow) {
           // UPDATE CLOUD? : if this was in the cloud already
-          await saveShowToCloud(finalShow);
+          await fire_saveShow(finalShow);
 
           // NOTIFY : tell app the data has changed
           // since the updateObject may have changed this item

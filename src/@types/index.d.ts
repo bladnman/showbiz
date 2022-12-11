@@ -3,6 +3,24 @@ import React from "react";
 import { Genre, Language, Network, Season } from "../services/TMDB/types";
 import { Timestamp } from "firebase/firestore";
 
+type CustomDataItem = {
+  id: number;
+  name: string;
+
+  //
+  // DATES
+  lastHydrationDate?: Timestamp;
+  createdDate: Timestamp;
+  editedDate: Timestamp;
+  delayUntilDate?: Timestamp;
+
+  //
+  // VALUES
+  watchStatus: "started" | "finished" | "quit" | "new";
+  interestLevel?: number;
+  userRating?: number;
+  collections: string[];
+};
 type ShowbizItem = {
   // common
   id: number;
@@ -45,7 +63,6 @@ type ShowbizItem = {
   isTv: boolean;
   itemType: "tv" | "movie" | "person" | null;
   isPerson: boolean;
-  collections: string[];
   personalRating?: number;
   lastHydrationDate?: Timestamp;
 };

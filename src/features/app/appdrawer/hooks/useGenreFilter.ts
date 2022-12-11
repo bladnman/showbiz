@@ -1,6 +1,6 @@
 import { Filter, ShowbizItem } from "../../../../@types";
 import { useFilter } from "./useFilter";
-import { showContainsGenre } from "../../../../store/utils/itemUtils";
+import { showContainsGenre } from "../../../../utils/itemUtils";
 import useGenres from "../../../../hooks/useGenres";
 
 export function useGenreFilter(shows: ShowbizItem[]): Filter {

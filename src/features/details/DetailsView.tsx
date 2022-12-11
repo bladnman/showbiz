@@ -20,7 +20,7 @@ import DetailsCtaGroup from "./components/details-cta-group/DetailsCtaGroup";
 
 export default function DetailsView({ show }: ShowPropOpt) {
   const windowSize = useWindowSize();
-  const backdropHeight = windowSize.height * 0.6 * 0.6;
+  const backdropHeight = windowSize.height * 0.9 * 0.6;
 
   return (
     <Box sx={{ position: "relative" }} onClick={() => console.log(show)}>
@@ -79,14 +79,24 @@ export default function DetailsView({ show }: ShowPropOpt) {
                   }}
                 >
                   {/* TOP META-DATA */}
-                  <Stack direction={"column"} marginBottom={1}>
+                  <Stack
+                    direction={"column"}
+                    marginBottom={1}
+                    sx={{
+                      backdropFilter: "blur(3px) brightness(120%)",
+                    }}
+                  >
                     <Stack direction={"row"} spacing={5}>
                       <DetailsYearTag show={show} />
                       <DetailsSeasonEpisodeCount show={show} />
                     </Stack>
                     <DetailsShowTitle
                       show={show}
-                      sx={{ marginTop: 1, marginBottom: 0 }}
+                      sx={{
+                        marginTop: 1,
+                        marginBottom: 0,
+                        backdropFilter: "blur(10px) brightness(80%)",
+                      }}
                     />
                     <Stack
                       direction={"row"}

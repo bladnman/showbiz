@@ -1,4 +1,4 @@
-import useMegaStore from "../MegaStore";
+import useMegaStore from "../store/MegaStore";
 import { showSearchFor } from "./itemUtils";
 
 export function toggleDrawer() {

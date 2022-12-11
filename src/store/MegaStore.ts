@@ -1,6 +1,6 @@
 import create from "zustand";
 import { devtools } from "zustand/middleware";
-import { ShowbizItem } from "../@types";
+import { CustomDataItem, ShowbizItem } from "../@types";
 import TMDB from "../services/TMDB/TMDB";
 import { DRAWER_WIDTH_OPEN } from "./const";
 
@@ -18,6 +18,7 @@ export interface MegaStore {
   isDrawerOpen: boolean;
   isDetailsOpen: boolean;
   shows: ShowbizItem[];
+  customDataList: CustomDataItem[];
   bodyShows: ShowbizItem[];
   bodyGroupBy?: string;
 }

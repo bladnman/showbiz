@@ -1,7 +1,10 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { collection, getFirestore } from "firebase/firestore";
-import { FIRE_SHOWS_COLLECTION_NAME } from "./fire_const";
+import {
+  FIRE_CUSTOM_DATA_COLLECTION_NAME,
+  FIRE_SHOWS_COLLECTION_NAME,
+} from "./fire_const";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -21,4 +24,8 @@ const firebaseConfig = {
 const fireApp = initializeApp(firebaseConfig);
 const fireDb = getFirestore(fireApp);
 const showsCollection = collection(fireDb, FIRE_SHOWS_COLLECTION_NAME);
-export { fireApp, fireDb, showsCollection };
+const customDataCollection = collection(
+  fireDb,
+  FIRE_CUSTOM_DATA_COLLECTION_NAME
+);
+export { fireApp, fireDb, showsCollection, customDataCollection };

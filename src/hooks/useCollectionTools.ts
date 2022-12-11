@@ -3,14 +3,13 @@ import {
   addCollection,
   removeCollection,
   toggleCollection,
-} from "../store/utils/itemUtils";
-import useShowTools from "./useShowTools";
+} from "../utils/collectionUtils";
 import useCollections from "./useCollections";
+import useActiveCustomDataList from "./useActiveCustomDataList";
 
 export default function useCollectionTools() {
-  const { shows } = useShowTools();
-  const collections = useCollections(shows);
-
+  const customDataList = useActiveCustomDataList();
+  const collections = useCollections(customDataList);
   return useMemo(
     () => ({
       collections,

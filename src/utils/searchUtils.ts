@@ -1,4 +1,4 @@
-import useMegaStore from "../MegaStore";
+import useMegaStore from "../store/MegaStore";
 
 export function setSearchQuery(value: string | undefined | null) {
   useMegaStore.setState({

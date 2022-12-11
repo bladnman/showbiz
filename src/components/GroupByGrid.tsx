@@ -1,22 +1,24 @@
 import { Box, Typography } from "@mui/material";
 import NotFoundTile from "./NotFoundTile";
-import { ShowbizItem } from "../@types";
+import { CustomDataItem, ShowbizItem } from "../@types";
 import ShowGrid from "./ShowGrid";
 import {
-  getAllCollections,
   getAllGenres,
   showsWithCollection,
   showsWithGenre,
-} from "../store/utils/itemUtils";
+} from "../utils/itemUtils";
 import { MouseEvent, useEffect, useRef, useState } from "react";
-import { setBodyGroupBy } from "../store/utils/appUtils";
+import { setBodyGroupBy } from "../utils/appUtils";
+import { getAllCollections } from "../utils/collectionUtils";
 
 export default function GroupByGrid({
   shows,
+  customDataList,
   onClick,
   groupBy,
 }: {
   shows?: ShowbizItem[];
+  customDataList: CustomDataItem[];
   onClick?: (show: ShowbizItem, event?: MouseEvent<HTMLDivElement>) => void;
   groupBy?: string;
 }) {
@@ -32,7 +34,7 @@ export default function GroupByGrid({
         break;
       case "COLLECTION":
         filterFn.current = showsWithCollection;
-        setGroups(getAllCollections(shows));
+        setGroups(getAllCollections(customDataList));
         break;
       default:
         filterFn.current = undefined;

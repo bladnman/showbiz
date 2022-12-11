@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { useCallback } from "react";
 import useMegaStore from "../../../store/MegaStore";
-import { toggleDrawer } from "../../../store/utils/appUtils";
+import { toggleDrawer } from "../../../utils/appUtils";
 import { styled } from "@mui/material/styles";
 import { DRAWER_WIDTH_OPEN } from "../../../store/const";
 import ToolbarSearch from "./components/ToolbarSearch";
