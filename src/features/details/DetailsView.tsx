@@ -24,43 +24,42 @@ export default function DetailsView({ show }: ShowPropOpt) {
   const backdropHeight = windowSize.height * 0.9 * 0.6;
 
   return (
-    <Box sx={{ position: "relative" }} onClick={() => console.log(show)}>
-      {/* HEADER IMAGE */}
-      <BoxAbsolute
-        sx={{
-          height: `${backdropHeight}px`,
-        }}
-      >
+    <BoxRelative
+      height={"100%"}
+      className={"details-area"}
+      onClick={() => console.log(show)}
+    >
+      {/* HEADER IMAGE
+        ---------------------------- */}
+      <BoxAbsolute className={"details-image-bg"} height={backdropHeight}>
         <DetailsBackdropImage show={show} />
       </BoxAbsolute>
 
-      {/* SEARCH */}
-      <BoxAbsolute sx={{ zIndex: 100 }}>
-        <Box flexDirection={"row"} justifyContent="center" display="flex">
-          <DetailsSearchField marginTop={1} maxWidth={350} width={350} />
-        </Box>
-      </BoxAbsolute>
-
-      {/* contents */}
-      <BoxRelative height={"100%"}>
-        <DialogContent sx={{ paddingTop: 0 }}>
+      {/* contents
+        ---------------------------- */}
+      <BoxRelative className={"details-contents"}>
+        <DialogContent sx={{ paddingTop: `${backdropHeight * 0.3}px` }}>
           <Stack
             display="flex"
             direction={"row"}
             className="details-data-table"
           >
             {/* left-side */}
-            {/* POSTER TILE */}
+            {/* POSTER TILE
+              ---------------------------- */}
             <Box paddingX={2} display="flex" flexDirection={"column"}>
-              <Box paddingTop={`${backdropHeight * 0.3}px`} height={"6em"}>
+              <Box height={"6em"}>
                 <DetailsRatingDisplay show={show} />
               </Box>
               <DetailsPosterTile show={show} width={200} />
-              <DetailsCtaGroup show={show} />
+              <Box height={"3em"} flexShrink={0} flexGrow={0} display="flex">
+                <DetailsCtaGroup show={show} />
+              </Box>
             </Box>
 
             {/* right-side */}
-            {/* META DATA */}
+            {/* META DATA
+              ---------------------------- */}
             <Stack direction={"column"} flexGrow={1}>
               <Stack
                 direction={"column"}
@@ -68,23 +67,26 @@ export default function DetailsView({ show }: ShowPropOpt) {
                 flexGrow={1}
                 paddingRight={10}
               >
-                {/* right-top-area */}
+                {/* right-top-area
+                  ---------------------------- */}
                 <Box
-                  height={`${backdropHeight}px`}
+                  // height={`${backdropHeight}px`}
                   display="flex"
                   flexDirection={"column"}
-                  justifyContent="flex-end"
                   flexShrink={0}
                   sx={{
                     width: "100%",
+                    paddingTop: `${backdropHeight * 0.35}px`,
                   }}
                 >
-                  {/* TOP META-DATA */}
+                  {/* TOP META-DATA
+                    ---------------------------- */}
                   <Stack
                     direction={"column"}
                     marginBottom={1}
+                    padding={3}
                     sx={{
-                      backdropFilter: "blur(3px) brightness(120%)",
+                      backdropFilter: "blur(2px) brightness(60%)",
                     }}
                   >
                     <Stack direction={"row"} spacing={5}>
@@ -109,18 +111,14 @@ export default function DetailsView({ show }: ShowPropOpt) {
                       <DetailsDuration show={show} />
                       <DetailsBoxOffice show={show} />
                     </Stack>
+                    <DetailsDescriptionText show={show} />
                   </Stack>
-                </Box>
-
-                {/* right-bottom-area */}
-                <Box height={"8em"} paddingTop={2.5}>
-                  <DetailsDescriptionText show={show} />
                 </Box>
               </Stack>
             </Stack>
           </Stack>
         </DialogContent>
       </BoxRelative>
-    </Box>
+    </BoxRelative>
   );
 }

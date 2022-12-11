@@ -1,13 +1,16 @@
 import React from "react";
 import useMegaStore from "../../../store/MegaStore";
-import DetailsDialog from "./detailsdialog/DetailDialog";
+
+const LazyDetailsDialog = React.lazy(
+  () => import("./detailsdialog/DetailDialog")
+);
 
 const AppDialogs = () => {
   const isDetailsOpen = useMegaStore((state) => state.isDetailsOpen);
 
   return (
     <>
-      <DetailsDialog isOpen={isDetailsOpen} />
+      <LazyDetailsDialog isOpen={isDetailsOpen} />
     </>
   );
 };
