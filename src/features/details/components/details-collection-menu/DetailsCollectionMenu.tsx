@@ -4,8 +4,8 @@ import { ShowProp } from "../../../../@types";
 import { Stack } from "@mui/system";
 import Button from "@mui/material/Button";
 import { COLORS } from "../../../app/apptheme/theme_const";
-import MdiIcon from "@mdi/react";
-import { mdiCheckCircle as AcceptIcon } from "@mdi/js";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 import useShowTools from "../../../../hooks/useShowTools";
 import useCollectionTools from "../../../../hooks/useCollectionTools";
 import { showContainsCollection } from "../../../../utils/collectionUtils";
@@ -85,7 +85,7 @@ export default function DetailsCollectionMenu({ onClose, show }: MenuProps) {
           }}
           onClick={() => doAddCollection()}
         >
-          <MdiIcon path={AcceptIcon} size={1} />
+          <CheckCircleIcon />
         </Button>
       </Stack>
 
@@ -112,7 +112,7 @@ function MenuItemForShow({ isSelected, collection, onClick }: MenuItemProps) {
     <MenuItem onClick={() => onClick && onClick(collection)}>
       <Stack direction={"row"}>
         <Box pr={1} sx={{ width: "2em" }}>
-          {isSelected ? <MdiIcon path={AcceptIcon} size={1} /> : null}
+          {isSelected ? <AddCircleIcon /> : null}
         </Box>
         {collection}
       </Stack>

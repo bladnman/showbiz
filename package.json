@@ -17,8 +17,6 @@
     "@fontsource/bowlby-one-sc": "^4.5.9",
     "@fontsource/teko": "^4.5.9",
     "@fontsource/titan-one": "^4.5.9",
-    "@mdi/js": "^7.0.96",
-    "@mdi/react": "^1.6.1",
     "@mui/icons-material": "^5.10.9",
     "@mui/material": "^5.10.12",
     "es6-error": "^4.1.1",

@@ -28,7 +28,7 @@ export function useFilter(props: FilterProps): Filter {
   const filteredShowsSet = useMemo(() => {
     if (!shows || filters.size < 1 || !filterFn) return new Set(shows);
 
-    let matchingShowsSet = new Set<ShowbizItem>();
+    const matchingShowsSet = new Set<ShowbizItem>();
 
     for (const show of shows) {
       for (const filter of filters) {

@@ -43,7 +43,7 @@ const useMegaStore = create<MegaStore>()(
         drawerWidth: DRAWER_WIDTH_OPEN,
         drawerWidthClosed: 0,
         isDrawerOpen: true,
-        isDetailsOpen: true,
+        isDetailsOpen: false,
         shows: [] as ShowbizItem[],
       } as MegaStore)
   )

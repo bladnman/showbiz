@@ -1,7 +1,6 @@
 import React from "react";
 import { Box, Button, Stack, Typography } from "@mui/material";
-import { mdiCircleSmall } from "@mdi/js";
-import MdiIcon from "@mdi/react";
+import CircleIcon from "@mui/icons-material/Circle";
 import { COLORS } from "../../apptheme/theme_const";
 import { Filter } from "../../../../@types";
 
@@ -27,9 +26,8 @@ export default function DrawerList({ filter }: { filter: Filter }) {
           size={"small"}
           startIcon={
             isInFilter(item) ? (
-              <MdiIcon path={mdiCircleSmall} size={1} color={COLORS.callout} />
+              <CircleIcon sx={{ color: COLORS.callout }} />
             ) : null
-            // isInFilter(item) ? <CircleIcon color={"secondary"} /> : null
           }
         >
           <Typography>{item}</Typography>

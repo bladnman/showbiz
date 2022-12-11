@@ -3,8 +3,7 @@ import { Button, ButtonGroup, Stack, Typography } from "@mui/material";
 import { SxPropOpt } from "../../../../@types";
 import { setBodyGroupBy } from "../../../../utils/appUtils";
 import useMegaStore from "../../../../store/MegaStore";
-import { mdiCircleSmall, mdiTagMultiple as TagIcon } from "@mdi/js";
-import MdiIcon from "@mdi/react";
+import CircleIcon from "@mui/icons-material/Circle";
 import { COLORS } from "../../apptheme/theme_const";
 
 export default function GroupByTool({ sx }: SxPropOpt) {
@@ -23,13 +22,8 @@ export default function GroupByTool({ sx }: SxPropOpt) {
             onClick={() => setBodyGroupBy(group)}
             startIcon={
               group === bodyGroupBy ? (
-                <MdiIcon
-                  path={mdiCircleSmall}
-                  size={1}
-                  color={COLORS.callout}
-                />
+                <CircleIcon sx={{ color: COLORS.callout }} />
               ) : null
-              // isInFilter(item) ? <CircleIcon color={"secondary"} /> : null
             }
           >
             {group}

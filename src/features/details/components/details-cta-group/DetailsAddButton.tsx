@@ -11,8 +11,7 @@ import {
 import { Box, ButtonGroup, Menu } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
-import MdiIcon from "@mdi/react";
-import { mdiTagMultiple as TagIcon } from "@mdi/js";
+import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import DetailsCollectionMenu from "../details-collection-menu/DetailsCollectionMenu";
 import useShowTools from "../../../../hooks/useShowTools";
 
@@ -61,8 +60,7 @@ const DetailsAddButton = ({ show = null }: ShowPropOpt) => {
           }}
           {...bindTrigger(popupState)}
         >
-          {/*<GroupIcon fontSize="large" />*/}
-          <MdiIcon path={TagIcon} size={1.3} />
+          <LocalOfferIcon fontSize="medium" />
         </Button>
         <Menu {...bindMenu(popupState)}>
           <DetailsCollectionMenu onClose={popupState.close} show={show} />
