@@ -10,11 +10,11 @@ export default function MainUI() {
   return (
     <>
       <AppSnackShop />
-      {/*<Box sx={{ display: "flex" }}>*/}
-      {/*  <AppToolbar />*/}
-      {/*  <AppDrawer />*/}
-      {/*  <AppBody />*/}
-      {/*</Box>*/}
+      <Box sx={{ display: "flex" }}>
+        <AppToolbar />
+        <AppDrawer />
+        <AppBody />
+      </Box>
       <AppDialogs />
     </>
   );

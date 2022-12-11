@@ -1,3 +1,4 @@
+import React from "react";
 import { Rating } from "@mui/material";
 
 const ItemRating = (props: { rating?: number | null }) => {

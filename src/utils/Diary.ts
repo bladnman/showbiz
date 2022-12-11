@@ -1,12 +1,12 @@
 export default class Diary {
-  private ttlSec: number = 60;
-  private entries: Record<string, { expires: Date; value: any }> = {};
+  private ttlSec = 60;
+  private entries: Record<string, { expires: Date; value: unknown }> = {};
 
   constructor(ttlSec = 60) {
     this.ttlSec = ttlSec;
   }
 
-  write(key: string, value: any, ttlSec = this.ttlSec) {
+  write(key: string, value: unknown, ttlSec = this.ttlSec) {
     const expires = dateByAddingSecondsToDate(new Date(), ttlSec);
     this.entries[key] = { value: value, expires };
     return value;
@@ -18,14 +18,11 @@ export default class Diary {
     return value;
   }
 
-  erase(key: string) {
-    delete this.entries[key];
-  }
+  // erase(key: string) {
+  //   delete this.entries[key];
+  // }
 }
 
 function dateByAddingSecondsToDate(date: Date, seconds: number) {
-  if (date instanceof Date) {
-    return new Date(date.getTime() + seconds * 1000);
-  }
-  return new Date();
+  return new Date(date.getTime() + seconds * 1000);
 }

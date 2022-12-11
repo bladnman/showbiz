@@ -6,8 +6,9 @@
   "scripts": {
     "dev": "vite",
     "start": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview"
+    "build": "yarn lint && tsc && vite build",
+    "preview": "vite preview",
+    "lint": "eslint src/{**/*,*}.{ts,tsx}"
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",
@@ -34,8 +35,12 @@
     "@types/lodash": "^4.14.187",
     "@types/react": "^18.0.22",
     "@types/react-dom": "^18.0.7",
+    "@typescript-eslint/eslint-plugin": "^5.46.0",
+    "@typescript-eslint/parser": "^5.46.0",
     "@vitejs/plugin-react": "^2.2.0",
     "deep-map-keys": "^2.0.1",
+    "eslint": "^8.29.0",
+    "eslint-plugin-react": "^7.31.11",
     "material-ui-popup-state": "^4.1.0",
     "prettier": "^2.8.0",
     "typescript": "^4.6.4",

@@ -1,17 +1,11 @@
 import { CustomDataItem, ShowbizItem } from "../@types";
 import {
   fire_deleteShow,
-  fire_saveCustomData,
   fire_saveShow,
 } from "../services/firestore/utils/fire_utils";
 import useMegaStore from "../store/MegaStore";
-import { keys } from "lodash";
 import { setSearchQuery } from "./searchUtils";
-import {
-  getReleaseDecade,
-  getReleaseYear,
-} from "../services/TMDB/utils/yearUtils";
-import { Timestamp } from "firebase/firestore";
+import { getReleaseDecade } from "../services/TMDB/utils/yearUtils";
 import { showContainsCollection } from "./collectionUtils";
 
 export function isShowInList(show: ShowbizItem | null, shows: ShowbizItem[]) {
@@ -202,24 +196,27 @@ export function getAllShowTypes(shows: ShowbizItem[]): string[] {
   return Array.from(set).sort();
 }
 
-export function getAllYears(shows: ShowbizItem[]): string[] {
-  const set = new Set<string>();
-  shows
-    .filter((show) => !!getReleaseYear(show))
-    .forEach((show) => set.add(getReleaseYear(show) as string));
-  return Array.from(set).sort();
-}
+// export function getAllYears(shows: ShowbizItem[]): string[] {
+//   const set = new Set<string>();
+//   shows
+//     .filter((show) => !!getReleaseYear(show))
+//     .forEach((show) => set.add(getReleaseYear(show) as string));
+//   return Array.from(set).sort();
+// }
+//
+// export function overlayMissingKeys(ontoObject: any, fromObject: any) {
+//   if (!ontoObject || !fromObject) return ontoObject;
+//
+//   for (const [key, value] of Object.entries(fromObject)) {
+//     if (!(key in ontoObject)) ontoObject[key] = value;
+//   }
+//   return ontoObject;
+// }
 
-export function overlayMissingKeys(ontoObject: any, fromObject: any) {
-  if (!ontoObject || !fromObject) return ontoObject;
-
-  for (const [key, value] of Object.entries(fromObject)) {
-    if (!(key in ontoObject)) ontoObject[key] = value;
-  }
-  return ontoObject;
-}
-
-export function updateObject(targetObject: any, fromObject: any) {
+export function updateObject(
+  targetObject: Record<string, unknown>,
+  fromObject: Record<string, unknown>
+) {
   if (!targetObject || !fromObject) return targetObject;
 
   for (const [key, value] of Object.entries(fromObject)) {
@@ -228,6 +225,9 @@ export function updateObject(targetObject: any, fromObject: any) {
   return targetObject;
 }
 
-export function mergeObjects(object1: any, object2: any) {
+export function mergeObjects(
+  object1: Record<string, unknown>,
+  object2: Record<string, unknown>
+) {
   return { ...object1, ...object2 };
 }

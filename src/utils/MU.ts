@@ -1,14 +1,14 @@
 export function ymd(date: Date) {
-  var year = date.getFullYear();
-  var month = date.getMonth() + 1; //months from 1-12
-  var day = date.getDate();
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1; //months from 1-12
+  const day = date.getDate();
   return `${year}-${month}-${day}`;
 }
 
 export function ymdhms(date: Date) {
-  var h = date.getHours();
-  var m = date.getMinutes();
-  var s = date.getSeconds();
+  const h = date.getHours();
+  const m = date.getMinutes();
+  const s = date.getSeconds();
   return `${ymd(date)} ${pad(h, 2)}:${pad(m, 2)}:${pad(s, 2)}`;
 }
 
@@ -61,10 +61,10 @@ export function returnDecimalPlaces(value: number, decimalsToReturn: number) {
   decimalsToReturn = decimalsToReturn || 0;
 
   // 'toFixed' rounds, we are avoiding that by adding another digit of precision
-  let fixedValue = value.toFixed(++decimalsToReturn);
+  const fixedValue = value.toFixed(++decimalsToReturn);
 
   // then dropping that digit
-  let ret = fixedValue.slice(0, fixedValue.length - 1);
+  const ret = fixedValue.slice(0, fixedValue.length - 1);
 
   // and the leading '+' is to convert back to a number
   return +ret; // convert to number
@@ -92,7 +92,9 @@ function secondsDiff(startDate?: Date, endDate?: Date): number {
     const startMs = millsFromDate(startDate);
     const endMs = millsFromDate(endDate);
     return Math.max(0, Math.floor(Math.abs(endMs - startMs) / 1000));
-  } catch (er) {}
+  } catch (er) {
+    //noop
+  }
 
   return 0;
 }
@@ -100,7 +102,9 @@ function secondsDiff(startDate?: Date, endDate?: Date): number {
 export function secondsFromDate(date: Date) {
   try {
     return ~~(date.getTime() / 1000);
-  } catch (e) {}
+  } catch (e) {
+    // noop
+  }
 
   return 0;
 }
@@ -108,7 +112,9 @@ export function secondsFromDate(date: Date) {
 export function millsFromDate(date: Date) {
   try {
     return date.getTime();
-  } catch (e) {}
+  } catch (e) {
+    //noop
+  }
 
   return 0;
 }

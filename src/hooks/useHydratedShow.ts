@@ -6,7 +6,7 @@ import {
   updateObject,
   updateShows,
 } from "../utils/itemUtils";
-import { minSince, secSince } from "../utils/MU";
+import { secSince } from "../utils/MU";
 import { fetchApiShow } from "../services/TMDB/hooks/useApi";
 import { fire_saveShow } from "../services/firestore/utils/fire_utils";
 import { REFRESH_DETAILS_SEC } from "../store/const";
@@ -47,8 +47,8 @@ export default function useHydratedShow(withShow?: ShowbizItem | null) {
         const [tmdbShow] = await fetchApiShow(sourceShow);
 
         // MERGE & UPDATE LIST? : this will update the data in the list if there was a listShow
-        finalShow = mergeObjects(tmdbShow, sourceShow); // move user data onto tmdb show
-        finalShow = updateObject(sourceShow, finalShow); // update "listShow" if there was one
+        finalShow = mergeObjects(tmdbShow, sourceShow) as ShowbizItem; // move user data onto tmdb show
+        finalShow = updateObject(sourceShow, finalShow) as ShowbizItem; // update "listShow" if there was one
 
         if (listShow) {
           // UPDATE CLOUD? : if this was in the cloud already

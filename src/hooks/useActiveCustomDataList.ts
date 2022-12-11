@@ -1,5 +1,4 @@
 import { useMemo } from "react";
-import { addShow, updateShows } from "../utils/itemUtils";
 import useMegaStore from "../store/MegaStore";
 
 export default function useActiveCustomDataList() {

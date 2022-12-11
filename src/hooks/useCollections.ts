@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { CustomDataItem, ShowbizItem } from "../@types";
+import { CustomDataItem } from "../@types";
 import { getAllCollections } from "../utils/collectionUtils";
 
 export default function useCollections(customDataList: CustomDataItem[]) {
