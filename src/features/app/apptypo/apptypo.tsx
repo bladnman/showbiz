@@ -2,7 +2,7 @@
  * Installable Font:
  * https://fontsource.org/
  */
-
+import React from "react";
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 

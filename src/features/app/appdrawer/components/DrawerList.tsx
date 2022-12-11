@@ -1,7 +1,7 @@
+import React from "react";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { mdiCircleSmall } from "@mdi/js";
 import MdiIcon from "@mdi/react";
-import React from "react";
 import { COLORS } from "../../apptheme/theme_const";
 import { Filter } from "../../../../@types";
 

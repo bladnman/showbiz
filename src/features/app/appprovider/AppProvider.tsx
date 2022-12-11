@@ -1,3 +1,4 @@
+import React from "react";
 import { KidProps } from "../../../@types";
 import AppTheme from "../apptheme/AppTheme";
 import { ConfirmProvider } from "material-ui-confirm";
