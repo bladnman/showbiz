@@ -20,11 +20,20 @@ export default function DetailsWithResults({ show }: ShowPropOpt) {
   return (
     <Box sx={{ position: "relative" }}>
       {/* SEARCH */}
-      <Box sx={{ zIndex: 100, position: "fixed", width: "100%" }}>
+      <Box
+        sx={{
+          zIndex: 100,
+          position: "absolute",
+          // position: "fixed",
+          left: 0,
+          right: 0,
+        }}
+      >
         <Box
           flexDirection={"row"}
           justifyContent="space-between"
           display="flex"
+          sx={{ position: "relative" }}
         >
           <Box
             justifyContent="center"
@@ -38,7 +47,8 @@ export default function DetailsWithResults({ show }: ShowPropOpt) {
               <CloseIcon />
             </IconButton>
           </Box>
-          <DetailsSearchField marginTop={0} maxWidth={350} width={350} />
+
+          <DetailsSearchField maxWidth={350} width={350} />
         </Box>
       </Box>
       <DialogContent sx={{ padding: 0 }}>
