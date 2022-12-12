@@ -3,11 +3,12 @@ import { Box } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { ShowPropOpt, SxPropOpt } from "../../../@types";
 import { TypoSmallCapsBlack } from "../../app/apptypo/apptypo";
+import { IMAGE_TEXT_SHADOW } from "../../../utils/CONST";
 
 /** https://html-css-js.com/css/generator/text-shadow/ */
 
 const StyledText = styled(TypoSmallCapsBlack)(() => ({
-  textShadow: "2px 2px 0px rgba(0,0,0,0.55), 7px 6px 0px rgba(0,0,0,0.15)",
+  textShadow: IMAGE_TEXT_SHADOW,
   // "-webkit-text-stroke": "1px #606060",
   WebkitTextStrokeWidth: "1px",
   WebkitTextStrokeColor: "#606060",

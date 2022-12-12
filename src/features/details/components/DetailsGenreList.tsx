@@ -2,6 +2,7 @@ import React from "react";
 import { Box } from "@mui/material";
 import { ShowPropOpt, SxPropOpt } from "../../../@types";
 import DetailsImageText from "./DetailsImageText";
+import { IMAGE_TEXT_SHADOW } from "../../../utils/CONST";
 
 export default function DetailsGenreList({
   show,
@@ -22,8 +23,7 @@ function GenreItem({ text }: { text: string }) {
     <DetailsImageText
       sx={{
         paddingRight: 3,
-        textShadow:
-          "2px 2px 0px rgba(0,0,0,0.55), 7px 6px 0px rgba(0,0,0,0.15)",
+        textShadow: IMAGE_TEXT_SHADOW,
       }}
       text={text}
     />

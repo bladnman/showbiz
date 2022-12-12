@@ -5,3 +5,4 @@ export const IDS = {
     JUNGLE_BOOK: 278927,
   },
 };
+export const IMAGE_TEXT_SHADOW = "2px 2px 0px rgba(0,0,0,0.55)";

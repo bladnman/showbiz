@@ -1,6 +1,7 @@
 import React from "react";
 import { Typography } from "@mui/material";
 import { SxPropOpt } from "../../../@types";
+import { IMAGE_TEXT_SHADOW } from "../../../utils/CONST";
 
 export default function DetailsImageText({
   text,
@@ -10,7 +11,7 @@ export default function DetailsImageText({
     <Typography
       component="span"
       sx={{
-        textShadow: "1px 1px 2px rgba(0,0,0,0.65)",
+        textShadow: IMAGE_TEXT_SHADOW,
         ...sx,
       }}
     >

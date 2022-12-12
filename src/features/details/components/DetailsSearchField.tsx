@@ -10,10 +10,7 @@ export default function DetailsSearchField(props: any) {
       paddingTop={0.3}
       paddingBottom={1}
       sx={{
-        backgroundColor: "#00000077",
-        borderColor: "#404040",
-        borderStyle: "solid",
-        borderRadius: 5,
+        backdropFilter: "blur(2px) brightness(60%)",
       }}
     >
       <AppSearchField />
