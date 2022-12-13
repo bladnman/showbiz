@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
 import NotFoundTile from "./NotFoundTile";
-import { CustomDataItem, ShowbizItem } from "../@types";
+import { CustomDataItem, ShowbizItem } from "@types";
 import ShowGrid from "./ShowGrid";
 import {
   getAllGenres,

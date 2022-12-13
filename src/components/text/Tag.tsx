@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
-import { SxPropOpt } from "../../@types";
+import { SxPropOpt } from "@types";
 
 export default function Tag({ children, sx }: { children?: any } & SxPropOpt) {
   return (

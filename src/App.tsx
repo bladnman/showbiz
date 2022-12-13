@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
-import AppLoading from "./features/app/apploading/AppLoading";
-import AppProvider from "./features/app/appprovider/AppProvider";
+import AppLoading from "./features/app/app-loading/AppLoading";
+import AppProvider from "./features/app/app-provider/AppProvider";
 // import MainUI from "./features/MainUI";
 import useAppInitializer from "./hooks/useAppInitializer";
 

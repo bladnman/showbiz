@@ -5,7 +5,7 @@ import { useWindowSize } from "../hooks/useWindowSize";
 import PosterTile from "../features/tiles/postertile/PosterTile";
 import NotFoundTile from "./NotFoundTile";
 import useBreakSize from "../utils/useBreakSize";
-import { ShowbizItem } from "../@types";
+import { ShowbizItem } from "@types";
 
 export default function ShowGrid({
   shows,

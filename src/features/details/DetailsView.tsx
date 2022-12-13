@@ -1,7 +1,7 @@
 import React from "react";
-import { ShowPropOpt } from "../../@types";
-import DetailsLayoutTwoPanel from "./layouts/DetailsLayoutTwoPanel";
+import { ShowPropOpt } from "@types";
+import DetailsTwoPanelLayout from "./layouts/DetailsTwoPanelLayout";
 
 export default function DetailsView({ show }: ShowPropOpt) {
-  return <DetailsLayoutTwoPanel show={show} />;
+  return <DetailsTwoPanelLayout show={show} />;
 }
