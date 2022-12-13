@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "vite",
     "start": "vite",
+    "prod": "yarn build && yarn ftp",
     "build": "yarn lint && tsc && vite build",
+    "ftp": "pyftpsync upload ./dist ftp://showbiz@metal-sole.com@ftp.metal-sole.com --force --delete --resolve=local",
     "preview": "vite preview",
     "lint": "eslint src/{**/*,*}.{ts,tsx}"
   },

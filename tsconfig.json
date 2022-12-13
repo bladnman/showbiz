@@ -26,6 +26,9 @@
       "@types": [
         "./src/@types"
       ],
+      "@CONST": [
+        "./src/utils/CONST"
+      ],
       "@components/*": [
         "./src/components/*"
       ],

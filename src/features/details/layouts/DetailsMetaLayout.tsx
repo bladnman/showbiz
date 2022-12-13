@@ -21,8 +21,6 @@ export default function DetailsMetaLayout({ show }: ShowPropOpt) {
         show={show}
         sx={{
           marginTop: 1,
-          marginBottom: 0,
-          backdropFilter: "blur(10px) brightness(80%)",
         }}
       />
       <Stack direction={"row"} spacing={5} height={"1.5em"} flexShrink={0}>

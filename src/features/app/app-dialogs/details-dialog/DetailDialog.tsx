@@ -4,7 +4,7 @@ import { setSearchMode } from "../../../../utils/appUtils";
 import useBreakSize from "../../../../utils/useBreakSize";
 import useMegaStore from "../../../../store/MegaStore";
 import useHydratedShow from "../../../../hooks/useHydratedShow";
-import DetailsViewWithResults from "./DetailsViewWithResults";
+import DialogDetailsWithResults from "./DialogDetailsWithResults";
 
 export default function DetailsDialog({ isOpen = false }: { isOpen: boolean }) {
   const { isLtLg } = useBreakSize();
@@ -29,7 +29,7 @@ export default function DetailsDialog({ isOpen = false }: { isOpen: boolean }) {
       fullWidth={true}
       className={"detail_dialog"}
     >
-      <DetailsViewWithResults show={show} />
+      <DialogDetailsWithResults show={show} />
     </Dialog>
   );
 }

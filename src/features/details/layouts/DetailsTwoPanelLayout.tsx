@@ -8,6 +8,7 @@ import BoxAbsolute from "@components/box/BoxAbsolute";
 import DetailsMetaLayout from "./DetailsMetaLayout";
 import DetailsPosterLayout from "./DetailsPosterLayout";
 import DetailsBackdropImage from "../parts/DetailsBackdropImage";
+import { GLASS_BACKDROP_FILTER } from "@CONST";
 
 export default function DetailsTwoPanelLayout({ show }: ShowPropOpt) {
   const windowSize = useWindowSize();
@@ -65,7 +66,9 @@ export default function DetailsTwoPanelLayout({ show }: ShowPropOpt) {
               className={"details-template-meta-area"}
               padding={3}
               sx={{
-                backdropFilter: "blur(2px) brightness(60%)",
+                backdropFilter: GLASS_BACKDROP_FILTER,
+                background:
+                  "linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.50) 80%)",
               }}
             >
               <DetailsMetaLayout show={show} />
