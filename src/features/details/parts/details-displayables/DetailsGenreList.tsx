@@ -1,8 +1,8 @@
 import React from "react";
 import { Box } from "@mui/material";
-import { ShowPropOpt, SxPropOpt } from "../../../@types";
-import DetailsImageText from "./DetailsImageText";
-import { IMAGE_TEXT_SHADOW } from "../../../utils/CONST";
+import { ShowPropOpt, SxPropOpt } from "@types";
+import DetailsImageText from "../DetailsImageText";
+import { IMAGE_TEXT_SHADOW } from "@CONST";
 
 export default function DetailsGenreList({
   show,

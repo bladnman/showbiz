@@ -1,9 +1,9 @@
 import React from "react";
 import { Box } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { ShowPropOpt, SxPropOpt } from "../../../@types";
-import { TypoSmallCapsBlack } from "../../app/app-typo/apptypo";
-import { IMAGE_TEXT_SHADOW } from "../../../utils/CONST";
+import { ShowPropOpt, SxPropOpt } from "@types";
+import { TypoSmallCapsBlack } from "../../../app/app-typo/apptypo";
+import { IMAGE_TEXT_SHADOW } from "@CONST";
 
 /** https://html-css-js.com/css/generator/text-shadow/ */
 

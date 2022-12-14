@@ -1,9 +1,9 @@
 import React from "react";
 import { Box } from "@mui/material";
-import { ShowPropOpt, SxPropOpt } from "../../../@types";
+import { ShowPropOpt, SxPropOpt } from "@types";
 import { useMemo } from "react";
-import { returnDecimalPlaces } from "../../../utils/MU";
-import { TypoRevenue } from "../../app/app-typo/apptypo";
+import { returnDecimalPlaces } from "@utils/MU";
+import { TypoRevenue } from "../../../app/app-typo/apptypo";
 import { styled } from "@mui/material/styles";
 
 const StyledText = styled(TypoRevenue)(({ value = 0 }: { value?: number }) => {

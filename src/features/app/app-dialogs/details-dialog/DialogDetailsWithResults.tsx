@@ -8,7 +8,7 @@ import { setSearchMode } from "@utils/appUtils";
 import DetailsPanel from "../../../details/DetailsPanel";
 import DetailSimilarResultsGrid from "../../../details/parts/details-grids/DetailSimilarResultsGrid";
 import DetailSearchResultsGrid from "../../../details/parts/details-grids/DetailSearchResultsGrid";
-import DetailsSearchField from "../../../details/parts/DetailsSearchField";
+import DetailsSearchField from "./parts/DetailsSearchField";
 import { GLASS_BACKDROP_FILTER } from "@CONST";
 
 export default function DialogDetailsWithResults({ show }: ShowPropOpt) {

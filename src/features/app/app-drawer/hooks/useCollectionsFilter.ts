@@ -1,11 +1,9 @@
 import { Filter, ShowbizItem } from "@types";
 import { useFilter } from "./useFilter";
-import useCollections from "../../../../hooks/useCollections";
 import {
-  getAllCollections,
   getAllCollectionsForShows,
   showContainsCollection,
-} from "../../../../utils/collectionUtils";
+} from "@utils/collectionUtils";
 import { useMemo } from "react";
 
 export function useCollectionsFilter(

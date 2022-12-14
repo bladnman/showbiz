@@ -1,20 +1,18 @@
-import Box from "@mui/material/Box";
-import DetailsRatingDisplay from "../parts/DetailsRatingDisplay";
-import DetailsPosterTile from "../parts/DetailsPosterTile";
-import DetailsCtaGroup from "../parts/details-cta-group/DetailsCtaGroup";
+import DetailsRatingDisplay from "../parts/details-displayables/DetailsRatingDisplay";
 import React from "react";
 import { ShowPropOpt } from "@types";
+import { Stack } from "@mui/system";
+import DetailsAddButton from "@features/details/parts/details-interactables/DetailsAddButton";
+import PosterTile from "@features/tiles/postertile/PosterTile";
+import DetailsWatchStatusButton from "@features/details/parts/details-interactables/DetailsWatchStatusButton";
 
 export default function DetailsPosterLayout({ show }: ShowPropOpt) {
   return (
-    <Box>
-      <Box height={"6em"}>
-        <DetailsRatingDisplay show={show} />
-      </Box>
-      <DetailsPosterTile show={show} width={200} />
-      <Box height={"3em"} flexShrink={0} flexGrow={0} display="flex">
-        <DetailsCtaGroup show={show} />
-      </Box>
-    </Box>
+    <Stack direction={"column"} spacing={1} marginTop={2} alignItems={"center"}>
+      <DetailsRatingDisplay show={show} />
+      <PosterTile show={show} width={200} />
+      <DetailsAddButton show={show} />
+      <DetailsWatchStatusButton show={show} />
+    </Stack>
   );
 }

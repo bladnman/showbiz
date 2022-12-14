@@ -1,8 +1,8 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import Button from "@mui/material/Button";
-import { ClickEvent, ShowPropOpt } from "../../../../@types";
+import { ClickEvent, ShowPropOpt } from "@types";
 import { COLORS } from "../../../app/app-theme/theme_const";
-import { addShow, isShowInList, removeShow } from "../../../../utils/itemUtils";
+import { addShow, removeShow } from "@utils/itemUtils";
 import {
   bindMenu,
   bindTrigger,
@@ -12,12 +12,20 @@ import { Box, ButtonGroup, Menu } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
-import DetailsCollectionMenu from "../details-collection-menu/DetailsCollectionMenu";
-import useShowTools from "../../../../hooks/useShowTools";
+import useShowTools from "@hooks/useShowTools";
+import AppDropMenu from "@components/AppDropMenu";
+import useCollectionTools from "@hooks/useCollectionTools";
+import {
+  getCollectionsForShow,
+  showContainsCollection,
+} from "@utils/collectionUtils";
+import useMegaStore from "@store/MegaStore";
 
 const DetailsAddButton = ({ show = null }: ShowPropOpt) => {
-  const { shows } = useShowTools();
-  const isSaved = isShowInList(show, shows);
+  const { isShowSaved } = useShowTools();
+  const isSaved = isShowSaved(show);
+  const { collections, toggleCollection, getCollectionsForShow } =
+    useCollectionTools();
 
   const popupState = usePopupState({
     variant: "popover",
@@ -35,8 +43,26 @@ const DetailsAddButton = ({ show = null }: ShowPropOpt) => {
     },
     [show, isSaved]
   );
+  const onToggleValue = useCallback(
+    (value: string | undefined | null) => {
+      if (!value || !show) return;
+      // add the show first (in case it's new)
+      addShow(show);
+      // then change collection values
+      toggleCollection(show, value);
+      // focusOnField();
+    },
+    [show, addShow]
+  );
+  const doesEqualOrContain = useCallback(
+    (value: string) => {
+      return showContainsCollection(show, value);
+    },
+    [show]
+  );
 
   if (!show) return null;
+
   return (
     <Box flex={1} sx={{ display: "flex" }}>
       <ButtonGroup sx={{ flexGrow: 1 }}>
@@ -63,7 +89,13 @@ const DetailsAddButton = ({ show = null }: ShowPropOpt) => {
           <LocalOfferIcon fontSize="medium" />
         </Button>
         <Menu {...bindMenu(popupState)}>
-          <DetailsCollectionMenu onClose={popupState.close} show={show} />
+          <AppDropMenu
+            onToggleValue={onToggleValue}
+            doesEqualOrContain={doesEqualOrContain}
+            itemList={collections}
+            allowEntry={true}
+            title={"Collections"}
+          />
         </Menu>
       </ButtonGroup>
     </Box>

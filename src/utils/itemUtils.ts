@@ -7,6 +7,11 @@ import useMegaStore from "../store/MegaStore";
 import { setSearchQuery } from "./searchUtils";
 import { getReleaseDecade } from "../services/TMDB/utils/yearUtils";
 import { showContainsCollection } from "./collectionUtils";
+import {
+  finalSaveCustomData,
+  getCustomDataForShow,
+  addCustomDataForShow,
+} from "./customDataUtils";
 
 export function isShowInList(show: ShowbizItem | null, shows: ShowbizItem[]) {
   return !!getShowFromList(show, shows);
@@ -33,17 +38,20 @@ export function getShowFromList(
 export function addShow(show?: ShowbizItem | null) {
   if (!show) return;
   const shows = useMegaStore.getState().shows;
-  const isAlreadySaved = isShowInList(show, shows);
+
+  // already saved, move on
+  if (isShowInList(show, shows)) return;
 
   // add to/update cloud
   fire_saveShow(show).catch();
 
   // push to local list
-  if (!isAlreadySaved) {
-    shows.push(show);
-  }
+  shows.push(show);
 
-  // notify : something internal could have changed
+  // we need custom data as well
+  addCustomDataForShow(show);
+
+  // save to cloud and notify of change
   setShows(shows);
 }
 

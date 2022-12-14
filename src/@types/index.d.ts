@@ -16,7 +16,7 @@ type CustomDataItem = {
 
   //
   // VALUES
-  watchStatus: "started" | "finished" | "quit" | "new";
+  watchStatus: string;
   interestLevel?: number;
   userRating?: number;
   collections: string[];

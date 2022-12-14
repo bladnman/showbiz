@@ -1,6 +1,6 @@
 import React from "react";
-import { ShowPropOpt, SxPropOpt } from "../../../@types";
-import DetailsImageText from "./DetailsImageText";
+import { ShowPropOpt, SxPropOpt } from "@types";
+import DetailsImageText from "../DetailsImageText";
 
 export default function DetailsSeasonEpisodeCount({
   show,

@@ -1,11 +1,11 @@
 import { Stack } from "@mui/system";
-import DetailsYearTag from "../parts/DetailsYearTag";
-import DetailsSeasonEpisodeCount from "../parts/DetailsSeasonEpisodeCount";
-import DetailsShowTitle from "../parts/DetailsShowTitle";
-import DetailsGenreList from "../parts/DetailsGenreList";
-import DetailsDuration from "../parts/DetailsDuration";
-import DetailsBoxOffice from "../parts/DetailsBoxOffice";
-import DetailsDescriptionText from "../parts/DetailsDescriptionText";
+import DetailsYearTag from "../parts/details-displayables/DetailsYearTag";
+import DetailsSeasonEpisodeCount from "../parts/details-displayables/DetailsSeasonEpisodeCount";
+import DetailsShowTitle from "../parts/details-displayables/DetailsShowTitle";
+import DetailsGenreList from "../parts/details-displayables/DetailsGenreList";
+import DetailsDuration from "../parts/details-displayables/DetailsDuration";
+import DetailsBoxOffice from "../parts/details-displayables/DetailsBoxOffice";
+import DetailsDescriptionText from "../parts/details-displayables/DetailsDescriptionText";
 import React from "react";
 import { ShowPropOpt } from "@types";
 

@@ -7,7 +7,7 @@ import BoxRelative from "@components/box/BoxRelative";
 import BoxAbsolute from "@components/box/BoxAbsolute";
 import DetailsMetaLayout from "./DetailsMetaLayout";
 import DetailsPosterLayout from "./DetailsPosterLayout";
-import DetailsBackdropImage from "../parts/DetailsBackdropImage";
+import DetailsBackdropImage from "../parts/details-displayables/DetailsBackdropImage";
 import { GLASS_BACKDROP_FILTER } from "@CONST";
 
 export default function DetailsTwoPanelLayout({ show }: ShowPropOpt) {

@@ -15,11 +15,9 @@ export default function useActiveCustomDataList() {
 
   const shows = useMegaStore((state) => state.shows);
   const customDataList = useMegaStore((state) => state.customDataList);
-  return useMemo(
-    () =>
-      customDataList.filter((item) =>
-        shows.find((show) => show.id === item.id)
-      ),
-    [shows, customDataList]
-  );
+  return useMemo(() => {
+    return customDataList.filter((item) =>
+      shows.find((show) => show.id === item.id)
+    );
+  }, [shows, customDataList]);
 }

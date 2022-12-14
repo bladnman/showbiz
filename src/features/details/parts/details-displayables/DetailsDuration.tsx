@@ -2,7 +2,7 @@ import React from "react";
 import { Box } from "@mui/material";
 import { ShowPropOpt, SxPropOpt } from "@types";
 import { useMemo } from "react";
-import DetailsImageText from "./DetailsImageText";
+import DetailsImageText from "../DetailsImageText";
 
 export default function DetailsDuration({ show, sx }: ShowPropOpt & SxPropOpt) {
   const duration = useMemo(() => {

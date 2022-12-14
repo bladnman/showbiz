@@ -8,17 +8,24 @@ import {
   Timestamp,
   where,
 } from "firebase/firestore";
-import { CustomDataItem, ShowbizItem } from "../../../@types";
-import { getCustomDataForShow } from "../../../utils/customDataUtils";
+import { CustomDataItem, ShowbizItem } from "@types";
+import { getCustomDataForShow } from "@utils/customDataUtils";
 import { fireDb, showsCollection, customDataCollection } from "../firestore";
 import {
   FIRE_CUSTOM_DATA_COLLECTION_NAME,
   FIRE_SHOWS_COLLECTION_NAME,
 } from "../fire_const";
+import { CLOUD_SAVE_ENABLED } from "@CONST";
 
 export async function fire_saveShow(show: ShowbizItem) {
   // see if the show exists already
   const cloudShowDoc = await fire_getShowDocument(show);
+
+  // is fire-save enabled
+  if (!CLOUD_SAVE_ENABLED) {
+    console.log(`[🐽](fire_utils) [skipped] SAVING show`, show);
+    return;
+  }
 
   // update
   if (cloudShowDoc) {
@@ -29,6 +36,8 @@ export async function fire_saveShow(show: ShowbizItem) {
   else {
     // new show, needs new custom data
     const customData = getCustomDataForShow(show);
+    if (!customData) return;
+
     await fire_saveCustomData(customData);
     // and save the show
     addDoc(showsCollection, show).catch((e) =>
@@ -38,12 +47,19 @@ export async function fire_saveShow(show: ShowbizItem) {
 }
 
 export async function fire_saveCustomData(customData: CustomDataItem) {
+  if (!customData) return;
+
   customData.editedDate = Timestamp.fromDate(new Date());
 
   // find, if exists already
   const cloudCustomDataDoc = await fire_getCustomDataDocument(customData);
 
-  console.log(`[🐽](fire_utils) SAVING customData`, customData);
+  // is fire-save enabled
+  if (!CLOUD_SAVE_ENABLED) {
+    console.log(`[🐽](fire_utils) [skipped] SAVING customData`, customData);
+    return;
+  }
+
   // update
   if (cloudCustomDataDoc) {
     await setDoc(cloudCustomDataDoc, customData);

@@ -1,6 +1,6 @@
 import React from "react";
 import { Box } from "@mui/material";
-import AppSearchField from "../../../components/AppSearchField";
+import AppSearchField from "@components/AppSearchField";
 
 export default function DetailsSearchField(props: any) {
   return (

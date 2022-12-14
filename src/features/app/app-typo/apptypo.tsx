@@ -22,6 +22,7 @@ export const TypoSmallCapsBlack = styled(Typography)(({ theme }) => ({
 export const TypoScore = styled(Typography)(({ theme }) => ({
   fontFamily: ["Titan One", "san-serif"].join(","),
   fontSize: "5em",
+  lineHeight: 1.0,
 }));
 export const TypoRevenue = styled(Typography)(({ theme }) => ({
   fontFamily: ["Teko", "san-serif"].join(","),

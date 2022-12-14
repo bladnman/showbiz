@@ -1,12 +1,12 @@
 import React from "react";
 import { Box } from "@mui/material";
 import { useMemo } from "react";
-import { ShowPropOpt, SxPropOpt } from "../../../@types";
-import { TypoScore } from "../../app/app-typo/apptypo";
+import { ShowPropOpt, SxPropOpt } from "@types";
+import { TypoScore } from "../../../app/app-typo/apptypo";
 import { styled } from "@mui/material/styles";
-import { COLORS } from "../../app/app-theme/theme_const";
+import { COLORS } from "../../../app/app-theme/theme_const";
 
-const StyledText = styled(TypoScore)(() => ({
+const StyledText = styled<any>(TypoScore)(() => ({
   fontSize: "4em",
 
   /** INTERESTING OUTLINED TEXT */
@@ -28,9 +28,5 @@ export default function DetailsRatingDisplay({
   }, [show]);
 
   if (!rating) return null;
-  return (
-    <Box sx={sx} display={"flex"} justifyContent="center">
-      <StyledText>{rating}</StyledText>
-    </Box>
-  );
+  return <StyledText component={"div"}>{rating}</StyledText>;
 }
