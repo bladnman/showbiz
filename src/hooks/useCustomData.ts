@@ -1,4 +1,4 @@
-import { CustomDataItem, ShowbizItem, ShowPropOpt } from "@types";
+import { CustomDataItem, ShowbizItem } from "@types";
 import useShowTools from "./useShowTools";
 import { useEffect, useState } from "react";
 

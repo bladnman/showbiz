@@ -22,7 +22,7 @@ function GenreItem({ text }: { text: string }) {
   return (
     <DetailsImageText
       sx={{
-        paddingRight: 3,
+        paddingRight: 2,
         textShadow: IMAGE_TEXT_SHADOW,
       }}
       text={text}

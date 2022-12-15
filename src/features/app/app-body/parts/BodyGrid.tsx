@@ -18,8 +18,6 @@ export default function BodyGrid() {
 
   const handleShowClick = useCallback(
     (show: ShowbizItem, event?: MouseEvent<HTMLDivElement>) => {
-      console.log(`[🐽](AppBody) show`, show);
-      console.log(`[🐽](BodyGrid) event`, event);
       showSimilarShows(show);
     },
     []

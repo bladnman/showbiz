@@ -6,9 +6,12 @@ import { useWindowSize } from "@hooks/useWindowSize";
 import BoxRelative from "@components/box/BoxRelative";
 import BoxAbsolute from "@components/box/BoxAbsolute";
 import DetailsMetaLayout from "./DetailsMetaLayout";
-import DetailsPosterLayout from "./DetailsPosterLayout";
 import DetailsBackdropImage from "../parts/details-displayables/DetailsBackdropImage";
 import { GLASS_BACKDROP_FILTER } from "@CONST";
+import DetailsRatingDisplay from "@features/details/parts/details-displayables/DetailsRatingDisplay";
+import PosterTile from "@features/tiles/postertile/PosterTile";
+import DetailsAddButton from "@features/details/parts/details-interactables/DetailsAddButton";
+import DetailsWatchStatusButton from "@features/details/parts/details-interactables/DetailsWatchStatusButton";
 
 export default function DetailsTwoPanelLayout({ show }: ShowPropOpt) {
   const windowSize = useWindowSize();
@@ -53,7 +56,17 @@ export default function DetailsTwoPanelLayout({ show }: ShowPropOpt) {
             display="flex"
             flexDirection={"column"}
           >
-            <DetailsPosterLayout show={show} />
+            <Stack
+              direction={"column"}
+              spacing={1}
+              marginTop={2}
+              alignItems={"center"}
+            >
+              <DetailsRatingDisplay show={show} />
+              <PosterTile show={show} width={200} />
+              <DetailsAddButton show={show} />
+              <DetailsWatchStatusButton show={show} />
+            </Stack>
           </Box>
 
           {/* right-side

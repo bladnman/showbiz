@@ -1,17 +1,13 @@
-import { CustomDataItem, ShowbizItem } from "../@types";
+import { CustomDataItem, ShowbizItem } from "@types";
 import {
   fire_deleteShow,
   fire_saveShow,
-} from "../services/firestore/utils/fire_utils";
+} from "@services/firestore/utils/fire_utils";
 import useMegaStore from "../store/MegaStore";
 import { setSearchQuery } from "./searchUtils";
-import { getReleaseDecade } from "../services/TMDB/utils/yearUtils";
+import { getReleaseDecade } from "@services/TMDB/utils/yearUtils";
 import { showContainsCollection } from "./collectionUtils";
-import {
-  finalSaveCustomData,
-  getCustomDataForShow,
-  addCustomDataForShow,
-} from "./customDataUtils";
+import { addCustomDataForShow } from "./customDataUtils";
 
 export function isShowInList(show: ShowbizItem | null, shows: ShowbizItem[]) {
   return !!getShowFromList(show, shows);
