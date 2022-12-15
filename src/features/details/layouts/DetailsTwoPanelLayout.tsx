@@ -12,6 +12,8 @@ import DetailsRatingDisplay from "@features/details/parts/details-displayables/D
 import PosterTile from "@features/tiles/postertile/PosterTile";
 import DetailsAddButton from "@features/details/parts/details-interactables/DetailsAddButton";
 import DetailsWatchStatusButton from "@features/details/parts/details-interactables/DetailsWatchStatusButton";
+import { Typography } from "@mui/material";
+import DetailsExtras from "@features/details/DetailsExtras";
 
 export default function DetailsTwoPanelLayout({ show }: ShowPropOpt) {
   const windowSize = useWindowSize();
@@ -89,6 +91,10 @@ export default function DetailsTwoPanelLayout({ show }: ShowPropOpt) {
           </Stack>
         </Stack>
       </BoxRelative>
+      <Box>
+        <Typography>Hi</Typography>
+        <DetailsExtras />
+      </Box>
     </BoxRelative>
   );
 }

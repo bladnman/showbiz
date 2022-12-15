@@ -28,7 +28,12 @@ export default function DetailsMetaLayout({ show }: ShowPropOpt) {
         <DetailsDuration show={show} />
         <DetailsBoxOffice show={show} />
       </Stack>
-      <DetailsDescriptionText show={show} />
+      <DetailsDescriptionText
+        show={show}
+        defaultToClamped={false}
+        maxLines={3}
+        sx={{ fontSize: "1.2em" }}
+      />
     </Stack>
   );
 }
