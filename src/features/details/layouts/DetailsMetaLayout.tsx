@@ -8,26 +8,31 @@ import DetailsBoxOffice from "../parts/details-displayables/DetailsBoxOffice";
 import DetailsDescriptionText from "../parts/details-displayables/DetailsDescriptionText";
 import React from "react";
 import { ShowPropOpt } from "@types";
+import Shim from "@components/Shim";
 
 export default function DetailsMetaLayout({ show }: ShowPropOpt) {
   if (!show) return null;
   return (
-    <Stack direction={"column"}>
-      <Stack direction={"row"} spacing={5}>
+    <Stack direction={"column"} component={"div"}>
+      <Stack direction={"row"} spacing={5} component={"div"}>
         <DetailsYearTag show={show} />
         <DetailsSeasonEpisodeCount show={show} />
       </Stack>
-      <DetailsShowTitle
-        show={show}
-        sx={{
-          marginTop: 1,
-        }}
-      />
-      <Stack direction={"row"} spacing={5} height={"1.5em"} flexShrink={0}>
+      <Shim height={0.5} />
+      <DetailsShowTitle show={show} />
+      <Shim height={1} />
+      <Stack
+        direction={"row"}
+        spacing={5}
+        height={"1.5em"}
+        flexShrink={0}
+        component={"div"}
+      >
         <DetailsGenreList show={show} />
         <DetailsDuration show={show} />
         <DetailsBoxOffice show={show} />
       </Stack>
+      <Shim height={0.5} />
       <DetailsDescriptionText
         show={show}
         defaultToClamped={false}

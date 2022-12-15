@@ -36,6 +36,8 @@ type ShowbizItem = {
   genreIds?: number[];
   genres?: Genre[];
   imdbId?: string;
+  homepage?: string;
+  originalLanguage?: string;
 
   // tv items
   seasons?: Season[];

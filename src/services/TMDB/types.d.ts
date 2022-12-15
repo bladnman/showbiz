@@ -56,7 +56,7 @@ export type Country = {
   name: string;
 };
 export type Language = {
-  english_name: string;
+  englishName: string;
   iso6391: string;
   name: string;
 };
@@ -100,15 +100,6 @@ export type ShowImageCollection = ObjectBase & {
   posters?: ShowImage[];
   logos?: ShowImage[];
 };
-export type ShowImage = ObjectBase & {
-  aspectRatio?: number;
-  filePath?: string;
-  height?: number;
-  iso6391?: SoN;
-  voteAverage?: number;
-  voteCount?: number;
-  width?: number;
-};
 export type MovieVideoCollection = ObjectBase & {
   id?: number;
   results?: MovieVideo[];
@@ -138,16 +129,6 @@ export type Person = ObjectBase & {
   popularity?: number;
   profilePath?: ImagePath;
   knownFor: any;
-};
-export type Company = ObjectBase & {
-  description?: string;
-  headquarters?: string;
-  homepage?: string;
-  id?: number;
-  logoPath?: string;
-  name?: string;
-  originCountry?: string;
-  parentCompany?: null | Company;
 };
 export type Season = ObjectBase & {
   airDate?: string;
@@ -217,7 +198,7 @@ export type Tv = ShowBase & {
 };
 // https://developers.themoviedb.org/3/movies/get-movie-details
 export type Movie = ShowBase & {
-  belongsToCollection?: null | Object;
+  belongsToCollection?: null | object;
   budget?: number;
   imdbId?: SoN;
   originalTitle?: string;

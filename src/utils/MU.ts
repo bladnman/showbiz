@@ -19,6 +19,12 @@ export function pad(value: number | string, width: number, char?: string) {
     : new Array(width - value.length + 1).join(char ?? "0") + value;
 }
 
+export function isNoU(
+  value: string | boolean | number | object | undefined | null
+) {
+  return value === undefined || value === null;
+}
+
 export function fLeft(
   str: string | null | undefined,
   delim: string | null | undefined
@@ -35,6 +41,55 @@ export function fLeft(
     return str.substring(0, theSpot);
   }
   return "";
+}
+
+export function replaceFor(
+  string: string,
+  lookFor: string,
+  replaceWith: string
+) {
+  if (string === "") {
+    return "";
+  }
+
+  // bad lookfor
+  if (isNoU(lookFor)) {
+    return string;
+  }
+
+  // bad replaceWith
+  if (isNoU(replaceWith)) {
+    replaceWith = "";
+  }
+
+  if (lookFor === replaceWith) {
+    return string;
+  }
+
+  let inText = string,
+    outText = "",
+    holdText = "",
+    foundCount = 0,
+    theSpot = -1;
+  while (inText.indexOf(lookFor) > -1) {
+    foundCount++;
+    theSpot = inText.indexOf(lookFor);
+
+    if (outText.length > 0 || foundCount > 1) {
+      outText += replaceWith + inText.substring(0, theSpot);
+    } else {
+      outText = inText.substring(0, theSpot);
+    }
+
+    holdText = inText.substring(theSpot + lookFor.length, inText.length);
+    inText = holdText;
+  }
+  if (foundCount > 0) {
+    outText += replaceWith + inText;
+  } else {
+    outText = inText;
+  }
+  return outText;
 }
 
 export function fRight(

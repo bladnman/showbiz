@@ -37,7 +37,7 @@ const useMegaStore = create<MegaStore>()(
           IS_LOCAL_DEV,
           `http://localhost:${import.meta.env.VITE_DEV_SERVER_PORT}`
         ),
-        searchQuery: "griz",
+        searchQuery: null,
         searchType: null,
         drawerWidthOpen: DRAWER_WIDTH_OPEN,
         drawerWidth: DRAWER_WIDTH_OPEN,
