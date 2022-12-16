@@ -20,7 +20,6 @@ type CustomDataItem = {
   interestLevel?: number;
   userRating?: number;
   collections: string[];
-  streamItems?: StreamItem[];
 };
 type ShowbizItem = {
   // common
@@ -60,6 +59,7 @@ type ShowbizItem = {
   knownFor?: ShowbizItem[];
   knownForDepartment?: string[];
   profilePath?: string;
+  streamItems?: StreamItem[];
 
   // synthesized
   isMovie: boolean;

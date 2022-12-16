@@ -1,5 +1,10 @@
 import { useCallback, useMemo } from "react";
-import { addShow, isShowInList, updateShows } from "../utils/itemUtils";
+import {
+  addShow,
+  isShowInList,
+  updateShows,
+  updateShowInCloud,
+} from "@utils/itemUtils";
 import useMegaStore from "../store/MegaStore";
 import { ShowbizItem } from "@/@types";
 
@@ -19,6 +24,7 @@ export default function useShowTools() {
       addShow,
       updateShows,
       isShowSaved,
+      updateShowInCloud,
     }),
     [shows]
   );

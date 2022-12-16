@@ -1,5 +1,5 @@
 import { ShowbizItem } from "@types";
-import { getStreamService } from "./utils/streamUtils";
+import { getRapidApiKey, getStreamService } from "./utils/streamUtils";
 
 export default async function fetchWatchMode(
   show: ShowbizItem
@@ -10,7 +10,7 @@ export default async function fetchWatchMode(
     method: "GET",
     headers: {
       regions: "US",
-      "X-RapidAPI-Key": import.meta.env.VITE_RAPID_API_KEY,
+      "X-RapidAPI-Key": getRapidApiKey(),
       "X-RapidAPI-Host": "watchmode.p.rapidapi.com",
     },
   };
@@ -24,7 +24,6 @@ export default async function fetchWatchMode(
       if (response.message) {
         console.warn(response);
       }
-      console.log(`[🐽](fetchWatchMode) response`, response);
       return mapResponse(response);
     })
     .catch((err) => {
@@ -68,13 +67,13 @@ function mapResponse(response: ServerItem[]): StreamItem[] {
 
 function mapResponseItem(serverItem: ServerItem): StreamItem | null {
   const serviceDef = getStreamService(serverItem.name);
-  console.log(`[🐽](useStreamInfo) serviceDef`, serviceDef);
   if (!serviceDef) return null;
 
   return {
     name: serviceDef.name,
     link: serverItem.web_url,
     type: serverItem.type,
+    logo: serviceDef.logo,
   };
 }
 

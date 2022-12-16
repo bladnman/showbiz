@@ -1,10 +1,14 @@
 import React from "react";
-import { ShowbizItem, ShowPropOpt, SxPropOpt } from "@types";
-import Tag from "@components/text/Tag";
-import { getYearSpanDisplay } from "@services/TMDB/utils/yearUtils";
-import { Link, Stack, Typography } from "@mui/material";
-import NetworkIcon from "@components/icons/NetworkIcon";
+import { ShowbizItem, ShowPropOpt } from "@types";
+import { Box } from "@mui/material";
 import { replaceFor } from "@utils/MU";
+import {
+  GoogleIcon,
+  HomeIcon,
+  ImdbIcon,
+  RottenTomatoesIcon,
+} from "@/images/AppIcons";
+import IconPod from "@components/IconPod";
 
 type LinkDef = {
   title: string;
@@ -13,20 +17,38 @@ type LinkDef = {
 export default function DetailsLinkToSites({ show }: ShowPropOpt) {
   if (!show) return null;
 
-  const links: LinkDef[] = [];
-
-  show.homepage && links.push({ title: "Show Page", url: show.homepage });
-  links.push({ title: "Google", url: cleanGoogle(show) });
-  links.push({ title: "IMDB", url: cleanImdb(show) });
-  links.push({ title: "Rotten Tomatoes", url: cleanRt(show) });
+  const size = 25;
   return (
-    <Stack direction={"row"} component={"div"} spacing={2}>
-      {links.map((link) => (
-        <Link key={link.title} target="externalSite" href={link.url}>
-          {link.title}
-        </Link>
-      ))}
-    </Stack>
+    <Box>
+      <IconPod>
+        {show.homepage && (
+          <HomeIcon
+            width={size}
+            height={size}
+            link={show.homepage}
+            target={"externalSite"}
+          />
+        )}
+        <GoogleIcon
+          width={size}
+          height={size}
+          link={cleanGoogle(show)}
+          target={"externalSite"}
+        />
+        <ImdbIcon
+          width={size}
+          height={size}
+          link={cleanImdb(show)}
+          target={"externalSite"}
+        />
+        <RottenTomatoesIcon
+          width={size}
+          height={size}
+          link={cleanRt(show)}
+          target={"externalSite"}
+        />
+      </IconPod>
+    </Box>
   );
 }
 

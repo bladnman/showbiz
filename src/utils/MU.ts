@@ -173,3 +173,7 @@ export function millsFromDate(date: Date) {
 
   return 0;
 }
+
+export function randomItem<T>(arr: T[]) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}

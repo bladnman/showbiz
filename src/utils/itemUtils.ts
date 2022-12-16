@@ -51,6 +51,17 @@ export function addShow(show?: ShowbizItem | null) {
   setShows(shows);
 }
 
+export function updateShowInCloud(show?: ShowbizItem | null) {
+  if (!show) return;
+  const shows = useMegaStore.getState().shows;
+
+  // not a saved show, nothing we can do
+  if (!isShowInList(show, shows)) return;
+
+  // add to/update cloud
+  fire_saveShow(show).catch();
+}
+
 /**
  * remove show is used to remove a show from the collection,
  * as well as removing any saved data. Safe to call.

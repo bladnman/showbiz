@@ -1,16 +1,21 @@
 import React from "react";
-import { ShowPropOpt, SxPropOpt } from "@types";
-import Tag from "@components/text/Tag";
-import { getYearSpanDisplay } from "@services/TMDB/utils/yearUtils";
-import { Button, Stack } from "@mui/material";
-import NetworkIcon from "@components/icons/NetworkIcon";
+import { ShowPropOpt } from "@types";
+import { Button } from "@mui/material";
 import { showSimilarShows } from "@utils/itemUtils";
+import useMegaStore from "@store/MegaStore";
 
-export default function DetailsShowSimilar({
-  show,
-  sx,
-}: ShowPropOpt & SxPropOpt) {
+export default function DetailsShowSimilar({ show }: ShowPropOpt) {
+  const similarToShow = useMegaStore((state) => state.similarToShow);
+  const isShowingSimilarToThis = Boolean(show && similarToShow?.id === show.id);
+
   if (!show) return null;
 
-  return <Button onClick={() => showSimilarShows(show)}>show similar</Button>;
+  return (
+    <Button
+      disabled={isShowingSimilarToThis}
+      onClick={() => showSimilarShows(show)}
+    >
+      {isShowingSimilarToThis ? "showing similar" : "show similar"}
+    </Button>
+  );
 }

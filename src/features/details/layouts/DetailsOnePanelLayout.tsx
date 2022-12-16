@@ -13,11 +13,14 @@ import DetailsDuration from "@features/details/parts/details-displayables/Detail
 import DetailsBoxOffice from "@features/details/parts/details-displayables/DetailsBoxOffice";
 import DetailsYearTag from "@features/details/parts/details-displayables/DetailsYearTag";
 import DetailsSeasonEpisodeCount from "@features/details/parts/details-displayables/DetailsSeasonEpisodeCount";
+import DetailsMetaAdditionalLayout from "@features/details/layouts/DetailsMetaAdditionalLayout";
+import Shim from "@components/Shim";
+import DetailsShowSimilar from "@features/details/parts/details-displayables/DetailsShowSimilar";
 
 const COLLAPSED_LINE_MAX = 4;
 export default function DetailsOnePanelLayout({ show }: ShowPropOpt) {
   return (
-    <Box padding={3} paddingTop={9}>
+    <Box padding={3} paddingTop={9} paddingBottom={0}>
       <Stack direction={"row"} spacing={3}>
         {/* POSTER */}
         <Box flexShrink={0}>
@@ -82,7 +85,11 @@ export default function DetailsOnePanelLayout({ show }: ShowPropOpt) {
           defaultToClamped={false}
           maxLines={COLLAPSED_LINE_MAX}
         />
+        <Shim height={0.5} />
+        <DetailsMetaAdditionalLayout show={show} />
       </Box>
+      <Shim height={1} />
+      <DetailsShowSimilar show={show} />
     </Box>
   );
 }

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 27.1.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 511 511" style="enable-background:new 0 0 511 511;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#E0E0E0;}
+</style>
+<g id="cloud">
+	<path class="st0" d="M391.9,222.5C377.4,146,310.1,88.8,230.3,88.8c-80.5,0-148.6,58.1-162.1,136.4C28,238.2,0,275.9,0,319.1
+		c0,54.4,44.3,98.7,98.7,98.7h313.6c54.4,0,98.7-44.3,98.7-98.7C511,256.8,453.5,209.5,391.9,222.5z"/>
+</g>
+<path id="play_x5F_button" d="M288,255.6l-83.3-49.3c-10.9-6.5-24.8,1.4-24.8,14.2v98.7c0,12.7,13.9,20.6,24.8,14.2l83.3-49.3
+	C298.7,277.5,298.8,261.9,288,255.6z"/>
+</svg>

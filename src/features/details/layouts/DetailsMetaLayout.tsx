@@ -9,6 +9,10 @@ import DetailsDescriptionText from "../parts/details-displayables/DetailsDescrip
 import React from "react";
 import { ShowPropOpt } from "@types";
 import Shim from "@components/Shim";
+import DetailsLinkToSites from "@features/details/parts/details-displayables/DetailsLinkToSites";
+import DetailsOptionalStreamers from "@features/details/parts/details-interactables/DetailsOptionalStreamers";
+import DetailsLanguages from "@features/details/parts/details-displayables/DetailsLanguages";
+import DetailsMetaAdditionalLayout from "@features/details/layouts/DetailsMetaAdditionalLayout";
 
 export default function DetailsMetaLayout({ show }: ShowPropOpt) {
   if (!show) return null;
@@ -39,6 +43,9 @@ export default function DetailsMetaLayout({ show }: ShowPropOpt) {
         maxLines={3}
         sx={{ fontSize: "1.2em" }}
       />
+
+      <Shim height={0.5} />
+      <DetailsMetaAdditionalLayout show={show} />
     </Stack>
   );
 }

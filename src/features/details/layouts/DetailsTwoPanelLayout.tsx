@@ -12,10 +12,8 @@ import DetailsRatingDisplay from "@features/details/parts/details-displayables/D
 import PosterTile from "@features/tiles/postertile/PosterTile";
 import DetailsAddButton from "@features/details/parts/details-interactables/DetailsAddButton";
 import DetailsWatchStatusButton from "@features/details/parts/details-interactables/DetailsWatchStatusButton";
-import { Typography } from "@mui/material";
-import DetailsExtras from "@features/details/DetailsExtras";
-import CollapsableSection from "@components/collapsers/CollapsableSection";
-import { COLORS } from "@features/app/app-theme/theme_const";
+import DetailsShowSimilar from "@features/details/parts/details-displayables/DetailsShowSimilar";
+import Shim from "@components/Shim";
 
 export default function DetailsTwoPanelLayout({ show }: ShowPropOpt) {
   const windowSize = useWindowSize();
@@ -93,21 +91,26 @@ export default function DetailsTwoPanelLayout({ show }: ShowPropOpt) {
           </Stack>
         </Stack>
       </BoxRelative>
-      <CollapsableSection
-        defaultExpanded={false}
-        arrowAlign={"right"}
-        headerSx={{ backgroundColor: "rgba(0,0,0,0.3)", paddingX: 3 }}
-        headerChildren={
-          <Box flexGrow={1}>
-            <Typography color={COLORS.dim}>Enhanced Details</Typography>
-          </Box>
-        }
-        expandedChildren={
-          <Box paddingX={3}>
-            <DetailsExtras show={show} />
-          </Box>
-        }
-      />
+      {/*<CollapsableSection*/}
+      {/*  defaultExpanded={false}*/}
+      {/*  arrowAlign={"right"}*/}
+      {/*  headerSx={{ backgroundColor: "rgba(0,0,0,0.3)", paddingX: 3 }}*/}
+      {/*  headerChildren={*/}
+      {/*    <Box flexGrow={1}>*/}
+      {/*      <Typography color={COLORS.dim}>Enhanced Details</Typography>*/}
+      {/*    </Box>*/}
+      {/*  }*/}
+      {/*  expandedChildren={*/}
+      {/*    <Box paddingX={3}>*/}
+      {/*      <DetailsExtras show={show} />*/}
+      {/*    </Box>*/}
+      {/*  }*/}
+      {/*/>*/}
+
+      <Box paddingX={2}>
+        <Shim height={1} />
+        <DetailsShowSimilar show={show} />
+      </Box>
     </BoxRelative>
   );
 }

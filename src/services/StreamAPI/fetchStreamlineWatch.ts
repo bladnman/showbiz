@@ -78,7 +78,6 @@ const StreamLineWatchServices: Record<
   peacock: { alias: ["peacock"], name: "Peacock Premium", active: true },
   showtime: { alias: ["showtime"], name: "Showtime", active: true },
   // inactive
-  alias: ["//"],
   abc_free: { alias: ["abc_free"], name: "ABC", active: false },
   adult_swim_free: {
     alias: ["adult_swim_free"],

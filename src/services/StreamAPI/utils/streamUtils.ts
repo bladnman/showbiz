@@ -1,4 +1,4 @@
-import { replaceFor } from "@/utils/MU";
+import { randomItem, replaceFor } from "@/utils/MU";
 
 type StreamServiceDef = {
   name: string;
@@ -11,6 +11,12 @@ export function getStreamService(value: string) {
   if (!value) return undefined;
   const keyValue = replaceFor(value.toLowerCase(), " ", "");
   return StreamServices.find((srvc) => srvc.alias.includes(keyValue));
+}
+
+export function getRapidApiKey() {
+  return randomItem<string>(
+    import.meta.env.VITE_RAPID_API_KEY_LIST.split("|:|")
+  );
 }
 
 export const StreamServices: StreamServiceDef[] = [

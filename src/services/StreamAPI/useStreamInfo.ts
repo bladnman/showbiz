@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 import { ShowbizItem } from "@types";
 import Diary from "@utils/Diary";
 import fetchWatchMode from "@services/StreamAPI/fetchWatchMode";
-import { getStreamService } from "@services/StreamAPI/utils/streamUtils";
-import useCustomData from "@hooks/useCustomData";
+import useShowTools from "@/hooks/useShowTools";
 
 const promiseDiary = new Diary(300);
 
@@ -12,8 +11,7 @@ export default function useStreamInfo(
   show?: ShowbizItem | null
 ): StreamItem[] | undefined {
   const [streamItems, setStreamItems] = useState<StreamItem[]>();
-  const customData = useCustomData(show);
-
+  const { updateShowInCloud } = useShowTools();
 
   useEffect(() => {
     if (!enabled || !show) {
@@ -22,59 +20,29 @@ export default function useStreamInfo(
     }
 
     // use previous values from customData if available
-    // TODO: HERE!
-    // I don't want to store this on custom since that
-    // data is always valid. Needs to be stored on the
-    // show record since it has a TTL.
-    if (customData?.streamItems?.length) {
-      setStreamItems(customData?.streamItems);
+    if (show.streamItems?.length) {
+      setStreamItems(show.streamItems);
       return;
     }
 
     // time to do the pull
     const doFetch = async () => {
-      // const streamAvailabilityPromise = promiseDiary.readOrWrite(
-      //   `streamAvailability__${show.id}`,
-      //   () => fetchStreamAvailability(show)
-      // );
-      //
-      // const ottDetailsPromise = promiseDiary.readOrWrite(
-      //   `ottDetails__${show.id}`,
-      //   () => fetchOttDetails(show)
-      // );
-      //
       const watchModePromise = promiseDiary.readOrWrite(
         `watchMode__${show.id}`,
         () => fetchWatchMode(show)
       );
 
-      // BEST
-      // const streamlineWatchPromise = promiseDiary.readOrWrite(
-      //   `streamlineWatch__${show.id}`,
-      //   () => fetchStreamlineWatch(show)
-      // );
+      const [watchModeResults] = await Promise.all([watchModePromise]);
 
-      const [
-        // streamAvailabilityResults,
-        // ottDetailsResults,
-        watchModeResults,
-        // streamlineWatchResults,
-      ] = await Promise.all([
-        // streamAvailabilityPromise,
-        // ottDetailsPromise,
-        watchModePromise,
-        // streamlineWatchPromise,
-      ]);
+      // put items on show
+      show.streamItems = watchModeResults as StreamItem[];
+      updateShowInCloud(show); // only updates if a saved show
 
-      // console.log(`🐽 streamAvailabilityResults`, streamAvailabilityResults);
-      // console.log(`🐽 fetchedOTTInfo`, ottDetailsResults);
-      console.log(`🐽 watchModeResults`, watchModeResults);
-      // console.log(`🐽 streamlineWatchResults`, streamlineWatchResults);
-
-      setStreamItems(watchModeResults as StreamItem[]);
+      // save to state (for re-render)
+      setStreamItems(show.streamItems);
     };
     doFetch().catch();
-  }, [show, enabled, customData]);
+  }, [show, enabled]);
 
   return streamItems;
 }
