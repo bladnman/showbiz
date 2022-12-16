@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import useMegaStore from "../../../store/MegaStore";
-import { ShowbizItem } from "../../../@types";
+import { ShowbizItem } from "@types";
 import { getCleanedData } from "./useApi";
 import Diary from "../../../utils/Diary";
 

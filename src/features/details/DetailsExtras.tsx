@@ -5,6 +5,7 @@ import DetailsNetworks from "./parts/details-displayables/DetailsNetworks";
 import DetailsLinkToSites from "@features/details/parts/details-displayables/DetailsLinkToSites";
 import DetailsShowSimilar from "@features/details/parts/details-displayables/DetailsShowSimilar";
 import DetailsLanguages from "@features/details/parts/details-displayables/DetailsLanguages";
+import DetailsStreamers from "./parts/details-displayables/DetailsStreamers";
 
 export default function DetailsExtras({ show }: ShowPropOpt) {
   return (
@@ -20,6 +21,7 @@ export default function DetailsExtras({ show }: ShowPropOpt) {
         <DetailsShowSimilar show={show} />
         <DetailsLanguages show={show} />
       </Stack>
+      <DetailsStreamers show={show} />
     </Stack>
   );
 }

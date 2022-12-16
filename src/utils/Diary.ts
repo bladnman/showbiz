@@ -18,6 +18,12 @@ export default class Diary {
     return value;
   }
 
+  readOrWrite(key: string, createPromiseFn: () => Promise<unknown>) {
+    const previousPromise = this.read(key);
+    if (previousPromise) return previousPromise;
+    return this.write(key, createPromiseFn());
+  }
+
   // erase(key: string) {
   //   delete this.entries[key];
   // }

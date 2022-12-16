@@ -10,7 +10,6 @@ export default function DetailsLanguages({
   show,
   sx,
 }: ShowPropOpt & SxPropOpt) {
-  if (!show?.originalLanguage) return null;
   if (!show?.spokenLanguages) return null;
   const spoken = show.spokenLanguages.map((lang) => lang.englishName);
 

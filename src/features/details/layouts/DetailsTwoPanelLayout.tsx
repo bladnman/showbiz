@@ -12,16 +12,15 @@ import DetailsRatingDisplay from "@features/details/parts/details-displayables/D
 import PosterTile from "@features/tiles/postertile/PosterTile";
 import DetailsAddButton from "@features/details/parts/details-interactables/DetailsAddButton";
 import DetailsWatchStatusButton from "@features/details/parts/details-interactables/DetailsWatchStatusButton";
-import { IconButton, IconButtonProps, styled, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import DetailsExtras from "@features/details/DetailsExtras";
-import CollapseArea from "@components/collapsers/CollapseArea";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import CollapsableSection from "@components/collapsers/CollapsableSection";
 import { COLORS } from "@features/app/app-theme/theme_const";
 
 export default function DetailsTwoPanelLayout({ show }: ShowPropOpt) {
   const windowSize = useWindowSize();
   const backdropHeight = windowSize.height * 0.6;
+
   return (
     <BoxRelative
       height={"100%"}
@@ -95,7 +94,7 @@ export default function DetailsTwoPanelLayout({ show }: ShowPropOpt) {
         </Stack>
       </BoxRelative>
       <CollapsableSection
-        defaultExpanded={true}
+        defaultExpanded={false}
         arrowAlign={"right"}
         headerSx={{ backgroundColor: "rgba(0,0,0,0.3)", paddingX: 3 }}
         headerChildren={
