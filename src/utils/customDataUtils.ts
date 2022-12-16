@@ -1,5 +1,5 @@
-import { CustomDataItem, ShowbizItem } from "../@types";
-import { fire_saveCustomData } from "../services/firestore/utils/fire_utils";
+import { CustomDataItem, ShowbizItem } from "@types";
+import { fire_saveCustomData } from "@services/firestore/utils/fire_utils";
 import useMegaStore from "../store/MegaStore";
 import { Timestamp } from "firebase/firestore";
 

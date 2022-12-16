@@ -3,6 +3,7 @@ import { ShowbizItem } from "@types";
 import Diary from "@utils/Diary";
 import fetchWatchMode from "@services/StreamAPI/fetchWatchMode";
 import { getStreamService } from "@services/StreamAPI/utils/streamUtils";
+import useCustomData from "@hooks/useCustomData";
 
 const promiseDiary = new Diary(300);
 
@@ -11,10 +12,22 @@ export default function useStreamInfo(
   show?: ShowbizItem | null
 ): StreamItem[] | undefined {
   const [streamItems, setStreamItems] = useState<StreamItem[]>();
+  const customData = useCustomData(show);
+
 
   useEffect(() => {
     if (!enabled || !show) {
       setStreamItems(undefined);
+      return;
+    }
+
+    // use previous values from customData if available
+    // TODO: HERE!
+    // I don't want to store this on custom since that
+    // data is always valid. Needs to be stored on the
+    // show record since it has a TTL.
+    if (customData?.streamItems?.length) {
+      setStreamItems(customData?.streamItems);
       return;
     }
 
@@ -61,7 +74,7 @@ export default function useStreamInfo(
       setStreamItems(watchModeResults as StreamItem[]);
     };
     doFetch().catch();
-  }, [show, enabled]);
+  }, [show, enabled, customData]);
 
   return streamItems;
 }

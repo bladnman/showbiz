@@ -20,6 +20,7 @@ type CustomDataItem = {
   interestLevel?: number;
   userRating?: number;
   collections: string[];
+  streamItems?: StreamItem[];
 };
 type ShowbizItem = {
   // common

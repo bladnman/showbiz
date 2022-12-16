@@ -13,7 +13,7 @@ export default function DetailsStreamers({
   console.log(`[🐽](DetailsStreamers) streamItems`, streamItems);
   return (
     <Stack direction={"row"} component={"div"} spacing={3}>
-      {streamItems.map((streamItem, idx: number) => (
+      {streamItems.map((streamItem: StreamItem, idx: number) => (
         <StreamEntry
           streamItem={streamItem}
           key={`${streamItem.name}_${idx}`}
@@ -24,7 +24,6 @@ export default function DetailsStreamers({
 }
 
 function StreamEntry({ streamItem }: { streamItem: StreamItem }) {
-  console.log(`[🐽](DetailsStreamers) streamItem`, streamItem);
   const isPay = ["buy", "purchase", "rent"].includes(streamItem.type);
   const title = streamItem.name + (isPay ? " ($)" : "");
   if (!streamItem.link) {
