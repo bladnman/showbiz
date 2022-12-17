@@ -24,13 +24,22 @@ export default function DrawerList({ filter }: { filter: Filter }) {
           onClick={() => onClick && onClick(item)}
           key={`${item}_${idx}`}
           size={"small"}
-          startIcon={
-            isInFilter(item) ? (
-              <CircleIcon sx={{ color: COLORS.callout }} />
-            ) : null
-          }
         >
-          <Typography>{item}</Typography>
+          <Stack
+            direction={"row"}
+            component={"div"}
+            spacing={1.5}
+            alignItems={"center"}
+          >
+            <CircleIcon
+              sx={{
+                color: COLORS.callout,
+                opacity: isInFilter(item) ? 1.0 : 0,
+                fontSize: "10px",
+              }}
+            />
+            <Typography>{item}</Typography>
+          </Stack>
         </Button>
       ))}
     </Stack>

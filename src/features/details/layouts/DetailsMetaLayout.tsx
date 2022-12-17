@@ -13,14 +13,23 @@ import DetailsLinkToSites from "@features/details/parts/details-displayables/Det
 import DetailsOptionalStreamers from "@features/details/parts/details-interactables/DetailsOptionalStreamers";
 import DetailsLanguages from "@features/details/parts/details-displayables/DetailsLanguages";
 import DetailsMetaAdditionalLayout from "@features/details/layouts/DetailsMetaAdditionalLayout";
+import { Box } from "@mui/material";
+import DetailsCollectionList from "@features/details/parts/details-displayables/DetailsCollectionList";
 
 export default function DetailsMetaLayout({ show }: ShowPropOpt) {
   if (!show) return null;
   return (
     <Stack direction={"column"} component={"div"}>
-      <Stack direction={"row"} spacing={5} component={"div"}>
-        <DetailsYearTag show={show} />
-        <DetailsSeasonEpisodeCount show={show} />
+      <Stack
+        direction={"row"}
+        justifyContent={"space-between"}
+        component={"div"}
+      >
+        <Stack direction={"row"} spacing={5} component={"div"}>
+          <DetailsYearTag show={show} />
+          <DetailsSeasonEpisodeCount show={show} />
+        </Stack>
+        <DetailsCollectionList show={show} />
       </Stack>
       <Shim height={0.5} />
       <DetailsShowTitle show={show} />
@@ -36,6 +45,12 @@ export default function DetailsMetaLayout({ show }: ShowPropOpt) {
         <DetailsDuration show={show} />
         <DetailsBoxOffice show={show} />
       </Stack>
+      {show.originalLanguage !== "en" && (
+        <Box paddingTop={0.5}>
+          <DetailsLanguages show={show} />
+        </Box>
+      )}
+
       <Shim height={0.5} />
       <DetailsDescriptionText
         show={show}

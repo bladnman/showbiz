@@ -16,6 +16,8 @@ import DetailsSeasonEpisodeCount from "@features/details/parts/details-displayab
 import DetailsMetaAdditionalLayout from "@features/details/layouts/DetailsMetaAdditionalLayout";
 import Shim from "@components/Shim";
 import DetailsShowSimilar from "@features/details/parts/details-displayables/DetailsShowSimilar";
+import DetailsLanguages from "@features/details/parts/details-displayables/DetailsLanguages";
+import DetailsCollectionList from "@features/details/parts/details-displayables/DetailsCollectionList";
 
 const COLLAPSED_LINE_MAX = 4;
 export default function DetailsOnePanelLayout({ show }: ShowPropOpt) {
@@ -55,9 +57,19 @@ export default function DetailsOnePanelLayout({ show }: ShowPropOpt) {
         </Stack>
       </Stack>
 
-      <Box marginTop={2}>
+      <Box marginTop={1}>
+        <DetailsCollectionList show={show} />
+      </Box>
+
+      <Box marginTop={1}>
         <DetailsGenreList show={show} />
       </Box>
+
+      {show?.originalLanguage !== "en" && (
+        <Box paddingY={0.5}>
+          <DetailsLanguages show={show} />
+        </Box>
+      )}
 
       {/* TITLE & DESC */}
       <Box flexShrink={1}>
@@ -82,7 +94,7 @@ export default function DetailsOnePanelLayout({ show }: ShowPropOpt) {
 
         <DetailsDescriptionText
           show={show}
-          defaultToClamped={false}
+          defaultToClamped={true}
           maxLines={COLLAPSED_LINE_MAX}
         />
         <Shim height={0.5} />

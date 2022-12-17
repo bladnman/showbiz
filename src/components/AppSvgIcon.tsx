@@ -8,6 +8,7 @@ export type AppSvgIconProps = React.ComponentProps<"svg"> & {
 };
 export default function AppSvgIcon(
   props: {
+    // eslint-disable-line
     Icon: any;
   } & AppSvgIconProps
 ) {

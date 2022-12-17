@@ -10,7 +10,7 @@ import {
 import { Box, ButtonGroup, Menu } from "@mui/material";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
-import useCustomData from "@hooks/useCustomData";
+import useShowCustomData from "@hooks/useShowCustomData";
 import AppDropMenu from "@components/AppDropMenu";
 import useWatchStatusTools from "@hooks/useWatchStatusTools";
 import { GLASS_BACKDROP_FILTER } from "@CONST";
@@ -23,7 +23,7 @@ const DetailsWatchStatusButton = ({ show = null }: ShowPropOpt) => {
   const { watchStatuses, getWatchStatus, setWatchStatus } =
     useWatchStatusTools();
   const currentValue = getWatchStatus(show);
-  const customData = useCustomData(show);
+  const customData = useShowCustomData(show);
   const popupState = usePopupState({
     variant: "popover",
     popupId: "watchStatusOverflowMenu",
