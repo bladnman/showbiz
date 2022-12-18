@@ -1,4 +1,4 @@
-import { Filter, ShowbizItem } from "@types";
+import { FilterDef, ShowbizItem } from "@types";
 import { useFilter } from "./useFilter";
 import {
   getAllCollectionsForShows,
@@ -9,7 +9,7 @@ import { useMemo } from "react";
 export function useCollectionsFilter(
   shows: ShowbizItem[],
   collections: string[]
-): Filter {
+): FilterDef {
   const filterFn = (show: ShowbizItem, filterValue: string) => {
     return showContainsCollection(show, filterValue);
   };
@@ -22,5 +22,6 @@ export function useCollectionsFilter(
     title: "Collections",
     items: showsCollections,
     filterFn,
+    defaultExpanded: true,
   });
 }

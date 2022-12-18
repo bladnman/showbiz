@@ -1,3 +1,3 @@
 # showbiz
 
-A simple little project to view and organize TMDB items.
+A simple little project to view and organize TMDB allValues.

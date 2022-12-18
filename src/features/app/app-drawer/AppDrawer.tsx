@@ -4,7 +4,7 @@ import useMegaStore from "../../../store/MegaStore";
 import { toggleDrawer } from "../../../utils/appUtils";
 import { styled } from "@mui/material/styles";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import DrawerList from "./parts/DrawerList";
+import DrawerSection from "./DrawerSection";
 import { useDrawerFilters } from "./hooks/useDrawerFilters";
 import useShowTools from "../../../hooks/useShowTools";
 import useCollectionTools from "../../../hooks/useCollectionTools";
@@ -49,7 +49,7 @@ export default function AppDrawer() {
       <Divider />
       <Box paddingTop={3} p={2} role={"presentation"}>
         {filters.map((filter) => (
-          <DrawerList filter={filter} key={filter.title} />
+          <DrawerSection filter={filter} key={filter.title} />
         ))}
       </Box>
     </Drawer>

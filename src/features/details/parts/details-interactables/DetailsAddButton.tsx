@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback } from "react";
 import Button from "@mui/material/Button";
 import { ClickEvent, ShowPropOpt } from "@types";
 import { COLORS } from "../../../app/app-theme/theme_const";
@@ -15,11 +15,7 @@ import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import useShowTools from "@hooks/useShowTools";
 import AppDropMenu from "@components/AppDropMenu";
 import useCollectionTools from "@hooks/useCollectionTools";
-import {
-  getCollectionsForShow,
-  showContainsCollection,
-} from "@utils/collectionUtils";
-import useMegaStore from "@store/MegaStore";
+import { showContainsCollection } from "@utils/collectionUtils";
 
 const DetailsAddButton = ({ show = null }: ShowPropOpt) => {
   const { isShowSaved } = useShowTools();

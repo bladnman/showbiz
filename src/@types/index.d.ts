@@ -85,10 +85,16 @@ type KeyboardEvent = React.KeyboardEvent<
 type KidProps = {
   children?: React.ReactNode;
 };
-type Filter = {
-  items: string[];
+type FilterDef = {
+  // all filter values available in this Filter
+  allValues: string[];
+  // shows that match the selected filters of this Filter
+  // all active filters in this Filter
+  selectedValues: Set<string>;
   filteredShowsSet: Set<ShowbizItem>;
   title: string | null;
   onClick: (item: string, title?: string) => void;
-  filters: Set<string>;
+  onDeselectAll: () => void;
+  defaultExpanded: boolean;
+  isValueSelected: (item: string) => boolean;
 };

@@ -1,9 +1,9 @@
-import { Filter, ShowbizItem } from "@types";
+import { FilterDef, ShowbizItem } from "@types";
 import { useFilter } from "./useFilter";
 import { useMemo } from "react";
 import useWatchStatusTools from "@/hooks/useWatchStatusTools";
 
-export function useWatchStatusFilter(shows: ShowbizItem[]): Filter {
+export function useWatchStatusFilter(shows: ShowbizItem[]): FilterDef {
   const { getAllWatchStatusesForShows, showContainsWatchStatus } =
     useWatchStatusTools();
   const filterFn = (show: ShowbizItem, filterValue: string) => {
