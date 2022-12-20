@@ -8,14 +8,15 @@ import DrawerSection from "./DrawerSection";
 import { useDrawerFilters } from "./hooks/useDrawerFilters";
 import useShowTools from "../../../hooks/useShowTools";
 import useCollectionTools from "../../../hooks/useCollectionTools";
+import { SideBarIcon } from "@/images/AppIcons";
 
-export const DrawerHeader = styled("div")(({ theme }) => ({
+export const DrawerHeaderStyled = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
-  padding: theme.spacing(0, 1),
+  padding: theme.spacing(0, 2),
   // necessary for content to be below app bar
   ...theme.mixins.toolbar,
-  justifyContent: "flex-end",
+  // justifyContent: "flex-end",
 }));
 
 export default function AppDrawer() {
@@ -41,11 +42,11 @@ export default function AppDrawer() {
         },
       }}
     >
-      <DrawerHeader>
+      <DrawerHeaderStyled>
         <IconButton onClick={() => toggleDrawer()}>
-          <ChevronLeftIcon />
+          <SideBarIcon size={20} opacity={0.6} />
         </IconButton>
-      </DrawerHeader>
+      </DrawerHeaderStyled>
       <Divider />
       <Box paddingTop={3} p={2} role={"presentation"}>
         {filters.map((filter) => (

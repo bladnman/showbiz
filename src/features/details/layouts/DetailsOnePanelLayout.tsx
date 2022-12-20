@@ -38,28 +38,28 @@ export default function DetailsOnePanelLayout({ show }: ShowPropOpt) {
           alignItems={"center"}
           justifyContent={"center"}
         >
-          <Stack
-            flexShrink={0}
-            direction={"column"}
-            spacing={2}
-            alignItems={"center"}
-            justifyContent={"center"}
-          >
-            <DetailsRatingDisplay show={show} />
-            <Box flexGrow={0}>
-              <DetailsAddButton show={show} />
-            </Box>
-            <Box flexGrow={0}>
-              <DetailsWatchStatusButton show={show} />
-            </Box>
-            <DetailsBoxOffice show={show} />
-          </Stack>
+          {show && (
+            <Stack
+              flexShrink={0}
+              direction={"column"}
+              spacing={2}
+              alignItems={"center"}
+              justifyContent={"center"}
+            >
+              <DetailsRatingDisplay show={show} />
+              <Box flexGrow={0}>
+                <DetailsAddButton show={show} />
+              </Box>
+              <Box flexGrow={0}>
+                <DetailsWatchStatusButton show={show} />
+              </Box>
+              <DetailsBoxOffice show={show} />
+            </Stack>
+          )}
         </Stack>
       </Stack>
 
-      <Box marginTop={1}>
-        <DetailsCollectionList show={show} />
-      </Box>
+      <Box marginTop={1}>{show && <DetailsCollectionList show={show} />}</Box>
 
       <Box marginTop={1}>
         <DetailsGenreList show={show} />

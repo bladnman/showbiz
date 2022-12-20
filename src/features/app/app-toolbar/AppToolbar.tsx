@@ -14,6 +14,7 @@ import { toggleDrawer } from "../../../utils/appUtils";
 import { styled } from "@mui/material/styles";
 import { DRAWER_WIDTH_OPEN } from "../../../store/const";
 import ToolbarSearch from "./parts/ToolbarSearch";
+import { SideBarIcon } from "@/images/AppIcons";
 
 interface MyAppBarProps extends AppBarProps {
   open?: boolean;
@@ -70,7 +71,7 @@ export default function AppToolbar() {
             sx={{ ml: 0, mr: 1, ...(isDrawerOpen && { display: "none" }) }}
             onClick={onMenuClick}
           >
-            <MenuIcon />
+            <SideBarIcon size={20} opacity={0.6} />
           </IconButton>
           <Typography variant={"h6"}>{appName}</Typography>
           <ToolbarSearch />

@@ -8,8 +8,13 @@ import { setSearchQuery } from "./searchUtils";
 import { getReleaseDecade } from "@services/TMDB/utils/yearUtils";
 import { showContainsCollection } from "./collectionUtils";
 import { addCustomDataForShow } from "./customDataUtils";
+import { isNoU } from "@utils/MU";
 
-export function isShowInList(show: ShowbizItem | null, shows: ShowbizItem[]) {
+export function isShowInList(
+  show: ShowbizItem | null | undefined,
+  shows: ShowbizItem[]
+) {
+  if (!show) return false;
   return !!getShowFromList(show, shows);
 }
 
@@ -245,4 +250,78 @@ export function mergeObjects(
   object2: Record<string, unknown>
 ) {
   return { ...object1, ...object2 };
+}
+
+export function addToSelectedShows(show: ShowbizItem) {
+  const selectedShows = useMegaStore.getState().selectedShows;
+  const newSelectedShows = [...selectedShows, show];
+  useMegaStore.setState({
+    selectedShows: newSelectedShows,
+  });
+}
+
+export function removeFromSelectedShows(show: ShowbizItem) {
+  const selectedShows = useMegaStore.getState().selectedShows;
+  const newSelectedShows = selectedShows.filter((item) => item.id !== show.id);
+  useMegaStore.setState({
+    selectedShows: newSelectedShows,
+  });
+}
+
+export function clearSelectedShows() {
+  useMegaStore.setState({
+    selectedShows: [],
+  });
+}
+
+export function isShowSelected(show: ShowbizItem) {
+  const selectedShows = useMegaStore.getState().selectedShows;
+  return !!selectedShows.find((item) => item.id === show.id);
+}
+
+export function toggleShowSelection(show: ShowbizItem) {
+  if (isShowSelected(show)) {
+    removeFromSelectedShows(show);
+  } else {
+    addToSelectedShows(show);
+  }
+}
+
+export function selectShows(shows: ShowbizItem[]) {
+  useMegaStore.setState({
+    selectedShows: shows,
+  });
+}
+
+export function deselectShows(shows: ShowbizItem[]) {
+  const selectedShows = useMegaStore.getState().selectedShows;
+  const newSelectedShows = selectedShows.filter(
+    (item) => !shows.find((show) => show.id === item.id)
+  );
+  useMegaStore.setState({
+    selectedShows: newSelectedShows,
+  });
+}
+
+export function getPosterSize(width?: number, height?: number) {
+  if (!width || !height) {
+    // height only, return it
+    if (height) {
+      return {
+        width: height * 0.6666666666666666,
+        height,
+      };
+    }
+    if (width) {
+      return {
+        width,
+        height: width * 1.5,
+      };
+    }
+  }
+
+  return {
+    width,
+    height,
+  };
 }

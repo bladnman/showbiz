@@ -1,4 +1,4 @@
-import React, { ReactNode, useCallback, useRef } from "react";
+import React, { useCallback, useRef } from "react";
 import { AppBar, DialogContent, IconButton } from "@mui/material";
 import Box from "@mui/material/Box";
 import CloseIcon from "@mui/icons-material/Close";

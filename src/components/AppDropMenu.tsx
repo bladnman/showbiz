@@ -10,10 +10,12 @@ import { Stack } from "@mui/system";
 import Button from "@mui/material/Button";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
+import PendingIcon from "@mui/icons-material/Pending";
 
 type MenuProps = {
   onToggleValue: (value: string) => void;
-  doesEqualOrContain: (value: string) => boolean;
+  allEqualOrContain: (value: string) => boolean;
+  anyEqualOrContain?: (value: string) => boolean;
   placeholder?: string;
   title?: string;
   itemList: string[];
@@ -22,7 +24,8 @@ type MenuProps = {
 };
 export default function AppDropMenu(props: MenuProps) {
   const {
-    doesEqualOrContain,
+    allEqualOrContain,
+    anyEqualOrContain,
     onToggleValue,
     itemList,
     allowEntry = false,
@@ -45,7 +48,10 @@ export default function AppDropMenu(props: MenuProps) {
         <MenuItemForShow
           onClick={() => handleToggle(value)}
           value={value}
-          isSelected={doesEqualOrContain(value)}
+          isSelected={allEqualOrContain(value)}
+          isPartiallySelected={Boolean(
+            anyEqualOrContain && anyEqualOrContain(value)
+          )}
           key={value}
         />
       ))}
@@ -117,16 +123,29 @@ function MenuEntryField(props: MenuProps) {
 
 type MenuItemProps = {
   isSelected: boolean;
+  isPartiallySelected: boolean;
   value: string;
   onClick?: (value: string | undefined | null) => void;
 };
 
-function MenuItemForShow({ isSelected, value, onClick }: MenuItemProps) {
+function MenuItemForShow({
+  isSelected,
+  isPartiallySelected = false,
+  value,
+  onClick,
+}: MenuItemProps) {
+  const renderIcon = () => {
+    return isSelected ? (
+      <CheckCircleIcon />
+    ) : isPartiallySelected ? (
+      <PendingIcon />
+    ) : null;
+  };
   return (
     <MenuItem onClick={() => onClick && onClick(value)}>
       <Stack direction={"row"}>
         <Box pr={1} sx={{ width: "2em" }}>
-          {isSelected ? <CheckCircleIcon /> : null}
+          {renderIcon()}
         </Box>
         {value}
       </Stack>

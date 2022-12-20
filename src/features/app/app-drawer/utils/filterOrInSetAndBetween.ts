@@ -2,25 +2,23 @@ import { ShowbizItem } from "../../../../@types";
 
 export default function filterOrInSetAndBetween(
   sets: Set<ShowbizItem>[],
-  shows: ShowbizItem[]
+  allShows: ShowbizItem[]
 ): Set<ShowbizItem> {
   if (!sets) return new Set();
-  if (!shows) return new Set();
-  const anyIsFiltered = sets.some((set) => set.size < shows.length);
-  if (!anyIsFiltered) return new Set(shows);
+  if (!allShows) return new Set();
+  const anyIsFiltered = sets.some((set) => set.size < allShows.length);
+  if (!anyIsFiltered) return new Set(allShows);
 
-  let outSet = new Set<ShowbizItem>();
-  sets.forEach((set) => {
-    // first set: keep all
-    if (outSet.size < 1) {
-      outSet = set;
-    }
+  let finalShowSet = new Set<ShowbizItem>();
+  for (let i = 0; i < sets.length; i++) {
+    const filteredShowSet = sets[i];
+    // return empty set - no shows means show no shows
+    if (filteredShowSet.size === 0) return new Set();
+    // if all shows are filtered, no need to filter with this set
+    if (filteredShowSet.size === allShows.length) continue;
+    // intersection of sets
+    finalShowSet = new Set([...finalShowSet, ...filteredShowSet]);
+  }
 
-    // next sets: intersect
-    else {
-      outSet = new Set([...outSet].filter((show) => set.has(show)));
-    }
-  });
-
-  return outSet;
+  return finalShowSet;
 }

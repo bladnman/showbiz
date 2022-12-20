@@ -26,6 +26,7 @@ export function useDrawerFilters(shows: ShowbizItem[], collections: string[]) {
       ],
       shows
     );
+    console.log(`[🐽](useDrawerFilters) new Set()`, new Set());
     setBodyShows(Array.from(filteredShowsSet));
   }, [
     shows,

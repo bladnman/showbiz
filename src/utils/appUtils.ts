@@ -12,8 +12,16 @@ export function toggleDrawer() {
 }
 
 export function toggleSearchMode() {
-  // setSearchMode(!useMegaStore.getState().isDetailsOpen);
   showSearchFor(null);
+}
+
+export function toggleSelectMode() {
+  const newSelectMode = !useMegaStore.getState().isSelectMode;
+  const selectedShows = useMegaStore.getState().selectedShows;
+  useMegaStore.setState({
+    isSelectMode: !useMegaStore.getState().isSelectMode,
+    selectedShows: !newSelectMode ? [] : selectedShows,
+  });
 }
 
 export function setSearchMode(isEnabled: boolean) {

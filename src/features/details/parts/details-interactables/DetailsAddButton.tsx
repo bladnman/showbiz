@@ -87,7 +87,7 @@ const DetailsAddButton = ({ show = null }: ShowPropOpt) => {
         <Menu {...bindMenu(popupState)}>
           <AppDropMenu
             onToggleValue={onToggleValue}
-            doesEqualOrContain={doesEqualOrContain}
+            allEqualOrContain={doesEqualOrContain}
             itemList={collections}
             allowEntry={true}
             title={"Collections"}

@@ -37,7 +37,7 @@ let theme = createTheme({
     MuiDrawer: {
       styleOverrides: {
         paper: {
-          backgroundColor: COLORS.bg_front,
+          backgroundColor: COLORS.bg_drawer,
         },
       },
     },

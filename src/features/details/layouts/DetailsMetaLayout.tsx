@@ -9,8 +9,6 @@ import DetailsDescriptionText from "../parts/details-displayables/DetailsDescrip
 import React from "react";
 import { ShowPropOpt } from "@types";
 import Shim from "@components/Shim";
-import DetailsLinkToSites from "@features/details/parts/details-displayables/DetailsLinkToSites";
-import DetailsOptionalStreamers from "@features/details/parts/details-interactables/DetailsOptionalStreamers";
 import DetailsLanguages from "@features/details/parts/details-displayables/DetailsLanguages";
 import DetailsMetaAdditionalLayout from "@features/details/layouts/DetailsMetaAdditionalLayout";
 import { Box } from "@mui/material";

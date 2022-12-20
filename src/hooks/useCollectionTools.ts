@@ -10,10 +10,12 @@ import {
 import useActiveCustomDataList from "./useActiveCustomDataList";
 
 export default function useCollectionTools() {
-  const customDataList = useActiveCustomDataList();
+  const activeCustomDataList = useActiveCustomDataList();
+
   const collections = useMemo(() => {
-    return getAllCollections(customDataList);
-  }, [customDataList]);
+    return getAllCollections(activeCustomDataList);
+  }, [activeCustomDataList]);
+
   return useMemo(
     () => ({
       collections,

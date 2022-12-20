@@ -1,28 +1,16 @@
-import React from "react";
+import React, { MouseEvent } from "react";
 import { Box } from "@mui/material";
-import { MouseEvent, useMemo } from "react";
-import { ShowbizItem, ShowPropOpt, Size } from "@types";
-import { posterWidthToHeightRatio } from "../../../store/const";
+import { ShowbizItem, ShowPropOpt } from "@types";
+import { getPosterSize } from "@utils/itemUtils";
 
-export default function PosterTile({
-  show,
-  height,
-  width,
-  onClick,
-}: ShowPropOpt & {
+export type PosterTileProps = ShowPropOpt & {
   height?: number;
   width?: number;
   onClick?: (show: ShowbizItem, event?: MouseEvent<HTMLDivElement>) => void;
-}) {
-  const size = useMemo(() => {
-    const theSize = { width: width, height: height };
-    if (height) {
-      theSize.width = height * posterWidthToHeightRatio;
-    } else if (width) {
-      theSize.height = width / posterWidthToHeightRatio;
-    }
-    return theSize as Size;
-  }, [height, width]);
+};
+export default function PosterTile(props: PosterTileProps) {
+  const { show, height, width, onClick } = props;
+  const size = getPosterSize(width, height);
 
   const posterUrl = show?.posterPath ?? show?.profilePath;
 
@@ -41,7 +29,7 @@ export default function PosterTile({
       <div
         style={{
           backgroundImage: `url('${posterUrl}')`,
-          width: "100%",
+          width: size.width,
           height: size.height,
           backgroundPosition: "center",
           backgroundSize: "cover",

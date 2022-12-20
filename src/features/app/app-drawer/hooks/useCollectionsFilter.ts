@@ -23,5 +23,6 @@ export function useCollectionsFilter(
     items: showsCollections,
     filterFn,
     defaultExpanded: true,
+    areValuesEditable: true,
   });
 }

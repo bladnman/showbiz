@@ -17,10 +17,13 @@ export interface MegaStore {
   drawerWidthClosed: number;
   isDrawerOpen: boolean;
   isDetailsOpen: boolean;
+  collectionToRename: string | null;
+  isSelectMode: boolean;
   shows: ShowbizItem[];
   customDataList: CustomDataItem[];
   bodyShows: ShowbizItem[];
   bodyGroupBy?: string;
+  selectedShows: ShowbizItem[];
 }
 
 const IS_LOCAL_DEV = false; // start dev-server if true
@@ -44,7 +47,10 @@ const useMegaStore = create<MegaStore>()(
         drawerWidthClosed: 0,
         isDrawerOpen: true,
         isDetailsOpen: false,
+        collectionToRename: null,
+        isSelectMode: false,
         shows: [] as ShowbizItem[],
+        selectedShows: [] as ShowbizItem[],
       } as MegaStore)
   )
 );

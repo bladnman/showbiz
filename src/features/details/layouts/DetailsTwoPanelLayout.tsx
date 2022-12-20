@@ -58,17 +58,19 @@ export default function DetailsTwoPanelLayout({ show }: ShowPropOpt) {
             display="flex"
             flexDirection={"column"}
           >
-            <Stack
-              direction={"column"}
-              spacing={1}
-              marginTop={2}
-              alignItems={"center"}
-            >
-              <DetailsRatingDisplay show={show} />
-              <PosterTile show={show} width={200} />
-              <DetailsAddButton show={show} />
-              <DetailsWatchStatusButton show={show} />
-            </Stack>
+            {show && (
+              <Stack
+                direction={"column"}
+                spacing={1}
+                marginTop={2}
+                alignItems={"center"}
+              >
+                <DetailsRatingDisplay show={show} />
+                <PosterTile show={show} width={200} />
+                <DetailsAddButton show={show} />
+                <DetailsWatchStatusButton show={show} />
+              </Stack>
+            )}
           </Box>
 
           {/* right-side
@@ -91,21 +93,6 @@ export default function DetailsTwoPanelLayout({ show }: ShowPropOpt) {
           </Stack>
         </Stack>
       </BoxRelative>
-      {/*<CollapsableSection*/}
-      {/*  defaultExpanded={false}*/}
-      {/*  arrowAlign={"right"}*/}
-      {/*  headerSx={{ backgroundColor: "rgba(0,0,0,0.3)", paddingX: 3 }}*/}
-      {/*  headerChildren={*/}
-      {/*    <Box flexGrow={1}>*/}
-      {/*      <Typography color={COLORS.dim}>Enhanced Details</Typography>*/}
-      {/*    </Box>*/}
-      {/*  }*/}
-      {/*  expandedChildren={*/}
-      {/*    <Box paddingX={3}>*/}
-      {/*      <DetailsExtras show={show} />*/}
-      {/*    </Box>*/}
-      {/*  }*/}
-      {/*/>*/}
 
       <Box paddingX={2}>
         <Shim height={1} />

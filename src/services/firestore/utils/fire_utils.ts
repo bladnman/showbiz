@@ -47,18 +47,17 @@ export async function fire_saveShow(show: ShowbizItem) {
 }
 
 export async function fire_saveCustomData(customData: CustomDataItem) {
+  if (!CLOUD_SAVE_ENABLED) {
+    console.log(`[🐽](fire_utils) [skipped] SAVING customData`, customData);
+    return;
+  }
+
   if (!customData) return;
 
   customData.editedDate = Timestamp.fromDate(new Date());
 
   // find, if exists already
   const cloudCustomDataDoc = await fire_getCustomDataDocument(customData);
-
-  // is fire-save enabled
-  if (!CLOUD_SAVE_ENABLED) {
-    console.log(`[🐽](fire_utils) [skipped] SAVING customData`, customData);
-    return;
-  }
 
   // update
   if (cloudCustomDataDoc) {
@@ -93,6 +92,10 @@ export async function fire_deleteShow(show: ShowbizItem) {
   await Promise.all(deletePromises);
 }
 
+export async function fire_deleteCustomDataDocumentById(docId: string) {
+  return deleteDoc(doc(fireDb, FIRE_CUSTOM_DATA_COLLECTION_NAME, docId));
+}
+
 export async function fire_getShowDocument(show: ShowbizItem) {
   // find show in collection
   const q = query(showsCollection, where("id", "==", show.id));
@@ -106,15 +109,20 @@ export async function fire_getShowDocument(show: ShowbizItem) {
 }
 
 export async function fire_getCustomDataDocument(customData: CustomDataItem) {
+  const ids = await fire_getCustomDataDocumentIdList(customData.id);
+  if (ids.length < 1) return null;
+  return fire_getCustomDataDocumentWithDocId(ids[0]);
+}
+
+export async function fire_getCustomDataDocumentIdList(id: number) {
   // find doc in collection
-  const q = query(customDataCollection, where("id", "==", customData.id));
+  const q = query(customDataCollection, where("id", "==", id));
   const querySnapshotList = await getDocs(q);
 
   // not found
-  if (!querySnapshotList) return null;
+  if (!querySnapshotList) return [];
 
-  const snapDoc = querySnapshotList.docs[0];
-  return fire_getCustomDataDocumentWithDocId(snapDoc?.id);
+  return querySnapshotList.docs.map((doc) => doc.id);
 }
 
 export function fire_getShowDocumentWithDocId(docId: string) {

@@ -1,18 +1,25 @@
 import { Box } from "@mui/material";
 import React from "react";
+import { isNoU } from "@utils/MU";
 
 export type AppSvgIconProps = React.ComponentProps<"svg"> & {
   title?: string;
   link?: string;
   target?: string;
+  size?: number | string; // sets both height and width
+  width?: number | string;
+  height?: number | string;
 };
+const DEFAULT_SIZE = 20;
 export default function AppSvgIcon(
   props: {
     // eslint-disable-line
     Icon: any;
   } & AppSvgIconProps
 ) {
-  const { Icon, ...otherProps } = props;
+  const { Icon, size = DEFAULT_SIZE, width, height, ...otherProps } = props;
+  const finalHeight = !isNoU(height) ? height : size;
+  const finalWidth = !isNoU(width) ? width : size;
   return (
     <Box
       onClick={() => openLink(props.link, props.target)}
@@ -22,7 +29,7 @@ export default function AppSvgIcon(
       display="flex"
       alignItems={"center"}
     >
-      <Icon {...otherProps} />
+      <Icon width={finalWidth} height={finalHeight} {...otherProps} />
     </Box>
   );
 }

@@ -97,4 +97,5 @@ type FilterDef = {
   onDeselectAll: () => void;
   defaultExpanded: boolean;
   isValueSelected: (item: string) => boolean;
+  areValuesEditable: boolean;
 };

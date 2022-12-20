@@ -1,11 +1,11 @@
-import React from "react";
+import React, { MouseEvent, useMemo } from "react";
 import { Box, Grid } from "@mui/material";
-import { MouseEvent, useMemo } from "react";
-import { useWindowSize } from "../hooks/useWindowSize";
-import PosterTile from "../features/tiles/postertile/PosterTile";
+import { useWindowSize } from "@hooks/useWindowSize";
 import NotFoundTile from "./NotFoundTile";
 import useBreakSize from "../utils/useBreakSize";
 import { ShowbizItem } from "@types";
+import SelectablePosterTile from "@features/tiles/postertile/SelectablePosterTile";
+import useShowTools from "@hooks/useShowTools";
 
 export default function ShowGrid({
   shows,
@@ -16,6 +16,8 @@ export default function ShowGrid({
 }) {
   const windowSize = useWindowSize();
   const { isXs, isSm, isMd, isLg, isXl } = useBreakSize();
+
+  const { isShowSelected } = useShowTools();
 
   const numberOfColumns = useMemo(() => {
     if (isXs) {
@@ -45,7 +47,8 @@ export default function ShowGrid({
             md={12 / numberOfColumns}
             key={show.id}
           >
-            <PosterTile
+            <SelectablePosterTile
+              selected={isShowSelected(show)}
               show={show}
               key={show.id}
               width={tileWidth}
