@@ -7,6 +7,7 @@ import {
 } from "./customDataUtils";
 import { addShow } from "@utils/itemUtils";
 import useMegaStore from "@store/MegaStore";
+import { sortAlphaNumeric } from "@utils/helpers";
 
 export function getAllCollections(customDataList: CustomDataItem[]): string[] {
   if (!customDataList || customDataList.length === 0) return [];
@@ -16,7 +17,7 @@ export function getAllCollections(customDataList: CustomDataItem[]): string[] {
       item.collections &&
       item.collections.forEach((collection) => set.add(collection))
   );
-  return Array.from(set).sort();
+  return Array.from(set).sort(sortAlphaNumeric);
 }
 
 export function getAllCollectionsForShows(shows: ShowbizItem[]): string[] {
@@ -28,12 +29,12 @@ export function getAllCollectionsForShows(shows: ShowbizItem[]): string[] {
       item.collections &&
       item.collections.forEach((collection) => set.add(collection))
   );
-  return Array.from(set).sort();
+  return Array.from(set).sort(sortAlphaNumeric);
 }
 
 export function getCollectionsForShow(show: ShowbizItem | null): string[] {
   if (!show) return [];
-  return getAllCollectionsForShows([show]);
+  return getAllCollectionsForShows([show]).sort(sortAlphaNumeric);
 }
 
 export function showContainsCollection(
@@ -46,13 +47,19 @@ export function showContainsCollection(
   return customData.collections.includes(collection);
 }
 
-export function addCollection(
+export function showHasCollections(show: ShowbizItem | null): boolean {
+  const customData = getCustomDataForShow(show);
+  if (!customData) return false;
+  return customData.collections.length > 0;
+}
+
+export async function addCollection(
   show: ShowbizItem,
   collectionName: string,
   doCloudSave = true
 ) {
   // this needs to be a show before it gets collections
-  addShow(show);
+  await addShow(show);
 
   const customData = getCustomDataForShow(show);
   if (!customData) return;
@@ -60,10 +67,10 @@ export function addCollection(
   const set = new Set<string>(customData.collections);
   set.add(collectionName.toLowerCase());
   customData.collections = Array.from(set).sort();
-  doCloudSave && finalSaveCustomData(customData);
+  doCloudSave && (await finalSaveCustomData(customData));
 }
 
-export function removeCollection(
+export async function removeCollection(
   show: ShowbizItem,
   collectionName: string,
   doCloudSave = true
@@ -74,10 +81,10 @@ export function removeCollection(
   const set = new Set<string>(customData.collections);
   set.delete(collectionName.toLowerCase());
   customData.collections = Array.from(set).sort();
-  doCloudSave && finalSaveCustomData(customData);
+  doCloudSave && (await finalSaveCustomData(customData));
 }
 
-export function toggleCollection(
+export async function toggleCollection(
   show: ShowbizItem,
   collectionName: string,
   doCloudSave = true
@@ -87,13 +94,13 @@ export function toggleCollection(
 
   const set = new Set<string>(customData.collections);
   if (set.has(collectionName.toLowerCase())) {
-    removeCollection(show, collectionName, doCloudSave);
+    await removeCollection(show, collectionName, doCloudSave);
   } else {
-    addCollection(show, collectionName, doCloudSave);
+    await addCollection(show, collectionName, doCloudSave);
   }
 }
 
-export function renameCollection(
+export async function renameCollection(
   oldCollectionName: string,
   newCollectionName: string,
   doCloudSave = true
@@ -101,15 +108,19 @@ export function renameCollection(
   // we need to go through ALL custom data
   const customDataList = getAllCustomDataList(); // we do really need ALL (including non-active)
 
+  const savePromises: Promise<void>[] = [];
   customDataList.forEach((customData) => {
     const set = new Set<string>(customData.collections);
     if (set.has(oldCollectionName.toLowerCase())) {
       set.delete(oldCollectionName.toLowerCase());
       set.add(newCollectionName.toLowerCase());
       customData.collections = Array.from(set).sort();
-      doCloudSave && finalSaveCustomData(customData);
+      if (doCloudSave) {
+        savePromises.push(finalSaveCustomData(customData));
+      }
     }
   });
+  await Promise.all(savePromises);
 }
 
 export function setCollectionToRename(collectionName: string) {

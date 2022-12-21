@@ -12,7 +12,7 @@ export function useGenreFilter(shows: ShowbizItem[]): FilterDef {
 
   return useFilter({
     title: "Genres",
-    items: genres,
+    filterValues: genres,
     filterFn,
   });
 }

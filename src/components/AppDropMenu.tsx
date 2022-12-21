@@ -81,6 +81,7 @@ function MenuEntryField(props: MenuProps) {
   const handleAdd = useCallback(() => {
     if (inputFieldRef.current?.value) {
       onToggleValue(inputFieldRef.current.value);
+      setFieldValue("");
     }
   }, []);
   return (

@@ -3,7 +3,7 @@ import { Box, Stack } from "@mui/material";
 import { SxPropOpt } from "@types";
 import GroupByTool from "./GroupByTool";
 import { GLASS_BACKDROP_FILTER } from "@CONST";
-import SelectionTools from "@features/app/app-body/parts/SelectionTools";
+import SelectionTools from "@features/app/app-body/parts/selection-tools/SelectionTools";
 
 export default function BodyToolbar({ sx }: SxPropOpt) {
   return (

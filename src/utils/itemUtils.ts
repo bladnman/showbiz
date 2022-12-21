@@ -7,7 +7,10 @@ import useMegaStore from "../store/MegaStore";
 import { setSearchQuery } from "./searchUtils";
 import { getReleaseDecade } from "@services/TMDB/utils/yearUtils";
 import { showContainsCollection } from "./collectionUtils";
-import { addCustomDataForShow } from "./customDataUtils";
+import {
+  addCustomDataForShow,
+  markCustomDataListAsChanged,
+} from "./customDataUtils";
 import { isNoU } from "@utils/MU";
 
 export function isShowInList(
@@ -36,7 +39,7 @@ export function getShowFromList(
  * saved. Safe to call.
  * @param show
  */
-export function addShow(show?: ShowbizItem | null) {
+export async function addShow(show?: ShowbizItem | null) {
   if (!show) return;
   const shows = useMegaStore.getState().shows;
 
@@ -44,13 +47,13 @@ export function addShow(show?: ShowbizItem | null) {
   if (isShowInList(show, shows)) return;
 
   // add to/update cloud
-  fire_saveShow(show).catch();
+  await fire_saveShow(show);
 
   // push to local list
   shows.push(show);
 
   // we need custom data as well
-  addCustomDataForShow(show);
+  await addCustomDataForShow(show);
 
   // save to cloud and notify of change
   setShows(shows);
@@ -72,18 +75,29 @@ export function updateShowInCloud(show?: ShowbizItem | null) {
  * as well as removing any saved data. Safe to call.
  * @param show
  */
-export function removeShow(show?: ShowbizItem | null) {
+export async function removeShow(show?: ShowbizItem | null) {
   if (!show) return;
   const shows = useMegaStore.getState().shows;
 
   // only do work if this show is known?
   if (isShowInList(show, shows)) {
-    fire_deleteShow(show).catch((er) =>
-      console.error("Problem deleting from cloud!", er)
-    );
+    await fire_deleteShow(show);
   }
 
   setShows(shows.filter((item) => item.id !== show.id));
+  markCustomDataListAsChanged();
+}
+
+export async function removeShows(shows?: ShowbizItem[]) {
+  if (!shows || shows.length < 1) return;
+
+  const removePromises: Promise<void>[] = [];
+  shows.forEach((show) => removePromises.push(fire_deleteShow(show)));
+  await Promise.all(removePromises);
+
+  const allShows = useMegaStore.getState().shows;
+  setShows(allShows.filter((show) => shows.indexOf(show) < 0));
+  markCustomDataListAsChanged();
 }
 
 /**

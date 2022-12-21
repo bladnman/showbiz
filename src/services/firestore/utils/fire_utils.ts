@@ -40,9 +40,7 @@ export async function fire_saveShow(show: ShowbizItem) {
 
     await fire_saveCustomData(customData);
     // and save the show
-    addDoc(showsCollection, show).catch((e) =>
-      console.error("Error adding show: ", e)
-    );
+    await addDoc(showsCollection, show);
   }
 }
 
@@ -66,7 +64,7 @@ export async function fire_saveCustomData(customData: CustomDataItem) {
 
   // save new
   else {
-    addDoc(customDataCollection, customData).catch((e) =>
+    await addDoc(customDataCollection, customData).catch((e) =>
       console.error("Error adding custom data: ", e)
     );
   }

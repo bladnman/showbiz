@@ -14,13 +14,13 @@ export function useCollectionsFilter(
     return showContainsCollection(show, filterValue);
   };
 
-  const showsCollections = useMemo(() => {
+  const showCollectionValues = useMemo(() => {
     return getAllCollectionsForShows(shows);
   }, [shows, collections]);
 
   return useFilter({
     title: "Collections",
-    items: showsCollections,
+    filterValues: showCollectionValues,
     filterFn,
     defaultExpanded: true,
     areValuesEditable: true,

@@ -2,7 +2,7 @@ import React from "react";
 import { Button, IconButton, Stack, Typography } from "@mui/material";
 import CircleIcon from "@mui/icons-material/Circle";
 import { COLORS } from "@features/app/app-theme/theme_const";
-import { FilterDef } from "@types";
+import { ClickEvent, FilterDef } from "@types";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { bindTrigger, usePopupState } from "material-ui-popup-state/hooks";
 import CollectionItemOptionsMenu from "@features/app/app-drawer/parts/CollectionItemOptionsMenu";
@@ -40,7 +40,9 @@ export default function DrawerFilterRow({
     >
       <Button
         style={{ justifyContent: "flex-start" }}
-        onClick={() => onClick?.(value)}
+        onClick={(event: ClickEvent) => {
+          onClick?.({ event, item: value });
+        }}
         size={"small"}
         fullWidth
       >

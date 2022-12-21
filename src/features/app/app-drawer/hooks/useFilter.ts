@@ -1,10 +1,10 @@
-import { FilterDef, ShowbizItem } from "../../../../@types";
+import { ClickEvent, FilterDef, ShowbizItem } from "@types";
 import useShowTools from "../../../../hooks/useShowTools";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import useCollectionTools from "@hooks/useCollectionTools";
 
 type FilterProps = {
-  items: string[];
+  filterValues: string[];
   title: string | null;
   filterFn: (show: ShowbizItem, filterValue: string) => boolean;
   defaultExpanded?: boolean;
@@ -14,7 +14,7 @@ type FilterProps = {
 export function useFilter(props: FilterProps): FilterDef {
   const {
     title,
-    items,
+    filterValues,
     filterFn,
     defaultExpanded,
     areValuesEditable = false,
@@ -24,12 +24,26 @@ export function useFilter(props: FilterProps): FilterDef {
   const { collections } = useCollectionTools();
 
   const handleClick = useCallback(
-    (value: string) => {
-      if (selectedValues.has(value)) {
-        selectedValues.delete(value);
+    ({ item, event }: { item: string; title?: string; event?: ClickEvent }) => {
+      const isMetaClick = event?.metaKey || event?.ctrlKey;
+      const wasPreviouslySelected = selectedValues.has(item);
+
+      // ADD TO SELECTION - meta-click
+      if (isMetaClick) {
+        if (wasPreviouslySelected) {
+          selectedValues.delete(item);
+        } else {
+          selectedValues.add(item);
+        }
       } else {
-        selectedValues.add(value);
+        const previousSelectionCount = selectedValues.size;
+        // REPLACE SELECTION - no meta-click
+        selectedValues.clear();
+        if (!wasPreviouslySelected || previousSelectionCount > 1) {
+          selectedValues.add(item);
+        }
       }
+
       setSelectedValues(new Set(selectedValues));
     },
     [selectedValues, collections]
@@ -59,9 +73,19 @@ export function useFilter(props: FilterProps): FilterDef {
     return !!selectedValues && selectedValues.has(value);
   };
 
+  // remove no longer valid "selected" values
+  useEffect(() => {
+    const validSelectedItems = filterValues.filter((item) =>
+      selectedValues.has(item)
+    );
+    if (validSelectedItems.length !== selectedValues.size) {
+      setSelectedValues(new Set(validSelectedItems));
+    }
+  }, [filterValues, selectedValues]);
+
   return {
     title,
-    allValues: items,
+    allValues: filterValues,
     onClick: handleClick,
     onDeselectAll: handleDeselectAll,
     selectedValues,

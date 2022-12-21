@@ -5,6 +5,14 @@ import {
   getCustomDataListForShows,
 } from "./customDataUtils";
 
+export const WATCH_STATUS_VALUES = [
+  "new",
+  "started",
+  "finished",
+  "waiting",
+  "dropped",
+];
+
 export function getAllWatchStatuses(
   customDataList: CustomDataItem[]
 ): string[] {
@@ -36,4 +44,10 @@ export function setWatchStatus(show: ShowbizItem | null, value: string) {
 
   customData.watchStatus = value;
   finalSaveCustomData(customData);
+}
+
+export function sortAccordingToConstant(list: string[]): string[] {
+  return list.sort(
+    (a, b) => WATCH_STATUS_VALUES.indexOf(a) - WATCH_STATUS_VALUES.indexOf(b)
+  );
 }

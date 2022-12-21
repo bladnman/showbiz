@@ -30,7 +30,7 @@ export function getCustomDataForShow(
   };
 }
 
-export function addCustomDataForShow(show: ShowbizItem | null) {
+export async function addCustomDataForShow(show: ShowbizItem | null) {
   if (!show) return;
 
   const customDataList = getAllCustomDataList();
@@ -52,7 +52,7 @@ export function addCustomDataForShow(show: ShowbizItem | null) {
 
   customDataList.push(newData);
 
-  finalSaveCustomData(newData);
+  await finalSaveCustomData(newData);
 }
 
 export function getCustomDataListForShows(shows: ShowbizItem[]) {
@@ -74,9 +74,9 @@ export function markCustomDataListAsChanged() {
   });
 }
 
-export function finalSaveCustomData(customData: CustomDataItem | null) {
+export async function finalSaveCustomData(customData: CustomDataItem | null) {
   if (!customData) return;
-  fire_saveCustomData(customData).catch();
+  await fire_saveCustomData(customData);
   markCustomDataListAsChanged();
 }
 
@@ -86,7 +86,10 @@ export function getDuplicateItemIds(): Set<number> {
     (customData) => countOccurrencesOfItem(customData) > 1
   );
   const idSet = new Set<number>();
-  duplicateItems.forEach((item) => idSet.add(item.id));
+  duplicateItems.forEach((item) => {
+    idSet.add(item.id);
+    console.log(`[🐽](customDataUtils) DUPE`, item.name);
+  });
   return idSet;
 }
 
@@ -110,7 +113,7 @@ export function getOccurrencesOfDataForId(id: number) {
  * At this point we will call it through a custom dev command.
  */
 let _dedupe_called = false;
-const REALLY_DELETE = false;
+const REALLY_DELETE = true;
 
 export async function removeAllDupes() {
   if (_dedupe_called) return;

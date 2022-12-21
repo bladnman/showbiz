@@ -13,7 +13,7 @@ export function useDecadeFilter(shows: ShowbizItem[]): FilterDef {
 
   return useFilter({
     title: "Decades",
-    items: decades,
+    filterValues: decades,
     filterFn,
   });
 }

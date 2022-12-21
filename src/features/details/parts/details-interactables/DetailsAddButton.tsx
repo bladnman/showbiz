@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import Button from "@mui/material/Button";
-import { ClickEvent, ShowPropOpt } from "@types";
+import { ClickEvent, ShowbizItem, ShowPropOpt } from "@types";
 import { COLORS } from "../../../app/app-theme/theme_const";
 import { addShow, removeShow } from "@utils/itemUtils";
 import {
@@ -16,24 +16,33 @@ import useShowTools from "@hooks/useShowTools";
 import AppDropMenu from "@components/AppDropMenu";
 import useCollectionTools from "@hooks/useCollectionTools";
 import { showContainsCollection } from "@utils/collectionUtils";
+import { useAsyncCallback } from "react-use-async-callback";
 
 const DetailsAddButton = ({ show = null }: ShowPropOpt) => {
   const { isShowSaved } = useShowTools();
   const isSaved = isShowSaved(show);
-  const { collections, toggleCollection, getCollectionsForShow } =
-    useCollectionTools();
+  const { collections, toggleCollection } = useCollectionTools();
 
   const popupState = usePopupState({
     variant: "popover",
     popupId: "ctaOverflowMenu",
   });
 
-  const handleButtonClick = useCallback(
+  const [toggleValueAsync] = useAsyncCallback(
+    async (show: ShowbizItem, value: string) => {
+      await addShow(show);
+      // then change collection values
+      await toggleCollection(show, value);
+    },
+    []
+  );
+
+  const handleAddRemoveButtonClick = useCallback(
     (event: ClickEvent) => {
       if (isSaved) {
-        removeShow(show);
+        removeShow(show).catch();
       } else {
-        addShow(show);
+        addShow(show).catch();
       }
       event.stopPropagation();
     },
@@ -42,11 +51,7 @@ const DetailsAddButton = ({ show = null }: ShowPropOpt) => {
   const onToggleValue = useCallback(
     (value: string | undefined | null) => {
       if (!value || !show) return;
-      // add the show first (in case it's new)
-      addShow(show);
-      // then change collection values
-      toggleCollection(show, value);
-      // focusOnField();
+      toggleValueAsync(show, value).catch();
     },
     [show, addShow]
   );
@@ -63,7 +68,7 @@ const DetailsAddButton = ({ show = null }: ShowPropOpt) => {
     <Box flex={1} sx={{ display: "flex" }}>
       <ButtonGroup sx={{ flexGrow: 1 }}>
         <Button
-          onClick={handleButtonClick}
+          onClick={handleAddRemoveButtonClick}
           variant="contained"
           endIcon={isSaved ? <DeleteIcon /> : <AddIcon />}
           sx={{

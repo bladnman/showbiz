@@ -17,7 +17,6 @@ export default async function fetchStreamlineWatch(show: ShowbizItem) {
   )
     .then((response) => response.json())
     .then((response) => {
-      console.log(`[🐽](fetchStreamlineWatch) response`, response);
       const first = response && response[0];
       return patchStreamlineWatchSourceList(
         first?.sources as StreamlineServerItem[]

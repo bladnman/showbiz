@@ -19,7 +19,13 @@ export default function DrawerCollapsableSection(props: DrawerSectionProps) {
   const isRightClickMenuShowing = popupState.isOpen;
   const hasSelectedValues = selectedValues.size > 0;
   return (
-    <Box>
+    <Box
+      sx={{
+        "&:hover": {
+          backgroundColor: "rgba(255, 255, 255, 0.03)",
+        },
+      }}
+    >
       <CollapsableSection
         defaultExpanded={Boolean(defaultExpanded)}
         arrowAlign={"right"}

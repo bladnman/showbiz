@@ -6,12 +6,17 @@ import AppSnackShop from "@features/app/app-snacks/AppSnackShop";
 import AppToolbar from "@features/app/app-toolbar/AppToolbar";
 import { Box } from "@mui/material";
 import AppKeyboardHandler from "@features/app/app-keyboard/AppKeyboardHandler";
-import { checkForCustomDataDuplicates } from "@utils/customDataUtils";
+import {
+  checkForCustomDataDuplicates,
+  removeAllDupes,
+} from "@utils/customDataUtils";
 
 export default function MainUI() {
   useEffect(() => {
     checkForCustomDataDuplicates();
-    // removeAllDupes
+    // removeAllDupes().then(() => {
+    //   console.log("done");
+    // });
   }, []);
   return (
     <>

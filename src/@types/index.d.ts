@@ -93,9 +93,25 @@ type FilterDef = {
   selectedValues: Set<string>;
   filteredShowsSet: Set<ShowbizItem>;
   title: string | null;
-  onClick: (item: string, title?: string) => void;
+  onClick: ({
+    item,
+    title,
+    event,
+  }: {
+    item: string;
+    title?: string;
+    event?: ClickEvent;
+  }) => void;
   onDeselectAll: () => void;
   defaultExpanded: boolean;
   isValueSelected: (item: string) => boolean;
   areValuesEditable: boolean;
+};
+type ShowGroup = {
+  title: string;
+  shows: ShowbizItem[];
+};
+type GroupByDef = {
+  title: string;
+  showGroups: ShowGroup[];
 };

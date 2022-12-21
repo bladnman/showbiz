@@ -1,5 +1,5 @@
 import React, { MouseEvent, useCallback, useMemo } from "react";
-import GroupByGrid from "../../../../components/GroupByGrid";
+import GroupByGrid from "./group-grid/GroupByGrid";
 import useMegaStore from "../../../../store/MegaStore";
 import useBodyShows from "../../../../hooks/useBodyShows";
 import { ShowbizItem } from "@types";
