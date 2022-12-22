@@ -1,4 +1,4 @@
-import { ShowbizItem } from "@types";
+import { CustomDataItem, ShowbizItem } from "@types";
 import { useCollectionsFilter } from "./useCollectionsFilter";
 import { useDecadeFilter } from "./useDecadeFilter";
 import { useEffect } from "react";
@@ -8,10 +8,14 @@ import filterOrInSetAndBetween from "../utils/filterOrInSetAndBetween";
 import { useShowTypeFilter } from "./useShowTypeFilter";
 import { useWatchStatusFilter } from "@features/app/app-drawer/hooks/useWatchStatusFilter";
 
-export function useDrawerFilters(shows: ShowbizItem[], collections: string[]) {
+export function useDrawerFilters(
+  shows: ShowbizItem[],
+  collections: string[],
+  customDataList: CustomDataItem[]
+) {
   const decadeFilter = useDecadeFilter(shows);
   const collectionsFilter = useCollectionsFilter(shows, collections);
-  const watchStatusFilter = useWatchStatusFilter(shows);
+  const watchStatusFilter = useWatchStatusFilter(shows, customDataList);
   const genreFilter = useGenreFilter(shows);
   const showTypeFilter = useShowTypeFilter(shows);
 

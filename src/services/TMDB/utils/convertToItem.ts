@@ -1,14 +1,5 @@
 import useMegaStore from "../../../store/MegaStore";
-import {
-  Movie,
-  Tv,
-  Person,
-  ObjectBase,
-  Genre,
-  Language,
-  Network,
-  Season,
-} from "../types";
+import { Movie, Person, Tv } from "../types";
 import { ShowbizItem } from "../../../@types";
 
 type commonSearchFields = {

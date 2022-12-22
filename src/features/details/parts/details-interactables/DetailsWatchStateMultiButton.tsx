@@ -3,15 +3,15 @@ import Button from "@mui/material/Button";
 import { ButtonGroup } from "@mui/material";
 import React, { useState } from "react";
 import { COLORS } from "@features/app/app-theme/theme_const";
+import { WATCH_STATUS_VALUES } from "@utils/watchStatusUtils";
 
 export default function DetailsWatchStateMultiButton({
   show = null,
 }: ShowPropOpt) {
-  const [currentState, setCurrentState] = useState("new");
-  const states = ["new", "active", "done"];
+  const [currentState, setCurrentState] = useState("no status");
   return (
     <ButtonGroup sx={{ flexGrow: 1 }}>
-      {states.map((state) => {
+      {WATCH_STATUS_VALUES.map((state) => {
         return (
           <Button
             variant={"text"}

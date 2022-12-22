@@ -9,6 +9,7 @@ import { useDrawerFilters } from "./hooks/useDrawerFilters";
 import useShowTools from "../../../hooks/useShowTools";
 import useCollectionTools from "../../../hooks/useCollectionTools";
 import { SideBarIcon } from "@/images/AppIcons";
+import useActiveCustomDataList from "@hooks/useActiveCustomDataList";
 
 export const DrawerHeaderStyled = styled("div")(({ theme }) => ({
   display: "flex",
@@ -24,8 +25,9 @@ export default function AppDrawer() {
   const isDrawerOpen = useMegaStore((state) => state.isDrawerOpen);
   const { shows } = useShowTools();
   const { collections } = useCollectionTools();
+  const customDataList = useActiveCustomDataList();
 
-  const filters = useDrawerFilters(shows, collections);
+  const filters = useDrawerFilters(shows, collections, customDataList);
 
   return (
     <Drawer

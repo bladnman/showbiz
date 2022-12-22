@@ -13,8 +13,11 @@ import AppDropMenu from "@components/AppDropMenu";
 import useWatchStatusTools from "@hooks/useWatchStatusTools";
 import { GLASS_BACKDROP_FILTER } from "@CONST";
 import useShowTools from "@hooks/useShowTools";
+import {
+  sortAccordingToConstant,
+  WATCH_STATUS_VALUES,
+} from "@utils/watchStatusUtils";
 
-const STATIC_OPTIONS = ["new", "started", "finished", "quit"];
 const DetailsWatchStatusButton = ({ show }: { show: ShowbizItem }) => {
   const { isShowSaved } = useShowTools();
   const isSaved = isShowSaved(show);
@@ -29,9 +32,9 @@ const DetailsWatchStatusButton = ({ show }: { show: ShowbizItem }) => {
 
   const valueOptions = useMemo(() => {
     const set = new Set<string>(watchStatuses);
-    STATIC_OPTIONS.forEach((option) => set.delete(option));
+    WATCH_STATUS_VALUES.forEach((option) => set.delete(option));
     const arr = Array.from(set).sort();
-    return [...STATIC_OPTIONS, ...arr];
+    return sortAccordingToConstant([...WATCH_STATUS_VALUES, ...arr]);
   }, [watchStatuses]);
 
   const onToggleValue = useCallback(
@@ -69,7 +72,7 @@ const DetailsWatchStatusButton = ({ show }: { show: ShowbizItem }) => {
           onToggleValue={onToggleValue}
           allEqualOrContain={doesEqualOrContain}
           itemList={valueOptions}
-          allowEntry={true}
+          allowEntry={false}
           title={"Watch Status"}
         />
       </Menu>

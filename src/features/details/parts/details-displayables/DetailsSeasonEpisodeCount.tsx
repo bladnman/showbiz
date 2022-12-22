@@ -8,9 +8,12 @@ export default function DetailsSeasonEpisodeCount({
 }: ShowPropOpt & SxPropOpt) {
   if (!show || !show.isTv) return null;
 
-  return (
-    <DetailsImageText
-      text={`${show.numberOfSeasons} seasons | ${show.numberOfEpisodes} episodes`}
-    />
-  );
+  let text = `${show.numberOfSeasons} seasons | ${show.numberOfEpisodes} episodes`;
+  if (show.episodeRunTime?.length) {
+    const totalRuntime = show.episodeRunTime[0];
+    if (totalRuntime) {
+      text += `  (${totalRuntime} min per)`;
+    }
+  }
+  return <DetailsImageText text={text} />;
 }

@@ -2,6 +2,7 @@ import { CustomDataItem, GroupByDef, ShowbizItem, ShowGroup } from "@types";
 import { useMemo } from "react";
 import getCollectionGroupByDef from "@features/app/app-body/parts/group-grid/utils/getCollectionGroupByDef";
 import getGenreGroupByDef from "@features/app/app-body/parts/group-grid/utils/getGenreGroupByDef";
+import getStatusGroupByDef from "@features/app/app-body/parts/group-grid/utils/getStatusGroupByDef";
 
 export default function useBodyGroupByDef({
   customDataList,
@@ -20,6 +21,11 @@ export default function useBodyGroupByDef({
         });
       case "COLLECTION":
         return getCollectionGroupByDef({
+          customDataList,
+          shows: shows ?? [],
+        });
+      case "STATUS":
+        return getStatusGroupByDef({
           customDataList,
           shows: shows ?? [],
         });

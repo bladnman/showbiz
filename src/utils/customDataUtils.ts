@@ -5,9 +5,7 @@ import {
   fire_saveCustomData,
 } from "@services/firestore/utils/fire_utils";
 import useMegaStore from "../store/MegaStore";
-import { deleteDoc, doc, Timestamp } from "firebase/firestore";
-import { fireDb } from "@services/firestore/firestore";
-import { FIRE_SHOWS_COLLECTION_NAME } from "@services/firestore/fire_const";
+import { Timestamp } from "firebase/firestore";
 
 export function getCustomDataForShow(
   show: ShowbizItem | null
@@ -23,7 +21,7 @@ export function getCustomDataForShow(
   return {
     id: show.id,
     name: show.name,
-    watchStatus: "new",
+    watchStatus: "no status",
     collections: [],
     createdDate: show.lastHydrationDate ?? Timestamp.fromDate(new Date()),
     editedDate: show.lastHydrationDate ?? Timestamp.fromDate(new Date()),
@@ -44,7 +42,7 @@ export async function addCustomDataForShow(show: ShowbizItem | null) {
   const newData = {
     id: show.id,
     name: show.name,
-    watchStatus: "new",
+    watchStatus: "no status",
     collections: [],
     createdDate: show.lastHydrationDate ?? Timestamp.fromDate(new Date()),
     editedDate: show.lastHydrationDate ?? Timestamp.fromDate(new Date()),

@@ -6,11 +6,11 @@ import {
 } from "./customDataUtils";
 
 export const WATCH_STATUS_VALUES = [
-  "new",
-  "started",
-  "finished",
-  "waiting",
-  "dropped",
+  "active",
+  "up next",
+  "hold",
+  "no status",
+  "done",
 ];
 
 export function getAllWatchStatuses(
@@ -23,7 +23,9 @@ export function getAllWatchStatuses(
 }
 
 export function getAllWatchStatusesForShows(shows: ShowbizItem[]): string[] {
-  return getAllWatchStatuses(getCustomDataListForShows(shows));
+  return sortAccordingToConstant(
+    getAllWatchStatuses(getCustomDataListForShows(shows))
+  );
 }
 
 export function getWatchStatus(show: ShowbizItem | null): string | undefined {
@@ -38,12 +40,12 @@ export function showContainsWatchStatus(
   return getWatchStatus(show) === value;
 }
 
-export function setWatchStatus(show: ShowbizItem | null, value: string) {
+export async function setWatchStatus(show: ShowbizItem | null, value: string) {
   const customData = getCustomDataForShow(show);
   if (!customData) return undefined;
 
   customData.watchStatus = value;
-  finalSaveCustomData(customData);
+  await finalSaveCustomData(customData);
 }
 
 export function sortAccordingToConstant(list: string[]): string[] {

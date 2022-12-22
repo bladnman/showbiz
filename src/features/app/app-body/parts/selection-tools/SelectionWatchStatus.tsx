@@ -16,6 +16,8 @@ import {
   showContainsWatchStatus,
   WATCH_STATUS_VALUES,
 } from "@utils/watchStatusUtils";
+import { useAsyncCallback } from "react-use-async-callback";
+import { ShowbizItem } from "@types";
 
 export default function SelectionWatchStatus() {
   const selectedShows = useMegaStore((state) => state.selectedShows);
@@ -33,6 +35,15 @@ export default function SelectionWatchStatus() {
     !anySelected && popupState.close();
   }, [anySelected]);
 
+  const [setWatchStatusesAsync] = useAsyncCallback(
+    async (shows: ShowbizItem[], watchStatus: string) => {
+      const promises: Promise<void>[] = [];
+      shows.forEach((show) => promises.push(setWatchStatus(show, watchStatus)));
+      await Promise.all(promises);
+    },
+    []
+  );
+
   //
   // HANDLERS
   const onToggleValue = useCallback(
@@ -40,12 +51,12 @@ export default function SelectionWatchStatus() {
       if (!value) return;
 
       // change values on all selected shows
-      selectedShows.forEach((show) => setWatchStatus(show, value));
+      setWatchStatusesAsync(selectedShows, value).catch();
 
       // update the selected show list in case
       // something has fallen out of the current filter
     },
-    [addShow, toggleCollection, selectedShows]
+    [addShow, toggleCollection, selectedShows, setWatchStatusesAsync]
   );
   const allEqualOrContain = useCallback(
     (value: string) => {

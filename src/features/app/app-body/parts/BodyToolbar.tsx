@@ -13,6 +13,7 @@ export default function BodyToolbar({ sx }: SxPropOpt) {
       flexGrow={1}
       sx={{
         top: "55px",
+        zIndex: 100,
         // either glass
         backgroundColor: "transparent",
         backdropFilter: GLASS_BACKDROP_FILTER,
@@ -26,7 +27,7 @@ export default function BodyToolbar({ sx }: SxPropOpt) {
         gap={3}
         alignItems={"center"}
         paddingX={3}
-        paddingY={1}
+        paddingY={1.5}
         justifyContent={"space-between"}
       >
         <GroupByTool />

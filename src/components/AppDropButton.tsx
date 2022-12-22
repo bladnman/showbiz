@@ -24,7 +24,7 @@ export default function AppDropButton<C extends React.ElementType>(
       endIcon={isOpen ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
       {...otherProps}
     >
-      {props.children}
+      {children}
     </Button>
   );
 }

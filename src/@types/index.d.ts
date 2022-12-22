@@ -47,6 +47,7 @@ type ShowbizItem = {
   firstAirDate?: string;
   numberOfEpisodes?: number;
   numberOfSeasons?: number;
+  episodeRunTime?: number[];
 
   // movie items
   budget?: number;

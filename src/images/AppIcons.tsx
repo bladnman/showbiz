@@ -5,6 +5,7 @@ import { ReactComponent as Home } from "@/images/home-green.svg";
 import { ReactComponent as RottenTomatoes } from "@/images/tomato.svg";
 import { ReactComponent as CloudStream } from "@/images/cloud-stream.svg";
 import { ReactComponent as SideBar } from "@/images/side-bar.svg";
+import { ReactComponent as SelectReverse } from "@/images/select-reverse.svg";
 import AppSvgIcon, { AppSvgIconProps } from "@/components/AppSvgIcon";
 
 export function GoogleIcon(props: AppSvgIconProps) {
@@ -29,4 +30,8 @@ export function CloudStreamIcon(props: AppSvgIconProps) {
 
 export function SideBarIcon(props: AppSvgIconProps) {
   return <AppSvgIcon Icon={SideBar} {...props} />;
+}
+
+export function SelectReverseIcon(props: AppSvgIconProps) {
+  return <AppSvgIcon Icon={SelectReverse} {...props} />;
 }

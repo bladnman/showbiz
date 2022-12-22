@@ -6,22 +6,26 @@ import { toggleSelectMode } from "@utils/appUtils";
 import useMegaStore from "@store/MegaStore";
 import { COLORS } from "@features/app/app-theme/theme_const";
 import useCollectionTools from "@hooks/useCollectionTools";
-import { deselectShows } from "@utils/itemUtils";
+import { deselectShows, selectShows } from "@utils/itemUtils";
 import SelectionCollections from "@features/app/app-body/parts/selection-tools/SelectionCollections";
 import SelectionWatchStatus from "@features/app/app-body/parts/selection-tools/SelectionWatchStatus";
 import SelectionRemove from "@features/app/app-body/parts/selection-tools/SelectionRemove";
+import SelectAllIcon from "@mui/icons-material/SelectAll";
+import DeselectIcon from "@mui/icons-material/Deselect";
+import { SelectReverseIcon } from "@/images/AppIcons";
 
 export default function SelectionTools({ sx }: SxPropOpt) {
   const isSelectMode = useMegaStore((state) => state.isSelectMode);
-  const selectedShows = useMegaStore((state) => state.selectedShows);
-  const anySelected = selectedShows.length > 0;
+  const currentlySelectedShows = useMegaStore((state) => state.selectedShows);
   const bodyShows = useMegaStore((state) => state.bodyShows);
+  const isAnySelected = currentlySelectedShows.length > 0;
   const { collections } = useCollectionTools();
 
   //
   // DE-SELECTOR
   // change selections when either shows or collections change
   useEffect(() => {
+    // get our owm. don't bind on this since we are setting it again!
     const currentlySelectedShows = useMegaStore.getState().selectedShows;
     const toRemoveShows: ShowbizItem[] = [];
     currentlySelectedShows.forEach((show) => {
@@ -31,7 +35,27 @@ export default function SelectionTools({ sx }: SxPropOpt) {
     });
     deselectShows(toRemoveShows);
   }, [bodyShows, collections]);
+  const handleInvertSelection = () => {
+    const notSelectedShows = bodyShows.filter(
+      (show) => !currentlySelectedShows.includes(show)
+    );
+    selectShows(notSelectedShows);
+  };
 
+  const selectOptionsButtonSx = {
+    ":hover": {
+      color: "white",
+    },
+    color: COLORS.dim,
+  };
+  const selectButtonSx = {
+    ":hover": {
+      color: "white",
+      backgroundColor: isSelectMode ? COLORS.primary : "transparent",
+    },
+    color: isSelectMode ? "white" : COLORS.dim,
+    backgroundColor: isSelectMode ? COLORS.primary : "transparent",
+  };
   return (
     <Stack sx={{ ...sx }} direction={"row"} gap={1} alignItems={"center"}>
       {isSelectMode && <SelectionRemove />}
@@ -39,15 +63,54 @@ export default function SelectionTools({ sx }: SxPropOpt) {
       {isSelectMode && <SelectionCollections />}
 
       {/* SELECTION TOGGLE BUTTON */}
-      <ButtonGroup variant="text">
+      <ButtonGroup
+        sx={{
+          marginLeft: "2em",
+          border: "1px solid rgba(255,255,255,0.3)",
+          padding: "0.2em 1em",
+          backgroundColor: "rgba(0,0,0,0.5)",
+        }}
+        variant={"outlined"}
+      >
+        {/* INVERT SELECTION */}
+        {isSelectMode && isAnySelected && (
+          <IconButton
+            title={"Invert Selection"}
+            onClick={() => handleInvertSelection()}
+            sx={{
+              ...selectOptionsButtonSx,
+            }}
+          >
+            <SelectReverseIcon />
+          </IconButton>
+        )}
+        {isSelectMode && (
+          <IconButton
+            title={"Deselect All"}
+            onClick={() => deselectShows(bodyShows)}
+            sx={{
+              ...selectOptionsButtonSx,
+            }}
+          >
+            <DeselectIcon />
+          </IconButton>
+        )}
+        {isSelectMode && (
+          <IconButton
+            title={"Select All"}
+            onClick={() => selectShows(bodyShows)}
+            sx={{
+              ...selectOptionsButtonSx,
+            }}
+          >
+            <SelectAllIcon />
+          </IconButton>
+        )}
+
         <IconButton
           onClick={toggleSelectMode}
           sx={{
-            ":hover": {
-              backgroundColor: isSelectMode ? COLORS.primary : "transparent",
-              color: "white",
-            },
-            backgroundColor: isSelectMode ? COLORS.primary : "transparent",
+            ...selectButtonSx,
           }}
         >
           <HighlightAltIcon />

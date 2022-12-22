@@ -6,10 +6,7 @@ import AppSnackShop from "@features/app/app-snacks/AppSnackShop";
 import AppToolbar from "@features/app/app-toolbar/AppToolbar";
 import { Box } from "@mui/material";
 import AppKeyboardHandler from "@features/app/app-keyboard/AppKeyboardHandler";
-import {
-  checkForCustomDataDuplicates,
-  removeAllDupes,
-} from "@utils/customDataUtils";
+import { checkForCustomDataDuplicates } from "@utils/customDataUtils";
 
 export default function MainUI() {
   useEffect(() => {
