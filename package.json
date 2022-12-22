@@ -21,6 +21,8 @@
     "@fontsource/titan-one": "^4.5.9",
     "@mui/icons-material": "^5.10.9",
     "@mui/material": "^5.10.12",
+    "@mui/x-date-pickers": "^5.0.11",
+    "dayjs": "^1.11.7",
     "es6-error": "^4.1.1",
     "firebase": "^9.13.0",
     "lodash": "^4.17.21",

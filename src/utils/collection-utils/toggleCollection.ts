@@ -1,7 +1,7 @@
 import { ShowbizItem } from "@types";
 import getCustomDataForShow from "@custom-data-utils/getCustomDataForShow";
 import removeCollection from "@collection-utils/removeCollection";
-import addCollection from "@collection-utils/addCollection";
+import addCollectionToShow from "@collection-utils/addCollectionToShow";
 
 export default async function toggleCollection(
   show: ShowbizItem,
@@ -15,6 +15,6 @@ export default async function toggleCollection(
   if (set.has(collectionName.toLowerCase())) {
     await removeCollection(show, collectionName, doCloudSave);
   } else {
-    await addCollection(show, collectionName, doCloudSave);
+    await addCollectionToShow(show, collectionName, doCloudSave);
   }
 }

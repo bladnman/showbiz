@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from "react";
 import Button from "@mui/material/Button";
-import { ShowbizItem } from "@types";
+import { ClickEvent, ShowbizItem } from "@types";
 import {
   bindMenu,
   bindTrigger,
@@ -9,16 +9,20 @@ import {
 import { Box, Menu } from "@mui/material";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
-import AppDropMenu from "@components/AppDropMenu";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import AppDropMenu, { AppMenuValueItem } from "@components/AppDropMenu";
 import useWatchStatusTools from "@hooks/useWatchStatusTools";
 import { GLASS_BACKDROP_FILTER } from "@CONST";
 import useShowTools from "@hooks/useShowTools";
 import WATCH_STATUS_VALUES from "@watch-status-utils/const";
 import sortAccordingToConstant from "@watch-status-utils/sortAccordingToConstant";
+import { Stack } from "@mui/system";
+import Typography from "@mui/material/Typography";
+import getWatchStatusMenuItemList from "@watch-status-utils/getWatchStatusMenuItemList";
+import setShowsToSelectHold from "@custom-data-utils/setShowsToSelectHold";
 
 const DetailsWatchStatusButton = ({ show }: { show: ShowbizItem }) => {
   const { isShowSaved } = useShowTools();
-  const isSaved = isShowSaved(show);
   const { watchStatuses, getWatchStatus, setWatchStatus } =
     useWatchStatusTools();
   const currentValue = getWatchStatus(show);
@@ -28,26 +32,19 @@ const DetailsWatchStatusButton = ({ show }: { show: ShowbizItem }) => {
     popupId: "watchStatusOverflowMenu",
   });
 
-  const valueOptions = useMemo(() => {
-    const set = new Set<string>(watchStatuses);
-    WATCH_STATUS_VALUES.forEach((option) => set.delete(option));
-    const arr = Array.from(set).sort();
-    return sortAccordingToConstant([...WATCH_STATUS_VALUES, ...arr]);
-  }, [watchStatuses]);
-
   const onToggleValue = useCallback(
-    (value: string) => {
-      setWatchStatus(show, value);
+    (valueItem: AppMenuValueItem) => {
+      setWatchStatus(show, valueItem.value).catch();
       popupState.close();
     },
     [show, popupState]
   );
 
-  const doesEqualOrContain = (value: string) => {
-    return value === currentValue;
+  const doesEqualOrContain = (valueItem: AppMenuValueItem) => {
+    return valueItem.value === currentValue;
   };
 
-  if (!isSaved) return null;
+  if (!isShowSaved(show)) return null;
   return (
     <Box>
       <Button
@@ -69,7 +66,7 @@ const DetailsWatchStatusButton = ({ show }: { show: ShowbizItem }) => {
         <AppDropMenu
           onToggleValue={onToggleValue}
           allEqualOrContain={doesEqualOrContain}
-          itemList={valueOptions}
+          itemList={getWatchStatusMenuItemList([show])}
           allowEntry={false}
           title={"Watch Status"}
         />

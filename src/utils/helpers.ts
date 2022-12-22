@@ -1,3 +1,5 @@
+import { Timestamp } from "firebase/firestore";
+
 export function rnd(min: number, max: number) {
   return Math.floor(min + Math.random() * (max - min + 1));
 }
@@ -29,4 +31,12 @@ export function sortAlphaNumeric(a: string, b: string) {
   return a
     .replace(/[^a-zA-Z0-9]/g, "")
     .localeCompare(b.replace(/[^a-zA-Z0-9]/g, ""));
+}
+
+export function dateFromTimestamp(timestamp: Timestamp) {
+  return new Date(timestamp.seconds * 1000);
+}
+
+export function timestampFromDate(date: Date) {
+  return Timestamp.fromDate(date);
 }

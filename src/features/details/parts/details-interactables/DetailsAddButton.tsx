@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import Button from "@mui/material/Button";
 import { ClickEvent, ShowbizItem, ShowPropOpt } from "@types";
 import { COLORS } from "../../../app/app-theme/theme_const";
@@ -12,12 +12,14 @@ import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import useShowTools from "@hooks/useShowTools";
-import AppDropMenu from "@components/AppDropMenu";
+import AppDropMenu, { AppMenuValueItem } from "@components/AppDropMenu";
 import useCollectionTools from "@hooks/useCollectionTools";
 import { useAsyncCallback } from "react-use-async-callback";
 import showContainsCollection from "@collection-utils/showContainsCollection";
 import addShow from "@show-utils/addShow";
 import removeShow from "@show-utils/removeShow";
+import WATCH_STATUS_VALUES from "@watch-status-utils/const";
+import sortAccordingToConstant from "@watch-status-utils/sortAccordingToConstant";
 
 const DetailsAddButton = ({ show = null }: ShowPropOpt) => {
   const { isShowSaved } = useShowTools();
@@ -50,18 +52,26 @@ const DetailsAddButton = ({ show = null }: ShowPropOpt) => {
     [show, isSaved]
   );
   const onToggleValue = useCallback(
-    (value: string | undefined | null) => {
-      if (!value || !show) return;
-      toggleValueAsync(show, value).catch();
+    (valueItem: AppMenuValueItem | undefined | null) => {
+      if (!valueItem || !show) return;
+      toggleValueAsync(show, valueItem.value).catch();
     },
     [show, addShow]
   );
-  const doesEqualOrContain = useCallback(
-    (value: string) => {
-      return showContainsCollection(show, value);
+  const allEqualOrContain = useCallback(
+    (valueItem: AppMenuValueItem) => {
+      return showContainsCollection(show, valueItem.value);
     },
     [show]
   );
+
+  const valueOptions: AppMenuValueItem[] = useMemo(() => {
+    return collections.map((item) => {
+      return {
+        value: item,
+      };
+    });
+  }, [collections]);
 
   if (!show) return null;
 
@@ -93,8 +103,8 @@ const DetailsAddButton = ({ show = null }: ShowPropOpt) => {
         <Menu {...bindMenu(popupState)}>
           <AppDropMenu
             onToggleValue={onToggleValue}
-            allEqualOrContain={doesEqualOrContain}
-            itemList={collections}
+            allEqualOrContain={allEqualOrContain}
+            itemList={valueOptions}
             allowEntry={true}
             title={"Collections"}
           />

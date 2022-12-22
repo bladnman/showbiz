@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import {
   bindMenu,
   bindTrigger,
@@ -6,7 +6,7 @@ import {
 } from "material-ui-popup-state/hooks";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import { Menu } from "@mui/material";
-import AppDropMenu from "@components/AppDropMenu";
+import AppDropMenu, { AppMenuValueItem } from "@components/AppDropMenu";
 import useMegaStore from "@store/MegaStore";
 import useCollectionTools from "@hooks/useCollectionTools";
 import AppDropButton from "@/components/AppDropButton";
@@ -32,11 +32,11 @@ export default function SelectionCollections() {
   //
   // HANDLERS
   const onToggleValue = useCallback(
-    (value: string | undefined | null) => {
-      if (!value) return;
+    (valueItem: AppMenuValueItem | undefined | null) => {
+      if (!valueItem) return;
 
       // change values on all selected shows
-      selectedShows.forEach((show) => toggleCollection(show, value));
+      selectedShows.forEach((show) => toggleCollection(show, valueItem.value));
 
       // update the selected show list in case
       // something has fallen out of the current filter
@@ -44,18 +44,30 @@ export default function SelectionCollections() {
     [addShow, toggleCollection, selectedShows]
   );
   const allEqualOrContain = useCallback(
-    (value: string) => {
-      return selectedShows.every((show) => showContainsCollection(show, value));
+    (valueItem: AppMenuValueItem) => {
+      return selectedShows.every((show) =>
+        showContainsCollection(show, valueItem.value)
+      );
     },
     [collections, selectedShows]
   );
 
   const anyEqualOrContain = useCallback(
-    (value: string) => {
-      return selectedShows.some((show) => showContainsCollection(show, value));
+    (valueItem: AppMenuValueItem) => {
+      return selectedShows.some((show) =>
+        showContainsCollection(show, valueItem.value)
+      );
     },
     [collections, selectedShows]
   );
+
+  const valueOptions: AppMenuValueItem[] = useMemo(() => {
+    return collections.map((item) => {
+      return {
+        value: item,
+      };
+    });
+  }, [collections]);
 
   return (
     <>
@@ -72,7 +84,7 @@ export default function SelectionCollections() {
           onToggleValue={onToggleValue}
           allEqualOrContain={allEqualOrContain}
           anyEqualOrContain={anyEqualOrContain}
-          itemList={collections}
+          itemList={valueOptions}
           allowEntry={true}
           title={"Collections"}
         />

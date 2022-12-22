@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import {
   bindMenu,
   bindTrigger,
@@ -6,16 +6,17 @@ import {
 } from "material-ui-popup-state/hooks";
 import FlagIcon from "@mui/icons-material/Flag";
 import { Box, Menu } from "@mui/material";
-import AppDropMenu from "@components/AppDropMenu";
+import AppDropMenu, { AppMenuValueItem } from "@components/AppDropMenu";
 import useMegaStore from "@store/MegaStore";
 import useCollectionTools from "@hooks/useCollectionTools";
 import AppDropButton from "@components/AppDropButton";
 import WATCH_STATUS_VALUES from "@watch-status-utils/const";
 import { useAsyncCallback } from "react-use-async-callback";
-import { ShowbizItem } from "@types";
+import { ClickEvent, ShowbizItem } from "@types";
 import showContainsWatchStatus from "@watch-status-utils/showContainsWatchStatus";
 import setWatchStatus from "@watch-status-utils/setWatchStatus";
 import addShow from "@show-utils/addShow";
+import getWatchStatusMenuItemList from "@watch-status-utils/getWatchStatusMenuItemList";
 
 export default function SelectionWatchStatus() {
   const selectedShows = useMegaStore((state) => state.selectedShows);
@@ -45,11 +46,11 @@ export default function SelectionWatchStatus() {
   //
   // HANDLERS
   const onToggleValue = useCallback(
-    (value: string | undefined | null) => {
-      if (!value) return;
+    (valueItem: AppMenuValueItem | undefined | null) => {
+      if (!valueItem) return;
 
       // change values on all selected shows
-      setWatchStatusesAsync(selectedShows, value).catch();
+      setWatchStatusesAsync(selectedShows, valueItem.value).catch();
 
       // update the selected show list in case
       // something has fallen out of the current filter
@@ -57,20 +58,23 @@ export default function SelectionWatchStatus() {
     [addShow, toggleCollection, selectedShows, setWatchStatusesAsync]
   );
   const allEqualOrContain = useCallback(
-    (value: string) => {
+    (valueItem: AppMenuValueItem) => {
       return selectedShows.every((show) =>
-        showContainsWatchStatus(show, value)
+        showContainsWatchStatus(show, valueItem.value)
       );
     },
     [collections, selectedShows]
   );
 
   const anyEqualOrContain = useCallback(
-    (value: string) => {
-      return selectedShows.some((show) => showContainsWatchStatus(show, value));
+    (valueItem: AppMenuValueItem) => {
+      return selectedShows.some((show) =>
+        showContainsWatchStatus(show, valueItem.value)
+      );
     },
     [collections, selectedShows]
   );
+
   return (
     <Box>
       <AppDropButton
@@ -86,7 +90,7 @@ export default function SelectionWatchStatus() {
           onToggleValue={onToggleValue}
           allEqualOrContain={allEqualOrContain}
           anyEqualOrContain={anyEqualOrContain}
-          itemList={WATCH_STATUS_VALUES}
+          itemList={getWatchStatusMenuItemList(selectedShows)}
           allowEntry={false}
           title={"Watch Status"}
         />

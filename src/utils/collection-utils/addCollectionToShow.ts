@@ -3,7 +3,7 @@ import getCustomDataForShow from "@custom-data-utils/getCustomDataForShow";
 import finalSaveCustomData from "@custom-data-utils/finalSaveCustomData";
 import addShow from "@show-utils/addShow";
 
-export default async function addCollection(
+export default async function addCollectionToShow(
   show: ShowbizItem,
   collectionName: string,
   doCloudSave = true

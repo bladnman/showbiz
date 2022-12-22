@@ -24,6 +24,7 @@ export interface MegaStore {
   bodyShows: ShowbizItem[];
   bodyGroupBy?: string;
   selectedShows: ShowbizItem[];
+  showsToSelectHold: ShowbizItem[] | null;
 }
 
 const IS_LOCAL_DEV = false; // start dev-server if true
@@ -51,6 +52,7 @@ const useMegaStore = create<MegaStore>()(
         isSelectMode: false,
         shows: [] as ShowbizItem[],
         selectedShows: [] as ShowbizItem[],
+        showsToSelectHold: null,
       } as MegaStore)
   )
 );

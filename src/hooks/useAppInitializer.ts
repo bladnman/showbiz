@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import {
   fire_fetchCustomDataList,
   fire_fetchSavedShows,
-} from "../services/firestore/utils/fire_utils";
+} from "@services/firestore/utils/fire_utils";
 import setCustomDataList from "@custom-data-utils/setCustomDataList";
 import setShows from "@show-utils/setShows";
 import setBodyShows from "@show-utils/setBodyShows";

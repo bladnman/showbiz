@@ -12,17 +12,22 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import PendingIcon from "@mui/icons-material/Pending";
 
-type MenuProps = {
-  onToggleValue: (value: string) => void;
-  allEqualOrContain: (value: string) => boolean;
-  anyEqualOrContain?: (value: string) => boolean;
+export type AppMenuValueItem = {
+  value: string;
+  title?: string;
+  component?: React.ReactNode;
+};
+type AppMenuProps = {
+  onToggleValue: (valueItem: AppMenuValueItem) => void;
+  allEqualOrContain: (valueItem: AppMenuValueItem) => boolean;
+  anyEqualOrContain?: (valueItem: AppMenuValueItem) => boolean;
   placeholder?: string;
   title?: string;
-  itemList: string[];
+  itemList: AppMenuValueItem[];
   allowEntry?: boolean;
   autoFocus?: boolean;
 };
-export default function AppDropMenu(props: MenuProps) {
+export default function AppDropMenu(props: AppMenuProps) {
   const {
     allEqualOrContain,
     anyEqualOrContain,
@@ -32,9 +37,9 @@ export default function AppDropMenu(props: MenuProps) {
     title,
   } = props;
 
-  const handleToggle = useCallback((value: string) => {
-    if (value) {
-      onToggleValue(value);
+  const handleToggle = useCallback((valueItem: AppMenuValueItem) => {
+    if (valueItem) {
+      onToggleValue(valueItem);
     }
   }, []);
 
@@ -44,18 +49,50 @@ export default function AppDropMenu(props: MenuProps) {
     <Box minWidth={300} padding={1}>
       <MenuTitle title={title} />
       {allowEntry && <MenuEntryField {...props} />}
-      {itemList.map((value) => (
+      {itemList.map((valueItem) => (
         <MenuItemForShow
-          onClick={() => handleToggle(value)}
-          value={value}
-          isSelected={allEqualOrContain(value)}
+          onClick={() => handleToggle(valueItem)}
+          valueItem={valueItem}
+          isSelected={allEqualOrContain(valueItem)}
           isPartiallySelected={Boolean(
-            anyEqualOrContain && anyEqualOrContain(value)
+            anyEqualOrContain && anyEqualOrContain(valueItem)
           )}
-          key={value}
+          key={valueItem.value}
         />
       ))}
     </Box>
+  );
+}
+
+type MenuItemProps = {
+  isSelected: boolean;
+  isPartiallySelected: boolean;
+  valueItem: AppMenuValueItem;
+  onClick?: (value: AppMenuValueItem | undefined | null) => void;
+};
+
+function MenuItemForShow({
+  isSelected,
+  isPartiallySelected = false,
+  valueItem,
+  onClick,
+}: MenuItemProps) {
+  const renderIcon = () => {
+    return isSelected ? (
+      <CheckCircleIcon />
+    ) : isPartiallySelected ? (
+      <PendingIcon />
+    ) : null;
+  };
+  return (
+    <MenuItem onClick={() => onClick && onClick(valueItem)}>
+      <Stack direction={"row"} flexGrow={1} alignItems="center">
+        <Box pr={1} sx={{ width: "2em", height: "1.7em" }}>
+          {renderIcon()}
+        </Box>
+        {valueItem.component ?? valueItem.title ?? valueItem.value}
+      </Stack>
+    </MenuItem>
   );
 }
 
@@ -68,7 +105,7 @@ function MenuTitle({ title }: { title?: string }) {
   );
 }
 
-function MenuEntryField(props: MenuProps) {
+function MenuEntryField(props: AppMenuProps) {
   const { onToggleValue, placeholder, autoFocus = false } = props;
   const [fieldValue, setFieldValue] = useState("");
   const inputFieldRef = useRef<HTMLInputElement>();
@@ -80,7 +117,7 @@ function MenuEntryField(props: MenuProps) {
 
   const handleAdd = useCallback(() => {
     if (inputFieldRef.current?.value) {
-      onToggleValue(inputFieldRef.current.value);
+      onToggleValue({ value: inputFieldRef.current.value });
       setFieldValue("");
     }
   }, []);
@@ -119,37 +156,5 @@ function MenuEntryField(props: MenuProps) {
         <AddCircleIcon />
       </Button>
     </Stack>
-  );
-}
-
-type MenuItemProps = {
-  isSelected: boolean;
-  isPartiallySelected: boolean;
-  value: string;
-  onClick?: (value: string | undefined | null) => void;
-};
-
-function MenuItemForShow({
-  isSelected,
-  isPartiallySelected = false,
-  value,
-  onClick,
-}: MenuItemProps) {
-  const renderIcon = () => {
-    return isSelected ? (
-      <CheckCircleIcon />
-    ) : isPartiallySelected ? (
-      <PendingIcon />
-    ) : null;
-  };
-  return (
-    <MenuItem onClick={() => onClick && onClick(value)}>
-      <Stack direction={"row"}>
-        <Box pr={1} sx={{ width: "2em" }}>
-          {renderIcon()}
-        </Box>
-        {value}
-      </Stack>
-    </MenuItem>
   );
 }

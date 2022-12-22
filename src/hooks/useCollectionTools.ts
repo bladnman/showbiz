@@ -3,7 +3,7 @@ import useActiveCustomDataList from "./useActiveCustomDataList";
 import getAllCollections from "@collection-utils/getAllCollections";
 import getAllCollectionsForShows from "@collection-utils/getAllCollectionsForShows";
 import getCollectionsForShow from "@collection-utils/getCollectionsForShow";
-import addCollection from "@collection-utils/addCollection";
+import addCollectionToShow from "@collection-utils/addCollectionToShow";
 import removeCollection from "@collection-utils/removeCollection";
 import toggleCollection from "@collection-utils/toggleCollection";
 
@@ -17,7 +17,7 @@ export default function useCollectionTools() {
   return useMemo(
     () => ({
       collections,
-      addCollection,
+      addCollection: addCollectionToShow,
       removeCollection,
       toggleCollection,
       getAllCollectionsForShows,

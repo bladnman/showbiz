@@ -1,6 +1,6 @@
 import { SxProps } from "@mui/material";
 import React from "react";
-import { Genre, Language, Network, Season } from "../services/TMDB/types";
+import { Genre, Language, Network, Season } from "@services/TMDB/types";
 import { Timestamp } from "firebase/firestore";
 
 type CustomDataItem = {
@@ -12,7 +12,7 @@ type CustomDataItem = {
   lastHydrationDate?: Timestamp;
   createdDate: Timestamp;
   editedDate: Timestamp;
-  delayUntilDate?: Timestamp;
+  holdUntilDate?: Timestamp;
 
   //
   // VALUES
@@ -70,19 +70,13 @@ type ShowbizItem = {
   personalRating?: number;
   lastHydrationDate?: Timestamp;
 };
-type SoN = string | null;
-type NoN = number | null;
 type Size = {
   width: number;
   height: number;
 };
-type ShowProp = { show: ShowbizItem };
 type ShowPropOpt = { show?: ShowbizItem | null };
 type SxPropOpt = { sx?: SxProps };
 type ClickEvent = React.MouseEvent<HTMLElement>;
-type KeyboardEvent = React.KeyboardEvent<
-  HTMLElement & { target: { value: string | undefined | null } }
->;
 type KidProps = {
   children?: React.ReactNode;
 };
