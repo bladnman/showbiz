@@ -2,8 +2,8 @@ import React from "react";
 import ShowGrid from "../../../../components/ShowGrid";
 import { ShowbizItem } from "../../../../@types";
 import useMegaStore from "../../../../store/MegaStore";
-import { setDetailItem } from "../../../../utils/itemUtils";
 import useSimilarShows from "../../../../services/TMDB/hooks/useSimilarShows";
+import setDetailItem from "@show-utils/setDetailItem";
 
 export default function DetailSimilarResultsGrid() {
   const similarToShow = useMegaStore((state) => state.similarToShow);

@@ -1,7 +1,7 @@
 import { FilterDef, ShowbizItem } from "../../../../@types";
 import { useFilter } from "./useFilter";
-import { showContainsGenre } from "../../../../utils/itemUtils";
 import useGenres from "../../../../hooks/useGenres";
+import showContainsGenre from "@show-utils/showContainsGenre";
 
 export function useGenreFilter(shows: ShowbizItem[]): FilterDef {
   const genres = useGenres(shows);

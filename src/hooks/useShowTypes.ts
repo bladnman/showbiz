@@ -1,6 +1,6 @@
 import { useMemo } from "react";
-import { getAllShowTypes } from "../utils/itemUtils";
 import { ShowbizItem } from "../@types";
+import getAllShowTypes from "@show-utils/getAllShowTypes";
 
 export default function useShowTypes(shows: ShowbizItem[]) {
   return useMemo(() => {

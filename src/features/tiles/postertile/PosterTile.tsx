@@ -1,7 +1,7 @@
 import React, { MouseEvent } from "react";
 import { Box } from "@mui/material";
 import { ShowbizItem, ShowPropOpt } from "@types";
-import { getPosterSize } from "@utils/itemUtils";
+import getPosterSize from "@show-utils/getPosterSize";
 
 export type PosterTileProps = ShowPropOpt & {
   height?: number;

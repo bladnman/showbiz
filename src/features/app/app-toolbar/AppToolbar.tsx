@@ -1,5 +1,4 @@
 import React from "react";
-import MenuIcon from "@mui/icons-material/Menu";
 import {
   AppBar,
   AppBarProps,
@@ -10,11 +9,11 @@ import {
 } from "@mui/material";
 import { useCallback } from "react";
 import useMegaStore from "../../../store/MegaStore";
-import { toggleDrawer } from "../../../utils/appUtils";
 import { styled } from "@mui/material/styles";
-import { DRAWER_WIDTH_OPEN } from "../../../store/const";
+import { DRAWER_WIDTH_OPEN } from "@store/const";
 import ToolbarSearch from "./parts/ToolbarSearch";
 import { SideBarIcon } from "@/images/AppIcons";
+import toggleDrawer from "@app-utils/toggleDrawer";
 
 interface MyAppBarProps extends AppBarProps {
   open?: boolean;

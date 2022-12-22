@@ -1,10 +1,10 @@
 import React from "react";
 import { Button, ButtonGroup, Stack, Typography } from "@mui/material";
 import { SxPropOpt } from "@types";
-import { setBodyGroupBy } from "../../../../utils/appUtils";
 import useMegaStore from "../../../../store/MegaStore";
 import CircleIcon from "@mui/icons-material/Circle";
 import { COLORS } from "../../app-theme/theme_const";
+import setBodyGroupBy from "@app-utils/setBodyGroupBy";
 
 export default function GroupByTool({ sx }: SxPropOpt) {
   const bodyGroupBy = useMegaStore((state) => state.bodyGroupBy);

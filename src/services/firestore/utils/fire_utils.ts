@@ -9,13 +9,13 @@ import {
   where,
 } from "firebase/firestore";
 import { CustomDataItem, ShowbizItem } from "@types";
-import { getCustomDataForShow } from "@utils/customDataUtils";
 import { fireDb, showsCollection, customDataCollection } from "../firestore";
 import {
   FIRE_CUSTOM_DATA_COLLECTION_NAME,
   FIRE_SHOWS_COLLECTION_NAME,
 } from "../fire_const";
 import { CLOUD_SAVE_ENABLED } from "@CONST";
+import getCustomDataForShow from "@custom-data-utils/getCustomDataForShow";
 
 export async function fire_saveShow(show: ShowbizItem) {
   // see if the show exists already

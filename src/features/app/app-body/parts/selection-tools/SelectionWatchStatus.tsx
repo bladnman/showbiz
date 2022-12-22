@@ -9,15 +9,13 @@ import { Box, Menu } from "@mui/material";
 import AppDropMenu from "@components/AppDropMenu";
 import useMegaStore from "@store/MegaStore";
 import useCollectionTools from "@hooks/useCollectionTools";
-import { addShow } from "@utils/itemUtils";
 import AppDropButton from "@components/AppDropButton";
-import {
-  setWatchStatus,
-  showContainsWatchStatus,
-  WATCH_STATUS_VALUES,
-} from "@utils/watchStatusUtils";
+import WATCH_STATUS_VALUES from "@watch-status-utils/const";
 import { useAsyncCallback } from "react-use-async-callback";
 import { ShowbizItem } from "@types";
+import showContainsWatchStatus from "@watch-status-utils/showContainsWatchStatus";
+import setWatchStatus from "@watch-status-utils/setWatchStatus";
+import addShow from "@show-utils/addShow";
 
 export default function SelectionWatchStatus() {
   const selectedShows = useMegaStore((state) => state.selectedShows);

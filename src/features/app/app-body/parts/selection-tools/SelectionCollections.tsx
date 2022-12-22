@@ -8,10 +8,10 @@ import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import { Menu } from "@mui/material";
 import AppDropMenu from "@components/AppDropMenu";
 import useMegaStore from "@store/MegaStore";
-import { addShow } from "@utils/itemUtils";
-import { showContainsCollection } from "@utils/collectionUtils";
 import useCollectionTools from "@hooks/useCollectionTools";
 import AppDropButton from "@/components/AppDropButton";
+import showContainsCollection from "@collection-utils/showContainsCollection";
+import addShow from "@show-utils/addShow";
 
 export default function SelectionCollections() {
   const selectedShows = useMegaStore((state) => state.selectedShows);

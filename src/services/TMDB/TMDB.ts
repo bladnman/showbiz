@@ -1,35 +1,27 @@
 import { camelCase } from "lodash";
+import { NotFoundError, RemoteError } from "./errors";
 import {
-  NotFoundError,
-  RemoteError,
-  Unimplemented,
-  UnexpectedResponseError,
-} from "./errors";
-import {
-  APIResponse,
-  Company,
-  FinditResults,
-  Movie,
-  ShowImage,
   CastCredit,
+  Company,
   Credits,
   CrewCredit,
-  ShowImageCollection,
-  MovieVideo,
-  MovieVideoCollection,
-  Person,
-  Query,
-  OptionsBag,
-  Tv,
-  ShowType,
-  Show,
-  SearchMultiResults,
   ExternalSource,
   FindResults,
+  Movie,
+  MovieVideo,
+  MovieVideoCollection,
+  OptionsBag,
+  Person,
+  SearchMultiResults,
+  Show,
+  ShowImage,
+  ShowImageCollection,
+  ShowType,
+  Tv,
 } from "./types";
 import deepMapKeys from "deep-map-keys";
 import extractKey from "./utils/extractKey";
-import { getObjectType, populateType } from "./utils/duckTyping";
+import { populateType } from "./utils/duckTyping";
 
 export default class TMDB {
   apiKey: string;
@@ -39,8 +31,8 @@ export default class TMDB {
 
   constructor(
     apiKey: string,
-    language: string = "en",
-    isLocalDev: boolean = false,
+    language = "en",
+    isLocalDev = false,
     devServerUrl: string | null = null
   ) {
     this.apiKey = apiKey;
@@ -145,8 +137,6 @@ export default class TMDB {
     id: number | string,
     options: OptionsBag & { type: ShowType }
   ): Promise<ShowImageCollection> {
-    let image_language_options;
-
     const type = extractKey("type", options) as ShowType;
 
     if (options?.includeImageLanguage) {
@@ -155,7 +145,7 @@ export default class TMDB {
       });
       delete options.includeImageLanguage;
     }
-    image_language_options = options?.includeImageLanguage
+    const image_language_options = options?.includeImageLanguage
       ? {
           include_image_language: options.includeImageLanguage.join(","),
         }

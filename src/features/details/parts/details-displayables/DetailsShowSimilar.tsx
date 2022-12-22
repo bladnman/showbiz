@@ -1,8 +1,8 @@
 import React from "react";
 import { ShowPropOpt } from "@types";
 import { Button } from "@mui/material";
-import { showSimilarShows } from "@utils/itemUtils";
 import useMegaStore from "@store/MegaStore";
+import showSimilarShows from "@show-utils/showSimilarShows";
 
 export default function DetailsShowSimilar({ show }: ShowPropOpt) {
   const similarToShow = useMegaStore((state) => state.similarToShow);

@@ -1,15 +1,13 @@
 import { useEffect, useState } from "react";
 import { ShowbizItem } from "../@types";
-import {
-  getShowFromList,
-  mergeObjects,
-  updateObject,
-  updateShows,
-} from "../utils/itemUtils";
 import { secSince } from "../utils/MU";
 import { fetchApiShow } from "../services/TMDB/hooks/useApi";
 import { fire_saveShow } from "../services/firestore/utils/fire_utils";
 import { REFRESH_DETAILS_SEC } from "../store/const";
+import getShowFromList from "@show-utils/getShowFromList";
+import updateShows from "@show-utils/updateShows";
+import updateObject from "@show-utils/updateObject";
+import mergeObjects from "@show-utils/mergeObjects";
 
 /**
  * ```

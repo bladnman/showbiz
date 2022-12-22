@@ -1,6 +1,6 @@
 import { useMemo } from "react";
-import { getAllGenres } from "../utils/itemUtils";
 import { ShowbizItem } from "../@types";
+import getAllGenres from "@show-utils/getAllGenres";
 
 export default function useGenres(shows: ShowbizItem[]) {
   return useMemo(() => {

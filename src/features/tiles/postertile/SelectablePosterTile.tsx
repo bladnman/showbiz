@@ -4,8 +4,8 @@ import PosterTile, {
   PosterTileProps,
 } from "@features/tiles/postertile/PosterTile";
 import useShowTools from "@hooks/useShowTools";
-import { getPosterSize } from "@utils/itemUtils";
 import { COLORS } from "@/features/app/app-theme/theme_const";
+import getPosterSize from "@show-utils/getPosterSize";
 
 type SelectablePosterTileProps = PosterTileProps & {
   selected?: boolean;

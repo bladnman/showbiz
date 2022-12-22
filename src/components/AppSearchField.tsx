@@ -2,9 +2,9 @@ import React, { useCallback } from "react";
 import { TextField } from "@mui/material";
 import { useEffect, useRef } from "react";
 import useMegaStore from "../store/MegaStore";
-import { setSearchQuery } from "../utils/searchUtils";
-import { setSimilarToShow } from "../utils/itemUtils";
 import useWindowFocus from "../hooks/useWindowFocus";
+import setSimilarToShow from "@show-utils/setSimilarToShow";
+import setSearchQuery from "@search-utils/setSearchQuery";
 
 type SearchFieldProps = {
   onChange?: (value: string) => void;

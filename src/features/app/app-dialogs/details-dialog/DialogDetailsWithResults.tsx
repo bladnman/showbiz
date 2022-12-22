@@ -4,12 +4,12 @@ import Box from "@mui/material/Box";
 import CloseIcon from "@mui/icons-material/Close";
 import { ShowPropOpt } from "@types";
 import useMegaStore from "@store/MegaStore";
-import { setSearchMode } from "@utils/appUtils";
 import DetailsPanel from "../../../details/DetailsPanel";
 import DetailSimilarResultsGrid from "../../../details/parts/details-grids/DetailSimilarResultsGrid";
 import DetailSearchResultsGrid from "../../../details/parts/details-grids/DetailSearchResultsGrid";
 import DetailsSearchField from "./parts/DetailsSearchField";
 import { GLASS_BACKDROP_FILTER } from "@CONST";
+import setSearchMode from "@app-utils/setSearchMode";
 
 export default function DialogDetailsWithResults({ show }: ShowPropOpt) {
   const similarToShow = useMegaStore((state) => state.similarToShow);

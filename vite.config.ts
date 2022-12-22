@@ -21,6 +21,22 @@ export default defineConfig({
       "@services": path.resolve(__dirname, "./src/services"),
       "@store": path.resolve(__dirname, "./src/store"),
       "@utils": path.resolve(__dirname, "./src/utils"),
+      "@app-utils": path.resolve(__dirname, "./src/utils/app-utils"),
+      "@custom-data-utils": path.resolve(
+        __dirname,
+        "./src/utils/custom-data-utils"
+      ),
+      "@collection-utils": path.resolve(
+        __dirname,
+        "./src/utils/collection-utils"
+      ),
+      "@show-utils": path.resolve(__dirname, "./src/utils/show-utils"),
+      "@search-utils": path.resolve(__dirname, "./src/utils/search-utils"),
+      "@style-utils": path.resolve(__dirname, "./src/utils/style-utils"),
+      "@watch-status-utils": path.resolve(
+        __dirname,
+        "./src/utils/watch-status-utils"
+      ),
     },
   },
 });

@@ -6,10 +6,8 @@ import { ClickEvent, FilterDef } from "@types";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { bindTrigger, usePopupState } from "material-ui-popup-state/hooks";
 import CollectionItemOptionsMenu from "@features/app/app-drawer/parts/CollectionItemOptionsMenu";
-import {
-  renameCollection,
-  setCollectionToRename,
-} from "@utils/collectionUtils";
+import renameCollection from "@collection-utils/renameCollection";
+import setCollectionToRename from "@collection-utils/setCollectionToRename";
 
 type DrawerFilterRowProps = {
   value: string;

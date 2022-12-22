@@ -5,7 +5,7 @@ import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { COLORS } from "@features/app/app-theme/theme_const";
 import { useConfirm } from "material-ui-confirm";
-import { removeShows } from "@utils/itemUtils";
+import removeShows from "@show-utils/removeShows";
 
 export default function SelectionRemove() {
   const selectedShows = useMegaStore((state) => state.selectedShows);

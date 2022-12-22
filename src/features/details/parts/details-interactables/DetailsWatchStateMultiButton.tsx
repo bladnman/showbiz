@@ -3,7 +3,7 @@ import Button from "@mui/material/Button";
 import { ButtonGroup } from "@mui/material";
 import React, { useState } from "react";
 import { COLORS } from "@features/app/app-theme/theme_const";
-import { WATCH_STATUS_VALUES } from "@utils/watchStatusUtils";
+import WATCH_STATUS_VALUES from "@watch-status-utils/const";
 
 export default function DetailsWatchStateMultiButton({
   show = null,

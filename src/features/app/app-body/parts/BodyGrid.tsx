@@ -3,10 +3,11 @@ import GroupByGrid from "./group-grid/GroupByGrid";
 import useMegaStore from "../../../../store/MegaStore";
 import useBodyShows from "../../../../hooks/useBodyShows";
 import { ShowbizItem } from "@types";
-import { showSimilarShows, toggleShowSelection } from "@utils/itemUtils";
 import ShowGrid from "../../../../components/ShowGrid";
-import { getCustomDataListForShows } from "@utils/customDataUtils";
 import useCollectionTools from "@hooks/useCollectionTools";
+import getCustomDataListForShows from "@custom-data-utils/getCustomDataListForShows";
+import showSimilarShows from "@show-utils/showSimilarShows";
+import toggleShowSelection from "@show-utils/toggleShowSelection";
 
 export default function BodyGrid() {
   const isSelectMode = useMegaStore((state) => state.isSelectMode);

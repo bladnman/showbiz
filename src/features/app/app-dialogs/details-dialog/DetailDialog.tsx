@@ -1,10 +1,10 @@
 import React, { useRef } from "react";
 import { Dialog } from "@mui/material";
-import { setSearchMode } from "../../../../utils/appUtils";
 import useBreakSize from "../../../../utils/useBreakSize";
 import useMegaStore from "../../../../store/MegaStore";
 import useHydratedShow from "../../../../hooks/useHydratedShow";
 import DialogDetailsWithResults from "./DialogDetailsWithResults";
+import setSearchMode from "@app-utils/setSearchMode";
 
 export default function DetailsDialog({ isOpen = false }: { isOpen: boolean }) {
   const { isLtLg } = useBreakSize();

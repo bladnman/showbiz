@@ -1,8 +1,8 @@
 import useMegaStore from "@/store/MegaStore";
 import React from "react";
 import KeyboardEventHandler from "react-keyboard-event-handler";
-import { selectShows } from "@utils/itemUtils";
 import useBodyShows from "@hooks/useBodyShows";
+import selectShows from "@show-utils/selectShows";
 
 export default function AppKeyboardHandler() {
   const isSelectMode = useMegaStore((state) => state.isSelectMode);

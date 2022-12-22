@@ -1,5 +1,6 @@
-import { getAllGenres, showsWithGenre } from "@/utils/itemUtils";
 import { GroupByDef, ShowbizItem } from "@types";
+import showsWithGenre from "@show-utils/showsWithGenre";
+import getAllGenres from "@show-utils/getAllGenres";
 
 export default function getGenreGroupByDef({
   shows,

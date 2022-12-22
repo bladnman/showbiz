@@ -3,7 +3,9 @@ import {
   fire_fetchCustomDataList,
   fire_fetchSavedShows,
 } from "../services/firestore/utils/fire_utils";
-import { setBodyShows, setCustomDataList, setShows } from "../utils/itemUtils";
+import setCustomDataList from "@custom-data-utils/setCustomDataList";
+import setShows from "@show-utils/setShows";
+import setBodyShows from "@show-utils/setBodyShows";
 
 const UseAppInitializer = () => {
   const startedRef = useRef(false); // de-bouncer to make sure fetching saved shows only starts once

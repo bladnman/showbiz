@@ -1,7 +1,7 @@
 import { FilterDef, ShowbizItem } from "@types";
 import { useFilter } from "./useFilter";
 import useShowTypes from "../../../../hooks/useShowTypes";
-import { getShowType } from "@utils/itemUtils";
+import getShowType from "@show-utils/getShowType";
 
 export function useShowTypeFilter(shows: ShowbizItem[]): FilterDef {
   const types = useShowTypes(shows);

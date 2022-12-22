@@ -2,7 +2,6 @@ import React, { useCallback } from "react";
 import Button from "@mui/material/Button";
 import { ClickEvent, ShowbizItem, ShowPropOpt } from "@types";
 import { COLORS } from "../../../app/app-theme/theme_const";
-import { addShow, removeShow } from "@utils/itemUtils";
 import {
   bindMenu,
   bindTrigger,
@@ -15,8 +14,10 @@ import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import useShowTools from "@hooks/useShowTools";
 import AppDropMenu from "@components/AppDropMenu";
 import useCollectionTools from "@hooks/useCollectionTools";
-import { showContainsCollection } from "@utils/collectionUtils";
 import { useAsyncCallback } from "react-use-async-callback";
+import showContainsCollection from "@collection-utils/showContainsCollection";
+import addShow from "@show-utils/addShow";
+import removeShow from "@show-utils/removeShow";
 
 const DetailsAddButton = ({ show = null }: ShowPropOpt) => {
   const { isShowSaved } = useShowTools();

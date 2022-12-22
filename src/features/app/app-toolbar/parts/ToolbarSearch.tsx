@@ -1,7 +1,7 @@
 import React from "react";
 import { IconButton } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import { toggleSearchMode } from "@/utils/appUtils";
+import toggleSearchMode from "@app-utils/toggleSearchMode";
 
 function ToolbarSearch() {
   return (

@@ -2,7 +2,7 @@ import { CustomDataItem, FilterDef, ShowbizItem } from "@types";
 import { useFilter } from "./useFilter";
 import { useMemo } from "react";
 import useWatchStatusTools from "@/hooks/useWatchStatusTools";
-import { sortAccordingToConstant } from "@utils/watchStatusUtils";
+import sortAccordingToConstant from "@watch-status-utils/sortAccordingToConstant";
 
 export function useWatchStatusFilter(
   shows: ShowbizItem[],

@@ -1,13 +1,11 @@
 import { useMemo } from "react";
-import {
-  addCollection,
-  getAllCollections,
-  getAllCollectionsForShows,
-  getCollectionsForShow,
-  removeCollection,
-  toggleCollection,
-} from "@utils/collectionUtils";
 import useActiveCustomDataList from "./useActiveCustomDataList";
+import getAllCollections from "@collection-utils/getAllCollections";
+import getAllCollectionsForShows from "@collection-utils/getAllCollectionsForShows";
+import getCollectionsForShow from "@collection-utils/getCollectionsForShow";
+import addCollection from "@collection-utils/addCollection";
+import removeCollection from "@collection-utils/removeCollection";
+import toggleCollection from "@collection-utils/toggleCollection";
 
 export default function useCollectionTools() {
   const activeCustomDataList = useActiveCustomDataList();

@@ -2,17 +2,18 @@ import React, { useEffect } from "react";
 import { ButtonGroup, IconButton, Stack } from "@mui/material";
 import { ShowbizItem, SxPropOpt } from "@types";
 import HighlightAltIcon from "@mui/icons-material/HighlightAlt";
-import { toggleSelectMode } from "@utils/appUtils";
 import useMegaStore from "@store/MegaStore";
 import { COLORS } from "@features/app/app-theme/theme_const";
 import useCollectionTools from "@hooks/useCollectionTools";
-import { deselectShows, selectShows } from "@utils/itemUtils";
 import SelectionCollections from "@features/app/app-body/parts/selection-tools/SelectionCollections";
 import SelectionWatchStatus from "@features/app/app-body/parts/selection-tools/SelectionWatchStatus";
 import SelectionRemove from "@features/app/app-body/parts/selection-tools/SelectionRemove";
 import SelectAllIcon from "@mui/icons-material/SelectAll";
 import DeselectIcon from "@mui/icons-material/Deselect";
 import { SelectReverseIcon } from "@/images/AppIcons";
+import toggleSelectMode from "@app-utils/toggleSelectMode";
+import selectShows from "@show-utils/selectShows";
+import deselectShows from "@show-utils/deselectShows";
 
 export default function SelectionTools({ sx }: SxPropOpt) {
   const isSelectMode = useMegaStore((state) => state.isSelectMode);

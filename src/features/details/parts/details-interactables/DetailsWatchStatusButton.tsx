@@ -13,10 +13,8 @@ import AppDropMenu from "@components/AppDropMenu";
 import useWatchStatusTools from "@hooks/useWatchStatusTools";
 import { GLASS_BACKDROP_FILTER } from "@CONST";
 import useShowTools from "@hooks/useShowTools";
-import {
-  sortAccordingToConstant,
-  WATCH_STATUS_VALUES,
-} from "@utils/watchStatusUtils";
+import WATCH_STATUS_VALUES from "@watch-status-utils/const";
+import sortAccordingToConstant from "@watch-status-utils/sortAccordingToConstant";
 
 const DetailsWatchStatusButton = ({ show }: { show: ShowbizItem }) => {
   const { isShowSaved } = useShowTools();

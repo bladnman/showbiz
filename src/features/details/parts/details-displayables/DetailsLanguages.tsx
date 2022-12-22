@@ -4,7 +4,7 @@ import Tag from "@components/text/Tag";
 import { getYearSpanDisplay } from "@services/TMDB/utils/yearUtils";
 import { Button, Stack, Typography } from "@mui/material";
 import NetworkIcon from "@components/icons/NetworkIcon";
-import { showSimilarShows } from "@utils/itemUtils";
+import showSimilarShows from "@show-utils/showSimilarShows";
 
 export default function DetailsLanguages({
   show,

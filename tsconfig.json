@@ -20,9 +20,9 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "paths": {
-            "@/*": [
-              "./src/*"
-            ],
+      "@/*": [
+        "./src/*"
+      ],
       "@types": [
         "./src/@types"
       ],
@@ -44,9 +44,30 @@
       "@store/*": [
         "./src/store/*"
       ],
+      "@app-utils/*": [
+        "./src/utils/app-utils/*"
+      ],
+      "@collection-utils/*": [
+        "./src/utils/collection-utils/*"
+      ],
+      "@custom-data-utils/*": [
+        "./src/utils/custom-data-utils/*"
+      ],
+      "@search-utils/*": [
+        "./src/utils/search-utils/*"
+      ],
+      "@style-utils/*": [
+        "./src/utils/style-utils/*"
+      ],
+      "@show-utils/*": [
+        "./src/utils/show-utils/*"
+      ],
+      "@watch-status-utils/*": [
+        "./src/utils/watch-status-utils/*"
+      ],
       "@utils/*": [
         "./src/utils/*"
-      ],
+      ]
     }
   },
   "include": [

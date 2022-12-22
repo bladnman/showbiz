@@ -1,4 +1,4 @@
-export function styleLineClamp(maxLines?: number | null) {
+export default function styleLineClamp(maxLines?: number | null) {
   if (!maxLines) return {};
   return {
     display: "-webkit-box",

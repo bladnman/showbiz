@@ -1,9 +1,7 @@
-import {
-  getAllCollections,
-  showContainsCollection,
-  showHasCollections,
-} from "@/utils/collectionUtils";
 import { CustomDataItem, GroupByDef, ShowbizItem } from "@types";
+import getAllCollections from "@collection-utils/getAllCollections";
+import showContainsCollection from "@collection-utils/showContainsCollection";
+import showHasCollections from "@collection-utils/showHasCollections";
 
 export default function getCollectionGroupByDef({
   customDataList,

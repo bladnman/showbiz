@@ -2,11 +2,11 @@ import { CustomDataItem, ShowbizItem } from "@types";
 import { useCollectionsFilter } from "./useCollectionsFilter";
 import { useDecadeFilter } from "./useDecadeFilter";
 import { useEffect } from "react";
-import { setBodyShows } from "@utils/itemUtils";
 import { useGenreFilter } from "./useGenreFilter";
 import filterOrInSetAndBetween from "../utils/filterOrInSetAndBetween";
 import { useShowTypeFilter } from "./useShowTypeFilter";
 import { useWatchStatusFilter } from "@features/app/app-drawer/hooks/useWatchStatusFilter";
+import setBodyShows from "@show-utils/setBodyShows";
 
 export function useDrawerFilters(
   shows: ShowbizItem[],

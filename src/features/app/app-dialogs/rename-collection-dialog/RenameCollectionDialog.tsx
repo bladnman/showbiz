@@ -7,12 +7,9 @@ import {
   DialogTitle,
   TextField,
 } from "@mui/material";
-import { setSearchMode } from "@utils/appUtils";
 import useMegaStore from "@store/MegaStore";
-import {
-  clearCollectionToRename,
-  renameCollection,
-} from "@utils/collectionUtils";
+import renameCollection from "@collection-utils/renameCollection";
+import clearCollectionToRename from "@collection-utils/clearCollectionToRename";
 
 export default function RenameCollectionDialog({
   isOpen = false,

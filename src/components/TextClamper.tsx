@@ -1,6 +1,6 @@
 import React from "react";
 import { Typography } from "@mui/material";
-import { styleLineClamp } from "@utils/styleUtils";
+import styleLineClamp from "@style-utils/styleLineClamp";
 
 export default function TextClamper({
   text,

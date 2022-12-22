@@ -1,15 +1,14 @@
 import React from "react";
 import { Box, Divider, Drawer, IconButton } from "@mui/material";
 import useMegaStore from "../../../store/MegaStore";
-import { toggleDrawer } from "../../../utils/appUtils";
 import { styled } from "@mui/material/styles";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import DrawerSection from "./DrawerSection";
 import { useDrawerFilters } from "./hooks/useDrawerFilters";
 import useShowTools from "../../../hooks/useShowTools";
 import useCollectionTools from "../../../hooks/useCollectionTools";
 import { SideBarIcon } from "@/images/AppIcons";
 import useActiveCustomDataList from "@hooks/useActiveCustomDataList";
+import toggleDrawer from "@app-utils/toggleDrawer";
 
 export const DrawerHeaderStyled = styled("div")(({ theme }) => ({
   display: "flex",
