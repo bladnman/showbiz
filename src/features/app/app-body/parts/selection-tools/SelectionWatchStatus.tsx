@@ -17,6 +17,8 @@ import showContainsWatchStatus from "@watch-status-utils/showContainsWatchStatus
 import setWatchStatus from "@watch-status-utils/setWatchStatus";
 import addShow from "@show-utils/addShow";
 import getWatchStatusMenuItemList from "@watch-status-utils/getWatchStatusMenuItemList";
+import setCustomDataList from "@custom-data-utils/setCustomDataList";
+import megaStore from "@store/MegaStore";
 
 export default function SelectionWatchStatus() {
   const selectedShows = useMegaStore((state) => state.selectedShows);
@@ -39,6 +41,8 @@ export default function SelectionWatchStatus() {
       const promises: Promise<void>[] = [];
       shows.forEach((show) => promises.push(setWatchStatus(show, watchStatus)));
       await Promise.all(promises);
+
+      // setCustomDataList(megaStore.getState().customDataList);
     },
     []
   );

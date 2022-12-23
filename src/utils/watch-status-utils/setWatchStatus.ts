@@ -10,5 +10,10 @@ export default async function setWatchStatus(
   if (!customData) return undefined;
 
   customData.watchStatus = value;
+
+  // clear any hold date
+  if (customData.watchStatus !== "hold") {
+    delete customData.holdUntilDate;
+  }
   await finalSaveCustomData(customData);
 }

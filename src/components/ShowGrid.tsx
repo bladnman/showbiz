@@ -4,8 +4,8 @@ import { useWindowSize } from "@hooks/useWindowSize";
 import NotFoundTile from "./NotFoundTile";
 import useBreakSize from "../utils/useBreakSize";
 import { ShowbizItem } from "@types";
-import SelectablePosterTile from "@features/tiles/postertile/SelectablePosterTile";
 import useShowTools from "@hooks/useShowTools";
+import CompositePosterTile from "@features/tiles/poster-tile/CompositePosterTile";
 
 export default function ShowGrid({
   shows,
@@ -47,7 +47,7 @@ export default function ShowGrid({
             md={12 / numberOfColumns}
             key={show.id}
           >
-            <SelectablePosterTile
+            <CompositePosterTile
               selected={isShowSelected(show)}
               show={show}
               key={show.id}

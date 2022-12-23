@@ -9,7 +9,7 @@ import DetailsMetaLayout from "./DetailsMetaLayout";
 import DetailsBackdropImage from "../parts/details-displayables/DetailsBackdropImage";
 import { GLASS_BACKDROP_FILTER } from "@CONST";
 import DetailsRatingDisplay from "@features/details/parts/details-displayables/DetailsRatingDisplay";
-import PosterTile from "@features/tiles/postertile/PosterTile";
+import BasePosterTile from "@features/tiles/poster-tile/base-poster-tile/BasePosterTile";
 import DetailsAddButton from "@features/details/parts/details-interactables/DetailsAddButton";
 import DetailsWatchStatusButton from "@features/details/parts/details-interactables/DetailsWatchStatusButton";
 import DetailsShowSimilar from "@features/details/parts/details-displayables/DetailsShowSimilar";
@@ -66,7 +66,7 @@ export default function DetailsTwoPanelLayout({ show }: ShowPropOpt) {
                 alignItems={"center"}
               >
                 <DetailsRatingDisplay show={show} />
-                <PosterTile show={show} width={200} />
+                <BasePosterTile show={show} width={200} />
                 <DetailsAddButton show={show} />
                 <DetailsWatchStatusButton show={show} />
               </Stack>

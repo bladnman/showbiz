@@ -11,5 +11,6 @@ export default async function setHoldUntilForShow(
   if (!customData) return undefined;
 
   customData.holdUntilDate = date ? Timestamp.fromDate(date) : undefined;
+  customData.watchStatus = "hold";
   await finalSaveCustomData(customData);
 }

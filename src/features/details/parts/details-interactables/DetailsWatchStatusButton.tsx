@@ -25,7 +25,8 @@ const DetailsWatchStatusButton = ({ show }: { show: ShowbizItem }) => {
   const { isShowSaved } = useShowTools();
   const { watchStatuses, getWatchStatus, setWatchStatus } =
     useWatchStatusTools();
-  const currentValue = getWatchStatus(show);
+  const currentValue = getWatchStatus(show, false);
+  const currentLabel = getWatchStatus(show, true);
 
   const popupState = usePopupState({
     variant: "popover",
@@ -60,7 +61,7 @@ const DetailsWatchStatusButton = ({ show }: { show: ShowbizItem }) => {
           backdropFilter: GLASS_BACKDROP_FILTER,
         }}
       >
-        {currentValue}
+        {currentLabel}
       </Button>
       <Menu {...bindMenu(popupState)}>
         <AppDropMenu

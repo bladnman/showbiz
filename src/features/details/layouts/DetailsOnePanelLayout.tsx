@@ -3,7 +3,7 @@ import { ShowPropOpt } from "@types";
 import { Stack } from "@mui/system";
 import Box from "@mui/material/Box";
 import DetailsRatingDisplay from "@features/details/parts/details-displayables/DetailsRatingDisplay";
-import PosterTile from "@features/tiles/postertile/PosterTile";
+import BasePosterTile from "@features/tiles/poster-tile/base-poster-tile/BasePosterTile";
 import DetailsAddButton from "@features/details/parts/details-interactables/DetailsAddButton";
 import DetailsWatchStatusButton from "@features/details/parts/details-interactables/DetailsWatchStatusButton";
 import DetailsDescriptionText from "@features/details/parts/details-displayables/DetailsDescriptionText";
@@ -26,7 +26,7 @@ export default function DetailsOnePanelLayout({ show }: ShowPropOpt) {
       <Stack direction={"row"} spacing={3}>
         {/* POSTER */}
         <Box flexShrink={0}>
-          <PosterTile show={show} width={190} />
+          <BasePosterTile show={show} width={190} />
         </Box>
 
         {/* ACTIONS */}

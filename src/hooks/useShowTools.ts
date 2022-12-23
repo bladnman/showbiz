@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import useMegaStore from "../store/MegaStore";
 import { ShowbizItem } from "@/@types";
 import isShowInList from "@show-utils/isShowInList";
@@ -36,6 +36,6 @@ export default function useShowTools() {
       selectedShows,
       isShowSelected,
     }),
-    [shows]
+    [shows, customDataList, isShowSaved, isShowSelected, selectedShows]
   );
 }

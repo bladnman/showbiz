@@ -1,4 +1,6 @@
-export default function getPosterSize(width?: number, height?: number) {
+import { Size } from "@types";
+
+export default function getPosterSize(width?: number, height?: number): Size {
   if (!width || !height) {
     // height only, return it
     if (height) {
@@ -16,7 +18,7 @@ export default function getPosterSize(width?: number, height?: number) {
   }
 
   return {
-    width,
-    height,
+    width: width ?? 200,
+    height: height ?? 300,
   };
 }

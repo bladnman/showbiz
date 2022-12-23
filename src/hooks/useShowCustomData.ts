@@ -8,7 +8,8 @@ export default function useShowCustomData(show?: ShowbizItem | null) {
 
   useEffect(() => {
     if (!customDataList || !show) return;
-    setCustomData(customDataList.find((item) => item.id === show.id));
+    const foundCustomData = customDataList.find((item) => item.id === show.id);
+    setCustomData(foundCustomData);
   }, [customDataList, show]);
 
   return customData;
