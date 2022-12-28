@@ -1,14 +1,15 @@
 import React from "react";
 import { Box, Divider, Drawer, IconButton } from "@mui/material";
-import useMegaStore from "../../../store/MegaStore";
 import { styled } from "@mui/material/styles";
 import DrawerSection from "./DrawerSection";
 import { useDrawerFilters } from "./hooks/useDrawerFilters";
 import useShowTools from "../../../hooks/useShowTools";
 import useCollectionTools from "../../../hooks/useCollectionTools";
-import { SideBarIcon } from "@/images/AppIcons";
 import useActiveCustomDataList from "@hooks/useActiveCustomDataList";
-import toggleDrawer from "@app-utils/toggleDrawer";
+import useBreakSize from "@utils/useBreakSize";
+import PushPinIcon from "@mui/icons-material/PushPin";
+import SideBarButton from "@components/SideBarButton";
+import useDrawerTools from "@hooks/useDrawerTools";
 
 export const DrawerHeaderStyled = styled("div")(({ theme }) => ({
   display: "flex",
@@ -16,21 +17,28 @@ export const DrawerHeaderStyled = styled("div")(({ theme }) => ({
   padding: theme.spacing(0, 2),
   // necessary for content to be below app bar
   ...theme.mixins.toolbar,
-  // justifyContent: "flex-end",
+  justifyContent: "space-between",
 }));
 
 export default function AppDrawer() {
-  const drawerWidth = useMegaStore((state) => state.drawerWidth);
-  const isDrawerOpen = useMegaStore((state) => state.isDrawerOpen);
+  const {
+    drawerMode,
+    toggleDrawer,
+    setDrawerLock,
+    isDrawerStateLocked,
+    isDrawerOpen,
+    drawerWidth,
+  } = useDrawerTools();
   const { shows } = useShowTools();
   const { collections } = useCollectionTools();
   const customDataList = useActiveCustomDataList();
+  const { isGtMd } = useBreakSize();
 
   const filters = useDrawerFilters(shows, collections, customDataList);
 
   return (
     <Drawer
-      variant="permanent"
+      variant={drawerMode}
       open={isDrawerOpen}
       onClose={() => toggleDrawer()}
       ModalProps={{
@@ -44,9 +52,15 @@ export default function AppDrawer() {
       }}
     >
       <DrawerHeaderStyled>
-        <IconButton onClick={() => toggleDrawer()}>
-          <SideBarIcon size={20} opacity={0.6} />
-        </IconButton>
+        <SideBarButton />
+        {!isGtMd && (
+          <IconButton onClick={() => setDrawerLock(!isDrawerStateLocked)}>
+            <PushPinIcon
+              fontSize={"small"}
+              sx={{ opacity: isDrawerStateLocked ? 1 : 0.3 }}
+            />
+          </IconButton>
+        )}
       </DrawerHeaderStyled>
       <Divider />
       <Box paddingTop={3} p={2} role={"presentation"}>

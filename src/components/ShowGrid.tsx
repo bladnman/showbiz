@@ -6,6 +6,7 @@ import useBreakSize from "../utils/useBreakSize";
 import { ShowbizItem } from "@types";
 import useShowTools from "@hooks/useShowTools";
 import CompositePosterTile from "@features/tiles/poster-tile/CompositePosterTile";
+import useDrawerTools from "@hooks/useDrawerTools";
 
 export default function ShowGrid({
   shows,
@@ -15,7 +16,13 @@ export default function ShowGrid({
   onClick?: (show: ShowbizItem, event?: MouseEvent<HTMLDivElement>) => void;
 }) {
   const windowSize = useWindowSize();
-  const { isXs, isSm, isMd, isLg, isXl } = useBreakSize();
+  const { isXs, isSm, isMd, isLg, isXl, isXxl } = useBreakSize();
+
+  const { drawerWidth, isDrawerPermanentOpen } = useDrawerTools();
+
+  const gridWidth = isDrawerPermanentOpen
+    ? windowSize.width - drawerWidth
+    : windowSize.width;
 
   const { isShowSelected } = useShowTools();
 
@@ -26,14 +33,25 @@ export default function ShowGrid({
     if (isSm) {
       return 4;
     }
-    return 6;
-  }, [isXs, isSm, isMd, isLg, isXl]);
+    if (isMd || (isDrawerPermanentOpen && isSm)) {
+      return 5;
+    }
+    if (isLg || (isDrawerPermanentOpen && isMd)) {
+      return 6;
+    }
+    if (isXl || (isDrawerPermanentOpen && isLg)) {
+      return 8;
+    }
+    if (isXxl || (isDrawerPermanentOpen && isXl)) {
+      return 10;
+    }
+    return 12;
+  }, [isXs, isSm, isMd, isDrawerPermanentOpen, isLg, isXl, isXxl]);
 
   const tileWidth = useMemo(() => {
-    const usableWidth = Math.min(1300, windowSize.width) * 0.8;
-
+    const usableWidth = Math.min(5000, gridWidth) * 0.9;
     return usableWidth / numberOfColumns;
-  }, [windowSize, numberOfColumns]);
+  }, [gridWidth, numberOfColumns]);
 
   if (!shows || !shows.length) return <NotFoundTile />;
   return (

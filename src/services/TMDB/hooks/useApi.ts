@@ -148,7 +148,6 @@ export async function fetchApiTv(id: number | string | null) {
 
 function addHydrationDate(item: any) {
   if (item) {
-    // item.lastHydrationDate = new Date();
     item.lastHydrationDate = Timestamp.fromDate(new Date());
   }
 }

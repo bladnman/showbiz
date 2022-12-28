@@ -14,6 +14,7 @@ import { SelectReverseIcon } from "@/images/AppIcons";
 import toggleSelectMode from "@app-utils/toggleSelectMode";
 import selectShows from "@show-utils/selectShows";
 import deselectShows from "@show-utils/deselectShows";
+import useBreakSize from "@utils/useBreakSize";
 
 export default function SelectionTools({ sx }: SxPropOpt) {
   const isSelectMode = useMegaStore((state) => state.isSelectMode);
@@ -21,6 +22,10 @@ export default function SelectionTools({ sx }: SxPropOpt) {
   const bodyShows = useMegaStore((state) => state.bodyShows);
   const isAnySelected = currentlySelectedShows.length > 0;
   const { collections } = useCollectionTools();
+  const { isGtXs } = useBreakSize();
+  const showSelectAll = isSelectMode && isGtXs;
+  const showDeselectAll = isSelectMode && isAnySelected && isGtXs;
+  const showInvertSelection = isSelectMode && isAnySelected && isGtXs;
 
   //
   // DE-SELECTOR
@@ -65,16 +70,16 @@ export default function SelectionTools({ sx }: SxPropOpt) {
 
       {/* SELECTION TOGGLE BUTTON */}
       <ButtonGroup
-        sx={{
-          marginLeft: "2em",
-          border: "1px solid rgba(255,255,255,0.3)",
-          padding: "0.2em 1em",
-          backgroundColor: "rgba(0,0,0,0.5)",
-        }}
+        // sx={{
+        //   marginLeft: "2em",
+        // border: "1px solid rgba(255,255,255,0.3)",
+        // padding: "0.2em 1em",
+        // backgroundColor: "rgba(0,0,0,0.5)",
+        //}}
         variant={"outlined"}
       >
         {/* INVERT SELECTION */}
-        {isSelectMode && isAnySelected && (
+        {showInvertSelection && (
           <IconButton
             title={"Invert Selection"}
             onClick={() => handleInvertSelection()}
@@ -85,7 +90,8 @@ export default function SelectionTools({ sx }: SxPropOpt) {
             <SelectReverseIcon />
           </IconButton>
         )}
-        {isSelectMode && (
+        {/* DESELECT ALL */}
+        {showDeselectAll && (
           <IconButton
             title={"Deselect All"}
             onClick={() => deselectShows(bodyShows)}
@@ -96,7 +102,8 @@ export default function SelectionTools({ sx }: SxPropOpt) {
             <DeselectIcon />
           </IconButton>
         )}
-        {isSelectMode && (
+        {/* SELECT ALL */}
+        {showSelectAll && (
           <IconButton
             title={"Select All"}
             onClick={() => selectShows(bodyShows)}
@@ -108,6 +115,7 @@ export default function SelectionTools({ sx }: SxPropOpt) {
           </IconButton>
         )}
 
+        {/* TOGGLE SELECT MODE */}
         <IconButton
           onClick={toggleSelectMode}
           sx={{

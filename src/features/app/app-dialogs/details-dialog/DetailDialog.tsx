@@ -5,6 +5,8 @@ import useMegaStore from "../../../../store/MegaStore";
 import useHydratedShow from "../../../../hooks/useHydratedShow";
 import DialogDetailsWithResults from "./DialogDetailsWithResults";
 import setSearchMode from "@app-utils/setSearchMode";
+import setDetailItem from "@show-utils/setDetailItem";
+import setSimilarToShow from "@show-utils/setSimilarToShow";
 
 export default function DetailsDialog({ isOpen = false }: { isOpen: boolean }) {
   const { isLtLg } = useBreakSize();
@@ -15,6 +17,8 @@ export default function DetailsDialog({ isOpen = false }: { isOpen: boolean }) {
   // HANDLERS
   const handleClose = useRef(() => {
     setSearchMode(false);
+    setDetailItem(null);
+    setSimilarToShow(null);
   }).current;
 
   if (!show) {

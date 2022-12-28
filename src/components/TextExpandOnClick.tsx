@@ -22,7 +22,7 @@ export default function TextExpandOnClick({
   const handleDescClick = useCallback(() => {
     setCurrentMaxLines(currentMaxLines ? undefined : maxLines);
     onClick && onClick();
-  }, [currentMaxLines]);
+  }, [currentMaxLines, maxLines, onClick]);
 
   return (
     <TextClamper

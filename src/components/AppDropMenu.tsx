@@ -37,11 +37,14 @@ export default function AppDropMenu(props: AppMenuProps) {
     title,
   } = props;
 
-  const handleToggle = useCallback((valueItem: AppMenuValueItem) => {
-    if (valueItem) {
-      onToggleValue(valueItem);
-    }
-  }, []);
+  const handleToggle = useCallback(
+    (valueItem: AppMenuValueItem) => {
+      if (valueItem) {
+        onToggleValue(valueItem);
+      }
+    },
+    [onToggleValue]
+  );
 
   if (!itemList) return null;
 
@@ -113,14 +116,14 @@ function MenuEntryField(props: AppMenuProps) {
   // FOCUS on field
   useEffect(() => {
     autoFocus && inputFieldRef.current?.focus();
-  }, []);
+  }, [autoFocus]);
 
   const handleAdd = useCallback(() => {
     if (inputFieldRef.current?.value) {
       onToggleValue({ value: inputFieldRef.current.value });
       setFieldValue("");
     }
-  }, []);
+  }, [onToggleValue]);
   return (
     <Stack direction="row" component={"div"}>
       <Box flexGrow={1}>

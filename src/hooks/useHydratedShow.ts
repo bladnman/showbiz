@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
-import { ShowbizItem } from "../@types";
-import { secSince } from "../utils/MU";
-import { fetchApiShow } from "../services/TMDB/hooks/useApi";
-import { fire_saveShow } from "../services/firestore/utils/fire_utils";
-import { REFRESH_DETAILS_SEC } from "../store/const";
+import { ShowbizItem } from "@types";
+import { secSince } from "@utils/MU";
+import { fetchApiShow } from "@services/TMDB/hooks/useApi";
+import { fire_saveShow } from "@services/firestore/utils/fire_utils";
+import { REFRESH_DETAILS_SEC } from "@store/const";
 import getShowFromList from "@show-utils/getShowFromList";
 import updateShows from "@show-utils/updateShows";
 import updateObject from "@show-utils/updateObject";
 import mergeObjects from "@show-utils/mergeObjects";
+import { Timestamp } from "firebase/firestore";
 
 /**
  * ```
@@ -20,14 +21,13 @@ import mergeObjects from "@show-utils/mergeObjects";
  * will `hydrate` your show as much as possible
  * */
 export default function useHydratedShow(withShow?: ShowbizItem | null) {
+  console.log(`[🐽](useHydratedShow) withShow`, withShow);
   const [show, setShow] = useState(withShow);
 
   useEffect(() => {
+    // no show, let's clear and leave
     if (!withShow) {
-      // clear previous show if there was one
-      if (show) {
-        setShow(null);
-      }
+      setShow(undefined);
       return;
     }
 
@@ -35,6 +35,8 @@ export default function useHydratedShow(withShow?: ShowbizItem | null) {
       let finalShow: ShowbizItem;
       const listShow = getShowFromList(withShow);
       const secSinceHydration = secSince(listShow?.lastHydrationDate?.toDate());
+
+      console.log(`[🐽](useHydratedShow) secSinceHydration`, secSinceHydration);
 
       // API PULL NEEDED
       if (!listShow || secSinceHydration > REFRESH_DETAILS_SEC) {
@@ -47,6 +49,9 @@ export default function useHydratedShow(withShow?: ShowbizItem | null) {
         // MERGE & UPDATE LIST? : this will update the data in the list if there was a listShow
         finalShow = mergeObjects(tmdbShow, sourceShow) as ShowbizItem; // move user data onto tmdb show
         finalShow = updateObject(sourceShow, finalShow) as ShowbizItem; // update "listShow" if there was one
+
+        // update hydration date!
+        finalShow.lastHydrationDate = Timestamp.fromDate(new Date());
 
         if (listShow) {
           // UPDATE CLOUD? : if this was in the cloud already
@@ -63,11 +68,13 @@ export default function useHydratedShow(withShow?: ShowbizItem | null) {
         finalShow = listShow;
       }
 
-      setShow(finalShow);
+      setShow({ ...finalShow });
     };
 
+    setShow(withShow); // start with our seed show (pre-hydrated)
     doFetch().catch();
   }, [withShow]);
 
+  console.log(`[🐽](useHydratedShow) show`, show);
   return show;
 }

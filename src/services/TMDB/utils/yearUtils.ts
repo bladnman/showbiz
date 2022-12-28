@@ -12,6 +12,8 @@ export function getYearSpanDisplay(show?: ShowbizItem | null): string | null {
     const isCompleted = show.status === "Ended" || show.status === "Canceled";
     const lastYear = isCompleted ? stripYear(show.lastAirDate) : "";
 
+    if (!firstYear && !lastYear) return null;
+
     return [firstYear, lastYear].join(" - ");
   }
 

@@ -84,7 +84,8 @@ export default function DetailsOnePanelLayout({ show }: ShowPropOpt) {
 
         <Stack
           paddingBottom={2}
-          direction={"row"}
+          spacing={1}
+          direction={"column"}
           justifyContent={"space-between"}
         >
           <DetailsYearTag show={show} />

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ShowbizItem } from "@types";
 import Diary from "@utils/Diary";
 import fetchWatchMode from "@services/StreamAPI/fetchWatchMode";
@@ -9,24 +9,28 @@ const promiseDiary = new Diary(300);
 export default function useStreamInfo(
   enabled: boolean,
   show?: ShowbizItem | null
-): StreamItem[] | undefined {
+) {
+  const [isLoading, setIsLoading] = useState(false);
   const [streamItems, setStreamItems] = useState<StreamItem[]>();
   const { updateShowInCloud } = useShowTools();
 
   useEffect(() => {
     if (!enabled || !show) {
       setStreamItems(undefined);
+      setIsLoading(false);
       return;
     }
 
     // use previous values from customData if available
     if (show.streamItems?.length) {
       setStreamItems(show.streamItems);
+      setIsLoading(false);
       return;
     }
 
     // time to do the pull
     const doFetch = async () => {
+      setIsLoading(true);
       const watchModePromise = promiseDiary.readOrWrite(
         `watchMode__${show.id}`,
         () => fetchWatchMode(show)
@@ -40,9 +44,16 @@ export default function useStreamInfo(
 
       // save to state (for re-render)
       setStreamItems(show.streamItems);
+
+      setIsLoading(false);
     };
     doFetch().catch();
-  }, [show, enabled]);
+  }, [show, enabled, updateShowInCloud, setIsLoading]);
 
-  return streamItems;
+  return useMemo(() => {
+    return {
+      isLoading,
+      streamItems,
+    };
+  }, [isLoading, streamItems]);
 }

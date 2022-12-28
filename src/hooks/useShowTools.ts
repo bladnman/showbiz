@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import useMegaStore from "../store/MegaStore";
 import { ShowbizItem } from "@/@types";
 import isShowInList from "@show-utils/isShowInList";
@@ -16,14 +16,11 @@ export default function useShowTools() {
     },
     [shows]
   );
-  const isShowSelected = useCallback(
-    (show: ShowbizItem) => {
-      if (!show) return false;
-      const selectedShows = useMegaStore.getState().selectedShows;
-      return !!selectedShows.find((item) => item.id === show.id);
-    },
-    [selectedShows]
-  );
+  const isShowSelected = useCallback((show: ShowbizItem) => {
+    if (!show) return false;
+    const selectedShows = useMegaStore.getState().selectedShows;
+    return !!selectedShows.find((item) => item.id === show.id);
+  }, []);
 
   return useMemo(
     () => ({

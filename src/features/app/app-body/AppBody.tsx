@@ -7,6 +7,7 @@ import { DrawerHeaderStyled } from "../app-drawer/AppDrawer";
 import BodyGrid from "./parts/BodyGrid";
 import BodyToolbar from "./parts/BodyToolbar";
 import { Box } from "@mui/material";
+import useDrawerTools from "@hooks/useDrawerTools";
 
 const MainBodyStyled = styled("main", {
   shouldForwardProp: (prop) => prop !== "open",
@@ -35,12 +36,15 @@ const MainBodyStyled = styled("main", {
   };
 });
 const AppBody = () => {
-  const isDrawerOpen = useMegaStore((state) => state.isDrawerOpen);
+  const { isDrawerOpen, isDrawerPermanentOpen } = useDrawerTools();
 
   return (
-    <Box flexGrow={1} marginLeft={isDrawerOpen ? `${DRAWER_WIDTH_OPEN}px` : 0}>
+    <Box
+      flexGrow={1}
+      marginLeft={isDrawerPermanentOpen ? `${DRAWER_WIDTH_OPEN}px` : 0}
+    >
       <DrawerHeaderStyled />
-      <BodyToolbar />
+      {/*<BodyToolbar />*/}
 
       <MainBodyStyled open={isDrawerOpen}>
         <BodyGrid />

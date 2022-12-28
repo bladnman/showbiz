@@ -48,6 +48,7 @@ export default function DetailsTwoPanelLayout({ show }: ShowPropOpt) {
           display="flex"
           direction={"row"}
           alignItems={"flex-end"}
+          flexGrow={1}
           className="details-template-data-table"
         >
           {/* left-side
@@ -78,6 +79,7 @@ export default function DetailsTwoPanelLayout({ show }: ShowPropOpt) {
           <Stack
             className={"details-template-right-panel"}
             direction={"column"}
+            flexGrow={1}
           >
             <Box
               className={"details-template-meta-area"}

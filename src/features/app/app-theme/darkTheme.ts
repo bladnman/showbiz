@@ -22,6 +22,18 @@ declare module "@mui/material/Typography" {
   }
 }
 
+declare module "@mui/material/styles" {
+  interface BreakpointOverrides {
+    xs: true;
+    sm: true;
+    md: true;
+    lg: true;
+    xl: true;
+    xxl: true;
+    mega: true;
+  }
+}
+
 const { palette } = createTheme();
 let theme = createTheme({
   palette: {

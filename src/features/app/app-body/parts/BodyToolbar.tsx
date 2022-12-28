@@ -28,9 +28,10 @@ export default function BodyToolbar({ sx }: SxPropOpt) {
         alignItems={"center"}
         paddingX={3}
         paddingY={1.5}
-        justifyContent={"space-between"}
+        // justifyContent={"space-between"}
+        justifyContent={"flex-end"}
       >
-        <GroupByTool />
+        {/*<GroupByTool />*/}
         <SelectionTools />
       </Stack>
     </Box>

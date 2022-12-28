@@ -7,9 +7,7 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 type AppDropButtonProps = ButtonProps & {
   isOpen?: boolean;
 };
-export default function AppDropButton<C extends React.ElementType>(
-  props: AppDropButtonProps
-) {
+export default function AppDropButton(props: AppDropButtonProps) {
   const { isOpen = false, children, ...otherProps } = props;
   const backgroundColor = isOpen ? COLORS.primary : "rgba(0,0,0,1)";
   const color = isOpen ? COLORS.bright : "rgba(255,255,255,0.6)";

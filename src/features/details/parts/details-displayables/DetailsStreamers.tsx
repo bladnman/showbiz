@@ -4,14 +4,26 @@ import { Link, Stack, Typography } from "@mui/material";
 import Image from "mui-image";
 import useStreamInfo from "@services/StreamAPI/useStreamInfo";
 import IconPod from "@/components/IconPod";
+import DoNotDisturbIcon from "@mui/icons-material/DoNotDisturb";
 
 export default function DetailsStreamers({
   show,
   enabled = true,
 }: ShowPropOpt & { enabled?: boolean }) {
-  const streamItems = useStreamInfo(enabled, show);
+  const { streamItems, isLoading } = useStreamInfo(enabled, show);
 
-  if (!enabled || !streamItems?.length) return null;
+  if (!enabled || isLoading) return null;
+
+  // NONE found
+  if (!streamItems?.length) {
+    return (
+      <IconPod spacing={2}>
+        <DoNotDisturbIcon opacity={0.6} />
+      </IconPod>
+    );
+  }
+
+  // SOME
   return (
     <IconPod spacing={2}>
       {streamItems.map((streamItem: StreamItem, idx: number) => (

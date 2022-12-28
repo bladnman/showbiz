@@ -7,6 +7,7 @@ export default function DetailsSeasonEpisodeCount({
   sx,
 }: ShowPropOpt & SxPropOpt) {
   if (!show || !show.isTv) return null;
+  if (!show.numberOfSeasons || !show.numberOfEpisodes) return null;
 
   let text = `${show.numberOfSeasons} seasons | ${show.numberOfEpisodes} episodes`;
   if (show.episodeRunTime?.length) {

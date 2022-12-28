@@ -3,6 +3,7 @@ import { devtools } from "zustand/middleware";
 import { CustomDataItem, ShowbizItem } from "../@types";
 import TMDB from "../services/TMDB/TMDB";
 import { DRAWER_WIDTH_OPEN } from "./const";
+import { DRAWER_PERMANENT_BREAKPOINT } from "@CONST";
 
 export interface MegaStore {
   isLocalDev: boolean;
@@ -15,7 +16,9 @@ export interface MegaStore {
   drawerWidthOpen: number;
   drawerWidth: number;
   drawerWidthClosed: number;
+  drawerMode: "permanent" | "temporary";
   isDrawerOpen: boolean;
+  isDrawerStateLocked: boolean;
   isDetailsOpen: boolean;
   collectionToRename: string | null;
   isSelectMode: boolean;
@@ -43,10 +46,17 @@ const useMegaStore = create<MegaStore>()(
         ),
         searchQuery: null,
         searchType: null,
+        bodyGroupBy: "status",
         drawerWidthOpen: DRAWER_WIDTH_OPEN,
         drawerWidth: DRAWER_WIDTH_OPEN,
         drawerWidthClosed: 0,
+        // attempt first breakpoint check for drawerMode
+        drawerMode:
+          window.innerWidth >= DRAWER_PERMANENT_BREAKPOINT
+            ? "permanent"
+            : "temporary",
         isDrawerOpen: true,
+        isDrawerStateLocked: false,
         isDetailsOpen: false,
         collectionToRename: null,
         isSelectMode: false,

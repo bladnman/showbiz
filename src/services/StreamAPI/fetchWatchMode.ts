@@ -39,7 +39,6 @@ type ServerItem = {
     | "tv_everywhere"
     | "subscription"
     | "purchase"
-    | "free"
     | "rent"
     | "buy"
     | "sub"

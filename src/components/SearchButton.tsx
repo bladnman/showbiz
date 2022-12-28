@@ -3,12 +3,12 @@ import { IconButton } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import toggleSearchMode from "@app-utils/toggleSearchMode";
 
-function ToolbarSearch() {
+function SearchButton() {
   return (
     <IconButton onClick={() => toggleSearchMode()}>
-      <SearchIcon />
+      <SearchIcon fontSize={"medium"} sx={{ opacity: 0.6 }} />
     </IconButton>
   );
 }
 
-export default ToolbarSearch;
+export default SearchButton;

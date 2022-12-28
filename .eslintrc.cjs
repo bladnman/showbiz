@@ -6,6 +6,7 @@ module.exports = {
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
     "plugin:@typescript-eslint/recommended"
   ],
   "overrides": [],
@@ -16,9 +17,12 @@ module.exports = {
   },
   "plugins": [
     "react",
-    "@typescript-eslint"
+    "@typescript-eslint",
+    "react-hooks"
   ],
-  "rules": {},
+  "rules": {
+    "react-hooks/exhaustive-deps": "error"
+  },
   "settings": {
     "react": {
       "version": "detect"

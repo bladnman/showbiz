@@ -1,26 +1,30 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect, useMemo, useRef } from "react";
 import { TextField } from "@mui/material";
-import { useEffect, useRef } from "react";
-import useMegaStore from "../store/MegaStore";
 import useWindowFocus from "../hooks/useWindowFocus";
 import setSimilarToShow from "@show-utils/setSimilarToShow";
 import setSearchQuery from "@search-utils/setSearchQuery";
+import debounce from "lodash/debounce";
+import { SEARCH_DEBOUNCE_MS } from "@CONST";
 
 type SearchFieldProps = {
   onChange?: (value: string) => void;
 };
 export default function AppSearchField({ onChange }: SearchFieldProps) {
-  const searchQuery = useMegaStore((state) => state.searchQuery);
+  const [localSearchQuery, setLocalSearchQuery] = React.useState("");
   const isWindowFocused = useWindowFocus();
 
-  const handleChanges = useRef((value: string) => {
-    // clear related search
-    setSimilarToShow(null);
-    setSearchQuery(value);
+  const debouncedChangeHandler = useMemo(
+    () =>
+      debounce((value: string) => {
+        // clear related search
+        setSimilarToShow(null);
+        setSearchQuery(value);
 
-    // if our owner wanted to hear about changes
-    onChange && onChange(value);
-  }).current;
+        // if our owner wanted to hear about changes
+        onChange && onChange(value);
+      }, SEARCH_DEBOUNCE_MS),
+    [onChange]
+  );
 
   const inputFieldRef = useRef<HTMLInputElement>();
 
@@ -41,17 +45,18 @@ export default function AppSearchField({ onChange }: SearchFieldProps) {
     if (isWindowFocused) {
       focusAndSelect();
     }
-  }, [isWindowFocused]);
+  }, [focusAndSelect, isWindowFocused]);
 
   return (
     <TextField
       id="search-field"
       label="Search"
       variant="standard"
-      value={searchQuery || ""}
+      value={localSearchQuery || ""}
       onChange={(event) => {
         const newValue = event.target.value;
-        handleChanges(newValue);
+        setLocalSearchQuery(newValue);
+        debouncedChangeHandler(newValue);
       }}
       sx={{
         width: "100%",

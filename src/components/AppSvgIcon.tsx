@@ -13,7 +13,6 @@ export type AppSvgIconProps = React.ComponentProps<"svg"> & {
 const DEFAULT_SIZE = 20;
 export default function AppSvgIcon(
   props: {
-    // eslint-disable-line
     Icon: any;
   } & AppSvgIconProps
 ) {

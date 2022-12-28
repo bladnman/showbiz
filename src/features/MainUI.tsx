@@ -7,8 +7,10 @@ import AppToolbar from "@features/app/app-toolbar/AppToolbar";
 import { Box } from "@mui/material";
 import AppKeyboardHandler from "@features/app/app-keyboard/AppKeyboardHandler";
 import checkForCustomDataDuplicates from "@custom-data-utils/checkForCustomDataDuplicates";
+import useDrawerModeManager from "@hooks/useDrawerModeManager";
 
 export default function MainUI() {
+  useDrawerModeManager(); // manage drawer mode
   useEffect(() => {
     checkForCustomDataDuplicates();
     // removeAllDupes().then(() => {

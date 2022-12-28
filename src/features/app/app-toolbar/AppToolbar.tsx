@@ -2,18 +2,17 @@ import React from "react";
 import {
   AppBar,
   AppBarProps,
-  IconButton,
+  Box,
   Stack,
   Toolbar,
   Typography,
 } from "@mui/material";
-import { useCallback } from "react";
 import useMegaStore from "../../../store/MegaStore";
 import { styled } from "@mui/material/styles";
 import { DRAWER_WIDTH_OPEN } from "@store/const";
-import ToolbarSearch from "./parts/ToolbarSearch";
-import { SideBarIcon } from "@/images/AppIcons";
-import toggleDrawer from "@app-utils/toggleDrawer";
+import SearchButton from "@components/SearchButton";
+import SideBarButton from "@components/SideBarButton";
+import SelectionTools from "@features/app/app-body/parts/selection-tools/SelectionTools";
 
 interface MyAppBarProps extends AppBarProps {
   open?: boolean;
@@ -44,9 +43,6 @@ const MyAppBar = styled(AppBar, {
 export default function AppToolbar() {
   const isDrawerOpen = useMegaStore((state) => state.isDrawerOpen);
   const appName = useMegaStore((state) => state.appName);
-  const onMenuClick = useCallback(() => {
-    toggleDrawer();
-  }, []);
 
   return (
     <MyAppBar
@@ -62,18 +58,24 @@ export default function AppToolbar() {
           alignItems="center"
           justifyContent={"space-between"}
         >
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            sx={{ ml: 0, mr: 1, ...(isDrawerOpen && { display: "none" }) }}
-            onClick={onMenuClick}
-          >
-            <SideBarIcon size={20} opacity={0.6} />
-          </IconButton>
-          <Typography variant={"h6"}>{appName}</Typography>
-          <ToolbarSearch />
+          {/* MENU BUTTON */}
+          <Box>
+            <Box
+              sx={{ ml: 0, mr: 1, ...(isDrawerOpen && { display: "none" }) }}
+            >
+              <SideBarButton />
+            </Box>
+          </Box>
+
+          <Stack direction={"row"}>
+            {/* TITLE */}
+            {/*<Typography variant={"h6"}>{appName}</Typography>*/}
+
+            <SelectionTools />
+
+            {/* SEARCH BUTTON */}
+            <SearchButton />
+          </Stack>
         </Stack>
       </Toolbar>
     </MyAppBar>
