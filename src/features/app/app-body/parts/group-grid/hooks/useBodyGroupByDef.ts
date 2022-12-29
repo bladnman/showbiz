@@ -3,6 +3,8 @@ import { useMemo } from "react";
 import getCollectionGroupByDef from "@features/app/app-body/parts/group-grid/utils/getCollectionGroupByDef";
 import getGenreGroupByDef from "@features/app/app-body/parts/group-grid/utils/getGenreGroupByDef";
 import getStatusGroupByDef from "@features/app/app-body/parts/group-grid/utils/getStatusGroupByDef";
+import sortShowsByRating from "@show-utils/shortShowsByRating";
+import sortShowsByHoldDate from "@show-utils/shortShowsByHoldDate";
 
 export default function useBodyGroupByDef({
   customDataList,
@@ -27,7 +29,7 @@ export default function useBodyGroupByDef({
       case "STATUS":
         return getStatusGroupByDef({
           customDataList,
-          shows: shows ?? [],
+          shows: sortShowsByHoldDate(sortShowsByRating(shows)) ?? [],
         });
     }
     return {

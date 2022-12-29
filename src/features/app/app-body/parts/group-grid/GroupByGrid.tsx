@@ -35,7 +35,9 @@ export default function GroupByGrid({
               spacing={3}
               marginBottom={2}
             >
-              <Typography variant={"h5"}>{title}</Typography>
+              <Typography variant={"h5"} sx={{ color: COLORS.bright }}>
+                {title}
+              </Typography>
               <AppCountLabel
                 value={shows.length}
                 sx={{ backgroundColor: COLORS.bg_front, color: COLORS.dim }}
