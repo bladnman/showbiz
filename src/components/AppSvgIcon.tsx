@@ -9,6 +9,7 @@ export type AppSvgIconProps = React.ComponentProps<"svg"> & {
   size?: number | string; // sets both height and width
   width?: number | string;
   height?: number | string;
+  sx?: React.CSSProperties;
 };
 const DEFAULT_SIZE = 20;
 export default function AppSvgIcon(

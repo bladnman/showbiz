@@ -3,7 +3,6 @@ import { ShowPropOpt } from "@types";
 import { Stack } from "@mui/system";
 import Box from "@mui/material/Box";
 import DetailsRatingDisplay from "@features/details/parts/details-displayables/DetailsRatingDisplay";
-import BasePosterTile from "@features/tiles/poster-tile/base-poster-tile/BasePosterTile";
 import DetailsAddButton from "@features/details/parts/details-interactables/DetailsAddButton";
 import DetailsWatchStatusButton from "@features/details/parts/details-interactables/DetailsWatchStatusButton";
 import DetailsDescriptionText from "@features/details/parts/details-displayables/DetailsDescriptionText";
@@ -18,6 +17,7 @@ import Shim from "@components/Shim";
 import DetailsShowSimilar from "@features/details/parts/details-displayables/DetailsShowSimilar";
 import DetailsLanguages from "@features/details/parts/details-displayables/DetailsLanguages";
 import DetailsCollectionList from "@features/details/parts/details-displayables/DetailsCollectionList";
+import CompositePosterTile from "@features/tiles/poster-tile/CompositePosterTile";
 
 const COLLAPSED_LINE_MAX = 4;
 export default function DetailsOnePanelLayout({ show }: ShowPropOpt) {
@@ -26,7 +26,7 @@ export default function DetailsOnePanelLayout({ show }: ShowPropOpt) {
       <Stack direction={"row"} spacing={3}>
         {/* POSTER */}
         <Box flexShrink={0}>
-          <BasePosterTile show={show} width={190} />
+          <CompositePosterTile show={show} width={190} />
         </Box>
 
         {/* ACTIONS */}

@@ -14,6 +14,7 @@ import DetailsAddButton from "@features/details/parts/details-interactables/Deta
 import DetailsWatchStatusButton from "@features/details/parts/details-interactables/DetailsWatchStatusButton";
 import DetailsShowSimilar from "@features/details/parts/details-displayables/DetailsShowSimilar";
 import Shim from "@components/Shim";
+import CompositePosterTile from "@features/tiles/poster-tile/CompositePosterTile";
 
 export default function DetailsTwoPanelLayout({ show }: ShowPropOpt) {
   const windowSize = useWindowSize();
@@ -67,7 +68,7 @@ export default function DetailsTwoPanelLayout({ show }: ShowPropOpt) {
                 alignItems={"center"}
               >
                 <DetailsRatingDisplay show={show} />
-                <BasePosterTile show={show} width={200} />
+                <CompositePosterTile show={show} width={200} />
                 <DetailsAddButton show={show} />
                 <DetailsWatchStatusButton show={show} />
               </Stack>

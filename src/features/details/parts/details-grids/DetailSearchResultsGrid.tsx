@@ -6,7 +6,15 @@ import useMegaStore from "../../../../store/MegaStore";
 import { useApiSearch } from "../../../../services/TMDB/hooks/useApi";
 import setDetailItem from "@show-utils/setDetailItem";
 
-export default function DetailSearchResultsGrid() {
+export default function DetailSearchResultsGrid({
+  columns,
+  maxPosterWidth,
+  gridWidth,
+}: {
+  columns?: number;
+  maxPosterWidth?: number;
+  gridWidth?: number;
+}) {
   const searchQuery = useMegaStore((state) => state.searchQuery);
   const searchType = useMegaStore((state) => state.searchType);
 
@@ -33,5 +41,13 @@ export default function DetailSearchResultsGrid() {
     setDetailItem(show);
   };
 
-  return <ShowGrid shows={shows} onClick={onClick} />;
+  return (
+    <ShowGrid
+      shows={shows}
+      onClick={onClick}
+      columns={columns}
+      maxPosterWidth={maxPosterWidth}
+      gridWidth={gridWidth}
+    />
+  );
 }

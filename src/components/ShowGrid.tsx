@@ -11,22 +11,31 @@ import useDrawerTools from "@hooks/useDrawerTools";
 export default function ShowGrid({
   shows,
   onClick,
+  columns,
+  gridWidth,
+  maxPosterWidth,
 }: {
   shows?: ShowbizItem[] | null;
   onClick?: (show: ShowbizItem, event?: MouseEvent<HTMLDivElement>) => void;
+  columns?: number;
+  gridWidth?: number;
+  maxPosterWidth?: number;
 }) {
   const windowSize = useWindowSize();
   const { isXs, isSm, isMd, isLg, isXl, isXxl } = useBreakSize();
-
   const { drawerWidth, isDrawerPermanentOpen } = useDrawerTools();
-
-  const gridWidth = isDrawerPermanentOpen
-    ? windowSize.width - drawerWidth
-    : windowSize.width;
-
   const { isShowSelected } = useShowTools();
 
+  const calcdGridWidth = useMemo(() => {
+    if (gridWidth) return Math.min(gridWidth, windowSize.width);
+
+    return isDrawerPermanentOpen
+      ? windowSize.width - drawerWidth
+      : windowSize.width;
+  }, [drawerWidth, gridWidth, isDrawerPermanentOpen, windowSize.width]);
   const numberOfColumns = useMemo(() => {
+    if (columns) return columns;
+
     if (isXs) {
       return 3;
     }
@@ -46,12 +55,12 @@ export default function ShowGrid({
       return 10;
     }
     return 12;
-  }, [isXs, isSm, isMd, isDrawerPermanentOpen, isLg, isXl, isXxl]);
+  }, [isXs, isSm, isMd, isDrawerPermanentOpen, isLg, isXl, isXxl, columns]);
 
   const tileWidth = useMemo(() => {
-    const usableWidth = Math.min(5000, gridWidth) * 0.9;
+    const usableWidth = Math.min(maxPosterWidth ?? 5000, calcdGridWidth) * 0.9;
     return usableWidth / numberOfColumns;
-  }, [gridWidth, numberOfColumns]);
+  }, [calcdGridWidth, maxPosterWidth, numberOfColumns]);
 
   if (!shows || !shows.length) return <NotFoundTile />;
   return (

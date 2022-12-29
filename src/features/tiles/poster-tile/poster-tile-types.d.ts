@@ -7,7 +7,11 @@ type PosterTileProps = ShowPropOpt & {
   width?: number;
   onClick?: (show: ShowbizItem, event?: MouseEvent<HTMLDivElement>) => void;
 };
-type SelectablePosterTileProps = PosterTileProps & {
+type SelectablePosterTileProps = {
+  show?: ShowbizItem | null;
+  height?: number;
+  width?: number;
+  onClick?: (show: ShowbizItem, event?: MouseEvent<HTMLDivElement>) => void;
   selected?: boolean;
 };
 type CompositePosterTileProps = SelectablePosterTileProps;

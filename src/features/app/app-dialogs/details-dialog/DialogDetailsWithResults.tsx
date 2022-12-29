@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from "react";
+import React, { useCallback, useMemo, useRef } from "react";
 import { AppBar, DialogContent, IconButton } from "@mui/material";
 import Box from "@mui/material/Box";
 import CloseIcon from "@mui/icons-material/Close";
@@ -10,6 +10,7 @@ import DetailSearchResultsGrid from "../../../details/parts/details-grids/Detail
 import DetailsSearchField from "./parts/DetailsSearchField";
 import { GLASS_BACKDROP_FILTER } from "@CONST";
 import setSearchMode from "@app-utils/setSearchMode";
+import useBreakSize from "@utils/useBreakSize";
 
 export default function DialogDetailsWithResults({ show }: ShowPropOpt) {
   const similarToShow = useMegaStore((state) => state.similarToShow);
@@ -20,6 +21,9 @@ export default function DialogDetailsWithResults({ show }: ShowPropOpt) {
     const parentNode = containerRef.current?.parentNode as HTMLDivElement;
     parentNode?.scrollTo({ top: 0, behavior: "smooth" });
   }, [containerRef]);
+
+  const { isLtMd } = useBreakSize();
+  const numberOfResultsColumns = isLtMd ? 3 : 5;
 
   if (!show) {
     // show zero-state
@@ -66,9 +70,15 @@ export default function DialogDetailsWithResults({ show }: ShowPropOpt) {
         {/*    R E S U L T S   G R I D    */}
         <DialogContent>
           {hasSimilarShow ? (
-            <DetailSimilarResultsGrid />
+            <DetailSimilarResultsGrid
+              columns={numberOfResultsColumns}
+              gridWidth={1000}
+            />
           ) : (
-            <DetailSearchResultsGrid />
+            <DetailSearchResultsGrid
+              columns={numberOfResultsColumns}
+              gridWidth={1000}
+            />
           )}
         </DialogContent>
       </DialogContent>

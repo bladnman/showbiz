@@ -6,40 +6,52 @@ import { CompositePosterTileProps } from "./poster-tile-types";
 import SelectablePosterTileBg from "@features/tiles/poster-tile/selected-poster-tile/SelectablePosterTileBg";
 import SelectablePosterTileFg from "@features/tiles/poster-tile/selected-poster-tile/SelectablePosterTileFg";
 import HoldPosterTileFg from "@features/tiles/poster-tile/hold-poster-tile/HoldPosterTileFg";
+import RatingPosterTile from "@features/tiles/poster-tile/rating-poster-tile/RatingPosterTile";
 
 export default function CompositePosterTile(props: CompositePosterTileProps) {
   const { show, height, width } = props;
   const size = getPosterSize(width, height);
   if (!show) return null;
 
+  const posterShapeSx = {
+    overflow: "hidden",
+    borderRadius: 3,
+    width: size.width,
+    height: size.height,
+  };
+
   return (
-    <Box
-      position={"relative"}
-      width={size.width}
-      height={size.height}
-      sx={{
-        overflow: "hidden",
-        borderRadius: 3,
-      }}
-    >
-      {/* BG */}
-      <PosterLayer sx={{ pointerEvents: "none", zIndex: 0 }}>
+    <Box position={"relative"} width={size.width} height={size.height}>
+      {/* BEHIND - allows for outside of poster rectangle display */}
+      <PosterLayer sx={{ zIndex: 0 }}>
         <SelectablePosterTileBg {...props} />
+        {/*<PosterLayer sx={{ top: "-0.5em" }}>*/}
+        {/*  <RatingPosterTile {...props} />*/}
+        {/*</PosterLayer>*/}
       </PosterLayer>
 
-      {/* POSTER */}
-      <PosterLayer sx={{ zIndex: 1 }}>
-        <BasePosterTile {...props} />
-      </PosterLayer>
-
-      {/* FG */}
-      <PosterLayer sx={{ pointerEvents: "none", zIndex: 2 }}>
-        <PosterLayer>
-          <HoldPosterTileFg {...props} />
+      {/* POSTER SHAPE - clipped to poster rectangle */}
+      <PosterLayer sx={{ ...posterShapeSx, zIndex: 10 }}>
+        {/* POSTER IMAGE - clipped to poster rectangle */}
+        <PosterLayer sx={{ zIndex: 11 }}>
+          <BasePosterTile {...props} /> {/* handles clicks */}
         </PosterLayer>
 
-        <PosterLayer>
-          <SelectablePosterTileFg {...props} />
+        {/* IN FRONT - clipped to poster rectangle */}
+        <PosterLayer sx={{ pointerEvents: "none", zIndex: 12 }}>
+          <PosterLayer>
+            <HoldPosterTileFg {...props} />
+          </PosterLayer>
+
+          <PosterLayer>
+            <Box sx={{ position: "absolute", bottom: "-0.5em", right: 0 }}>
+              <RatingPosterTile {...props} />
+            </Box>
+          </PosterLayer>
+
+          <PosterLayer>
+            <SelectablePosterTileFg {...props} />
+          </PosterLayer>
         </PosterLayer>
       </PosterLayer>
     </Box>
