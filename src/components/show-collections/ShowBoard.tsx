@@ -3,6 +3,8 @@ import NotFoundTile from "../tiles/NotFoundTile";
 import { ShowbizItem } from "@types";
 import { Box } from "@mui/material";
 import FreeBoard from "@components/free-board/FreeBoard";
+import CompositePosterTile from "@/features/tiles/poster-tile/CompositePosterTile";
+import { PieceEventData } from "@components/free-board/FreeBoardPiece";
 
 export default function ShowBoard({
   shows,
@@ -17,6 +19,16 @@ export default function ShowBoard({
   gridWidth?: number;
   maxPosterWidth?: number;
 }) {
+  const handleDragStop = (data: PieceEventData) => {
+    console.log(`[🐽](ShowBoard) DRAG STOP`, data);
+  };
+  const handleClick = (data: PieceEventData) => {
+    console.log(`[🐽](ShowBoard) CLICK`, data);
+    // onClick && onClick(data.show);
+  };
+  const handleDoubleClick = (data: PieceEventData) => {
+    console.log(`[🐽](ShowBoard) DOUBLE-CLICK`, data);
+  };
   if (!shows || !shows.length) return <NotFoundTile />;
   return (
     <Box
@@ -36,7 +48,15 @@ export default function ShowBoard({
         boxShadow: "inset 0 0 5px #00000050",
       }}
     >
-      <FreeBoard shows={shows} onClick={onClick} tileWidth={175} />
+      <FreeBoard
+        onDragStop={handleDragStop}
+        onClick={handleClick}
+        onDoubleClick={handleDoubleClick}
+      >
+        {shows.map((show, index) => (
+          <CompositePosterTile key={index} show={show} width={175} />
+        ))}
+      </FreeBoard>
     </Box>
   );
 }

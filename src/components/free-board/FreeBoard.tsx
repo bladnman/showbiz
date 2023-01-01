@@ -1,21 +1,18 @@
-import React, { MouseEvent, useRef, useState } from "react";
-import { ShowbizItem } from "@types";
+import React, { useRef, useState } from "react";
 import FreeBoardContents from "@components/free-board/layers/FreeBoardContents";
 import FreeBoardPlatform from "@components/free-board/layers/FreeBoardPlatform";
 import FreeBoardViewport from "@components/free-board/layers/FreeBoardViewport";
 import useScrollEventHandler from "@components/free-board/hooks/useScrollEventHandler";
-
-type TempProps = {
-  shows?: ShowbizItem[] | null;
-  tileWidth: number;
-  onClick?: (show: ShowbizItem, event?: MouseEvent<HTMLDivElement>) => void;
-};
+import { BoardEventHandlers } from "@components/free-board/FreeBoardPiece";
 
 type FreeBoardProps = {
   zoomRange?: [number, number];
+  children?: React.ReactNode[] | React.ReactNode;
 };
-export default function FreeBoard(props: FreeBoardProps & TempProps) {
-  const { shows, tileWidth, onClick, zoomRange = [0.5, 3] } = props;
+export default function FreeBoard(props: FreeBoardProps & BoardEventHandlers) {
+  const { children, zoomRange = [0.5, 3] } = props;
+  const { onDragStart, onDragStop, onClick, onDoubleClick, onContextMenu } =
+    props;
   const hugeSize = 10000000;
   const platformRef = useRef<HTMLDivElement>(null);
   const viewportRef = useRef<HTMLDivElement>(null);
@@ -40,10 +37,14 @@ export default function FreeBoard(props: FreeBoardProps & TempProps) {
       >
         <FreeBoardContents
           platformSize={platformSize}
-          tileWidth={tileWidth}
-          shows={shows}
+          onDragStart={onDragStart}
+          onDragStop={onDragStop}
           onClick={onClick}
-        />
+          onDoubleClick={onDoubleClick}
+          onContextMenu={onContextMenu}
+        >
+          {children}
+        </FreeBoardContents>
       </FreeBoardPlatform>
     </FreeBoardViewport>
   );
