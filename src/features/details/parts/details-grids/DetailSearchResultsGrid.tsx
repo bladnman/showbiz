@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect } from "react";
-import ShowGrid from "../../../../components/ShowGrid";
+import ShowGrid from "@components/show-collections/ShowGrid";
 import { ShowbizItem } from "../../../../@types";
 import useMegaStore from "../../../../store/MegaStore";
 import { useApiSearch } from "../../../../services/TMDB/hooks/useApi";

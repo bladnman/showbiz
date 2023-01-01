@@ -3,7 +3,7 @@ import { ShowPropOpt } from "@types";
 import { Box, Stack, Typography } from "@mui/material";
 import DetailsStreamers from "@features/details/parts/details-displayables/DetailsStreamers";
 import { CloudStreamIcon } from "@/images/AppIcons";
-import IconPod from "@/components/IconPod";
+import IconPod from "@components/utils/IconPod";
 
 export default function DetailsOptionalStreamers({ show }: ShowPropOpt) {
   const [enableForId, setEnabledForId] = useState<number>();

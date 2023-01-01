@@ -6,7 +6,8 @@ export const IDS = {
   },
 };
 export const IMAGE_TEXT_SHADOW = "2px 2px 0px rgba(0,0,0,0.55)";
-export const GLASS_BACKDROP_FILTER = "blur(2px) brightness(80%)"; // backdropFilter:
+export const GLASS_BACKDROP_FILTER = "brightness(80%)"; // backdropFilter:
+// export const GLASS_BACKDROP_FILTER = "blur(2px) brightness(80%)"; // backdropFilter:
 
 export const CLOUD_SAVE_ENABLED = true;
 export const DRAWER_PERMANENT_BREAKPOINT = 1200;

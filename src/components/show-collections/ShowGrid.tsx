@@ -1,8 +1,8 @@
 import React, { MouseEvent, useMemo } from "react";
 import { Box, Grid } from "@mui/material";
 import { useWindowSize } from "@hooks/useWindowSize";
-import NotFoundTile from "./NotFoundTile";
-import useBreakSize from "../utils/useBreakSize";
+import NotFoundTile from "../tiles/NotFoundTile";
+import useBreakSize from "@utils/useBreakSize";
 import { ShowbizItem } from "@types";
 import useShowTools from "@hooks/useShowTools";
 import CompositePosterTile from "@features/tiles/poster-tile/CompositePosterTile";

@@ -13,7 +13,7 @@ import BasePosterTile from "@features/tiles/poster-tile/base-poster-tile/BasePos
 import DetailsAddButton from "@features/details/parts/details-interactables/DetailsAddButton";
 import DetailsWatchStatusButton from "@features/details/parts/details-interactables/DetailsWatchStatusButton";
 import DetailsShowSimilar from "@features/details/parts/details-displayables/DetailsShowSimilar";
-import Shim from "@components/Shim";
+import Shim from "@components/utils/Shim";
 import CompositePosterTile from "@features/tiles/poster-tile/CompositePosterTile";
 
 export default function DetailsTwoPanelLayout({ show }: ShowPropOpt) {

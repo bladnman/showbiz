@@ -1,7 +1,7 @@
 import React from "react";
 import { ShowPropOpt } from "@types";
 import { IMAGE_TEXT_SHADOW } from "@CONST";
-import TextExpandOnClick from "@/components/TextExpandOnClick";
+import TextExpandOnClick from "@components/collapsers/TextExpandOnClick";
 
 /** https://html-css-js.com/css/generator/text-shadow/ */
 

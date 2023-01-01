@@ -1,6 +1,6 @@
 import create from "zustand";
 import { devtools } from "zustand/middleware";
-import { CustomDataItem, ShowbizItem } from "../@types";
+import { CustomDataItem, ShowbizItem } from "@types";
 import TMDB from "../services/TMDB/TMDB";
 import { DRAWER_WIDTH_OPEN } from "./const";
 import { DRAWER_PERMANENT_BREAKPOINT } from "@CONST";
@@ -26,6 +26,7 @@ export interface MegaStore {
   customDataList: CustomDataItem[];
   bodyShows: ShowbizItem[];
   bodyGroupBy?: string;
+  bodyBoardName?: string;
   selectedShows: ShowbizItem[];
   showsToSelectHold: ShowbizItem[] | null;
 }
@@ -63,6 +64,8 @@ const useMegaStore = create<MegaStore>()(
         shows: [] as ShowbizItem[],
         selectedShows: [] as ShowbizItem[],
         showsToSelectHold: null,
+
+        bodyBoardName: "FOR THE WIN",
       } as MegaStore)
   )
 );

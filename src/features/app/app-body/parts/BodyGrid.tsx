@@ -1,26 +1,20 @@
-import React, { MouseEvent, useCallback, useMemo } from "react";
+import React, { MouseEvent, useCallback } from "react";
 import GroupByGrid from "./group-grid/GroupByGrid";
 import useMegaStore from "../../../../store/MegaStore";
-import useBodyShows from "../../../../hooks/useBodyShows";
 import { ShowbizItem } from "@types";
-import ShowGrid from "../../../../components/ShowGrid";
-import useCollectionTools from "@hooks/useCollectionTools";
-import getCustomDataListForShows from "@custom-data-utils/getCustomDataListForShows";
+import ShowGrid from "@components/show-collections/ShowGrid";
 import showSimilarShows from "@show-utils/showSimilarShows";
 import toggleShowSelection from "@show-utils/toggleShowSelection";
+import useBodyShows from "@hooks/useBodyShows";
+import { COLORS } from "@features/app/app-theme/theme_const";
+import { Box } from "@mui/material";
 
 export default function BodyGrid() {
-  const isSelectMode = useMegaStore((state) => state.isSelectMode);
-  const bodyGroupBy = useMegaStore((state) => state.bodyGroupBy);
+  const groupBy = useMegaStore((state) => state.bodyGroupBy);
   const shows = useBodyShows();
-  const { collections } = useCollectionTools();
-
-  const customDataList = useMemo(() => {
-    return getCustomDataListForShows(shows) ?? [];
-  }, [shows, collections]);
-
   const handleShowClick = useCallback(
     (show: ShowbizItem, _event?: MouseEvent<HTMLDivElement>) => {
+      const isSelectMode = useMegaStore.getState().isSelectMode;
       // SELECT MODE
       if (isSelectMode) {
         toggleShowSelection(show);
@@ -31,18 +25,28 @@ export default function BodyGrid() {
         showSimilarShows(show);
       }
     },
-    [isSelectMode]
+    []
   );
 
-  // NO GROUP
-  if (!bodyGroupBy) return <ShowGrid shows={shows} onClick={handleShowClick} />;
-
   return (
-    <GroupByGrid
-      shows={shows}
-      customDataList={customDataList}
-      groupBy={bodyGroupBy}
-      onClick={handleShowClick}
-    />
+    <Box
+      sx={{
+        width: "100%",
+        height: "100%",
+        flexGrow: 1,
+        padding: 3,
+        backgroundColor: COLORS.bg_back,
+      }}
+    >
+      {groupBy ? (
+        <GroupByGrid
+          shows={shows}
+          groupBy={groupBy}
+          onClick={handleShowClick}
+        />
+      ) : (
+        <ShowGrid shows={shows} onClick={handleShowClick} />
+      )}
+    </Box>
   );
 }

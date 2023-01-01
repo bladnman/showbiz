@@ -1,18 +1,12 @@
 import React from "react";
-import {
-  AppBar,
-  AppBarProps,
-  Box,
-  Stack,
-  Toolbar,
-  Typography,
-} from "@mui/material";
+import { AppBar, AppBarProps, Box, Stack, Toolbar } from "@mui/material";
 import useMegaStore from "../../../store/MegaStore";
 import { styled } from "@mui/material/styles";
 import { DRAWER_WIDTH_OPEN } from "@store/const";
-import SearchButton from "@components/SearchButton";
-import SideBarButton from "@components/SideBarButton";
+import SearchButton from "@components/interactables/SearchButton";
+import SideBarButton from "@components/interactables/SideBarButton";
 import SelectionTools from "@features/app/app-body/parts/selection-tools/SelectionTools";
+import BoardModeButton from "@components/interactables/BoardModeButton";
 
 interface MyAppBarProps extends AppBarProps {
   open?: boolean;
@@ -50,6 +44,7 @@ export default function AppToolbar() {
       color={"transparent"}
       open={isDrawerOpen}
       elevation={0}
+      className={"APP-TOOLBAR"}
     >
       <Toolbar>
         <Stack
@@ -68,9 +63,9 @@ export default function AppToolbar() {
           </Box>
 
           <Stack direction={"row"}>
-            {/* TITLE */}
-            {/*<Typography variant={"h6"}>{appName}</Typography>*/}
+            <BoardModeButton />
 
+            {/* SELECTION BUTTON */}
             <SelectionTools />
 
             {/* SEARCH BUTTON */}

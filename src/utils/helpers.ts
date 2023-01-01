@@ -78,3 +78,33 @@ export function timestampFromDate(date: Date) {
 export function ymdFromTimestamp(timestamp: Timestamp) {
   return dayjs(dateFromTimestamp(timestamp)).format("YYYY-MM-DD");
 }
+
+export function graphPaperSx(paperColor = "#ffffff", featureColor = "#ddddff") {
+  return {
+    paperColor,
+    backgroundImage: `linear-gradient(${featureColor} 2.8px, transparent 2.8px), linear-gradient(90deg, ${featureColor} 2.8px, transparent 2.8px), linear-gradient(${featureColor} 1.4px, transparent 1.4px), linear-gradient(90deg, ${featureColor} 1.4px, ${paperColor} 1.4px)`,
+    backgroundSize: "95px 95px, 95px 95px, 19px 19px, 19px 19px",
+    backgroundPosition:
+      "--3.8px --3.8px, --3.8px --3.8px, -1.91px -1.91px, -1.91px -1.91px",
+  };
+}
+
+export function dottedPaperSx(
+  paperColor = "#ffffff",
+  featureColor = "#ddddff"
+) {
+  return {
+    paperColor,
+    backgroundImage: `radial-gradient(${featureColor} 0.95px, ${paperColor} 0.95px)`,
+    backgroundSize: "19px 19px",
+  };
+}
+
+export function disableNavScrollSx() {
+  return {
+    "&::-webkit-scrollbar": {
+      display: "none",
+    },
+    msOverflowStyle: "none",
+  };
+}

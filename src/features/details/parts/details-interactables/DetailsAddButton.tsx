@@ -12,7 +12,9 @@ import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import useShowTools from "@hooks/useShowTools";
-import AppDropMenu, { AppMenuValueItem } from "@components/AppDropMenu";
+import AppDropMenu, {
+  AppMenuValueItem,
+} from "@components/interactables/AppDropMenu";
 import useCollectionTools from "@hooks/useCollectionTools";
 import { useAsyncCallback } from "react-use-async-callback";
 import showContainsCollection from "@collection-utils/showContainsCollection";

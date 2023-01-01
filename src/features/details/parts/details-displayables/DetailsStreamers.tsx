@@ -3,7 +3,7 @@ import { ShowPropOpt } from "@types";
 import { Link, Stack, Typography } from "@mui/material";
 import Image from "mui-image";
 import useStreamInfo from "@services/StreamAPI/useStreamInfo";
-import IconPod from "@/components/IconPod";
+import IconPod from "@components/utils/IconPod";
 import DoNotDisturbIcon from "@mui/icons-material/DoNotDisturb";
 
 export default function DetailsStreamers({

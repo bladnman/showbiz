@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef } from "react";
 import { TextField } from "@mui/material";
-import useWindowFocus from "../hooks/useWindowFocus";
+import useWindowFocus from "@hooks/useWindowFocus";
 import setSimilarToShow from "@show-utils/setSimilarToShow";
 import setSearchQuery from "@search-utils/setSearchQuery";
 import debounce from "lodash/debounce";

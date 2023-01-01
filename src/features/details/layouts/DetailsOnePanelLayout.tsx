@@ -13,7 +13,7 @@ import DetailsBoxOffice from "@features/details/parts/details-displayables/Detai
 import DetailsYearTag from "@features/details/parts/details-displayables/DetailsYearTag";
 import DetailsSeasonEpisodeCount from "@features/details/parts/details-displayables/DetailsSeasonEpisodeCount";
 import DetailsMetaAdditionalLayout from "@features/details/layouts/DetailsMetaAdditionalLayout";
-import Shim from "@components/Shim";
+import Shim from "@components/utils/Shim";
 import DetailsShowSimilar from "@features/details/parts/details-displayables/DetailsShowSimilar";
 import DetailsLanguages from "@features/details/parts/details-displayables/DetailsLanguages";
 import DetailsCollectionList from "@features/details/parts/details-displayables/DetailsCollectionList";

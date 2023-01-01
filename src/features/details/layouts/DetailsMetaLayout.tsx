@@ -8,7 +8,7 @@ import DetailsBoxOffice from "../parts/details-displayables/DetailsBoxOffice";
 import DetailsDescriptionText from "../parts/details-displayables/DetailsDescriptionText";
 import React from "react";
 import { ShowPropOpt } from "@types";
-import Shim from "@components/Shim";
+import Shim from "@components/utils/Shim";
 import DetailsLanguages from "@features/details/parts/details-displayables/DetailsLanguages";
 import DetailsMetaAdditionalLayout from "@features/details/layouts/DetailsMetaAdditionalLayout";
 import { Box } from "@mui/material";

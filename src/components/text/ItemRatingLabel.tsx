@@ -1,7 +1,7 @@
 import React from "react";
 import { Rating } from "@mui/material";
 
-const ItemRating = (props: { rating?: number | null }) => {
+const ItemRatingLabel = (props: { rating?: number | null }) => {
   const { rating, ...otherProps } = props;
   if (!rating) return null;
 
@@ -16,4 +16,4 @@ const ItemRating = (props: { rating?: number | null }) => {
     />
   );
 };
-export default ItemRating;
+export default ItemRatingLabel;

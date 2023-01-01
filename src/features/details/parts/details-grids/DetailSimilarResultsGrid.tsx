@@ -1,5 +1,5 @@
 import React from "react";
-import ShowGrid from "../../../../components/ShowGrid";
+import ShowGrid from "@components/show-collections/ShowGrid";
 import { ShowbizItem } from "../../../../@types";
 import useMegaStore from "../../../../store/MegaStore";
 import useSimilarShows from "../../../../services/TMDB/hooks/useSimilarShows";

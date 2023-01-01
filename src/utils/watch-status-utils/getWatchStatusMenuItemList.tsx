@@ -9,7 +9,7 @@ import getCustomDataForShow from "@custom-data-utils/getCustomDataForShow";
 import { dateFromTimestamp } from "@utils/helpers";
 import dayjs from "dayjs";
 import setShowsToSelectHold from "@custom-data-utils/setShowsToSelectHold";
-import Shim from "@components/Shim";
+import Shim from "@components/utils/Shim";
 
 export default function getWatchStatusMenuItemList(shows: ShowbizItem[]) {
   const handleHoldOptionsClick = (event: ClickEvent) => {

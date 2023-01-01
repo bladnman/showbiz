@@ -14,7 +14,7 @@ import { ReactComponent as DotHalf } from "@/images/dot_half.svg";
 import { ReactComponent as DotEmpty } from "@/images/dot_empty.svg";
 import { ReactComponent as DotOneThird } from "@/images/dot_1third.svg";
 import { ReactComponent as DotTwoThird } from "@/images/dot_2third.svg";
-import AppSvgIcon, { AppSvgIconProps } from "@/components/AppSvgIcon";
+import AppSvgIcon, { AppSvgIconProps } from "@components/icons/AppSvgIcon";
 
 export function GoogleIcon(props: AppSvgIconProps) {
   return <AppSvgIcon Icon={Google} {...props} />;

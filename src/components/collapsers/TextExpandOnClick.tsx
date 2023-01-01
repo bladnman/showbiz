@@ -1,6 +1,6 @@
 import React from "react";
 import { useCallback, useState } from "react";
-import TextClamper from "./TextClamper";
+import TextClamper from "../utils/TextClamper";
 
 export default function TextExpandOnClick({
   text,

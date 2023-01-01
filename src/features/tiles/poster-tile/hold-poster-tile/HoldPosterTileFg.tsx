@@ -12,7 +12,7 @@ export default function HoldPosterTileFg(props: SelectablePosterTileProps) {
   const holdLabel = useMemo(() => {
     if (customData?.watchStatus.toLowerCase() !== "hold") return null;
     const holdUntilLabel = getShowHoldUntilDateDesc(customData);
-    return holdUntilLabel ? `Hold: ${holdUntilLabel}` : "Hold";
+    return holdUntilLabel ? `${holdUntilLabel}` : "Hold";
   }, [customData]);
 
   if (!holdLabel) return null;

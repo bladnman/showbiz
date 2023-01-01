@@ -6,10 +6,12 @@ import {
 } from "material-ui-popup-state/hooks";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import { Menu } from "@mui/material";
-import AppDropMenu, { AppMenuValueItem } from "@components/AppDropMenu";
+import AppDropMenu, {
+  AppMenuValueItem,
+} from "@components/interactables/AppDropMenu";
 import useMegaStore from "@store/MegaStore";
 import useCollectionTools from "@hooks/useCollectionTools";
-import AppDropButton from "@/components/AppDropButton";
+import AppDropButton from "@components/interactables/AppDropButton";
 import showContainsCollection from "@collection-utils/showContainsCollection";
 import addShow from "@show-utils/addShow";
 

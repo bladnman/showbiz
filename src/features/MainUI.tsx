@@ -18,15 +18,18 @@ export default function MainUI() {
     // });
   }, []);
   return (
-    <>
+    <Box width={"100%"} height={"100%"}>
       <AppSnackShop />
-      <Box sx={{ display: "flex" }}>
+      <Box
+        className={"MAIN-UI"}
+        sx={{ display: "flex", width: "100%", height: "100%" }}
+      >
         <AppToolbar />
         <AppDrawer />
         <AppBody />
       </Box>
       <AppDialogs />
       <AppKeyboardHandler />
-    </>
+    </Box>
   );
 }

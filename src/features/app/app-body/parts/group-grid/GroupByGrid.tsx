@@ -1,25 +1,24 @@
 import React, { MouseEvent } from "react";
-import { Badge, Box, Typography } from "@mui/material";
-import NotFoundTile from "@components/NotFoundTile";
-import { CustomDataItem, ShowbizItem, ShowGroup } from "@types";
-import ShowGrid from "@components/ShowGrid";
+import { Box, Typography } from "@mui/material";
+import NotFoundTile from "@components/tiles/NotFoundTile";
+import { ShowbizItem, ShowGroup } from "@types";
+import ShowGrid from "@components/show-collections/ShowGrid";
 import useBodyGroupByDef from "@features/app/app-body/parts/group-grid/hooks/useBodyGroupByDef";
-import AppCountLabel from "@components/AppCountLabel";
-import Shim from "@components/Shim";
+import AppCountLabel from "@components/text/AppCountLabel";
 import { Stack } from "@mui/system";
 import { COLORS } from "@/features/app/app-theme/theme_const";
+import useShowListCustomData from "@hooks/useShowListCustomData";
 
 export default function GroupByGrid({
   shows,
-  customDataList,
   onClick,
   groupBy,
 }: {
-  shows?: ShowbizItem[];
-  customDataList: CustomDataItem[];
+  shows: ShowbizItem[];
   onClick?: (show: ShowbizItem, event?: MouseEvent<HTMLDivElement>) => void;
   groupBy?: string;
 }) {
+  const customDataList = useShowListCustomData(shows);
   const groupByRef = useBodyGroupByDef({ groupBy, customDataList, shows });
 
   if (groupByRef.showGroups.length < 1) return <NotFoundTile />;

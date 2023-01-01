@@ -6,10 +6,12 @@ import {
 } from "material-ui-popup-state/hooks";
 import FlagIcon from "@mui/icons-material/Flag";
 import { Box, Menu } from "@mui/material";
-import AppDropMenu, { AppMenuValueItem } from "@components/AppDropMenu";
+import AppDropMenu, {
+  AppMenuValueItem,
+} from "@components/interactables/AppDropMenu";
 import useMegaStore from "@store/MegaStore";
 import useCollectionTools from "@hooks/useCollectionTools";
-import AppDropButton from "@components/AppDropButton";
+import AppDropButton from "@components/interactables/AppDropButton";
 import WATCH_STATUS_VALUES from "@watch-status-utils/const";
 import { useAsyncCallback } from "react-use-async-callback";
 import { ClickEvent, ShowbizItem } from "@types";

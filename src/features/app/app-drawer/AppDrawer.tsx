@@ -8,7 +8,7 @@ import useCollectionTools from "../../../hooks/useCollectionTools";
 import useActiveCustomDataList from "@hooks/useActiveCustomDataList";
 import useBreakSize from "@utils/useBreakSize";
 import PushPinIcon from "@mui/icons-material/PushPin";
-import SideBarButton from "@components/SideBarButton";
+import SideBarButton from "@components/interactables/SideBarButton";
 import useDrawerTools from "@hooks/useDrawerTools";
 
 export const DrawerHeaderStyled = styled("div")(({ theme }) => ({
@@ -38,6 +38,7 @@ export default function AppDrawer() {
 
   return (
     <Drawer
+      className={"APP_DRAWER"}
       variant={drawerMode}
       open={isDrawerOpen}
       onClose={() => toggleDrawer()}

@@ -10,7 +10,9 @@ import { Box, Menu } from "@mui/material";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import AppDropMenu, { AppMenuValueItem } from "@components/AppDropMenu";
+import AppDropMenu, {
+  AppMenuValueItem,
+} from "@components/interactables/AppDropMenu";
 import useWatchStatusTools from "@hooks/useWatchStatusTools";
 import { GLASS_BACKDROP_FILTER } from "@CONST";
 import useShowTools from "@hooks/useShowTools";

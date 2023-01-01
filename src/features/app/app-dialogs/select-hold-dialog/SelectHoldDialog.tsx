@@ -15,7 +15,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider, StaticDatePicker } from "@mui/x-date-pickers";
 import dayjs, { Dayjs } from "dayjs";
 import { Stack } from "@mui/system";
-import Shim from "@components/Shim";
+import Shim from "@components/utils/Shim";
 import Typography from "@mui/material/Typography";
 import setHoldUntilForShow from "@watch-status-utils/setHoldUntilForShow";
 import useBreakSize from "@utils/useBreakSize";

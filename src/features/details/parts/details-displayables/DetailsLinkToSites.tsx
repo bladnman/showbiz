@@ -8,7 +8,7 @@ import {
   ImdbIcon,
   RottenTomatoesIcon,
 } from "@/images/AppIcons";
-import IconPod from "@components/IconPod";
+import IconPod from "@components/utils/IconPod";
 
 type LinkDef = {
   title: string;
