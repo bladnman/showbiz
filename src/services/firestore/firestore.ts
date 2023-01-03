@@ -2,6 +2,7 @@
 import { initializeApp } from "firebase/app";
 import { collection, getFirestore } from "firebase/firestore";
 import {
+  FIRE_BOARD_COLLECTION_NAME,
   FIRE_CUSTOM_DATA_COLLECTION_NAME,
   FIRE_SHOWS_COLLECTION_NAME,
 } from "./fire_const";
@@ -28,4 +29,11 @@ const customDataCollection = collection(
   fireDb,
   FIRE_CUSTOM_DATA_COLLECTION_NAME
 );
-export { fireApp, fireDb, showsCollection, customDataCollection };
+const boardCollection = collection(fireDb, FIRE_BOARD_COLLECTION_NAME);
+export {
+  fireApp,
+  fireDb,
+  showsCollection,
+  customDataCollection,
+  boardCollection,
+};

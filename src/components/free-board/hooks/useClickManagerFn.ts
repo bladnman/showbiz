@@ -4,7 +4,7 @@ import { DraggableData, DraggableEvent } from "react-draggable";
 import getDraggableEventType from "../utils/getDraggableEventType";
 import { BoardInterfaceProps } from "@components/free-board/FreeBoardPiece";
 
-const doubleClickDelayMs = 200;
+const doubleClickDelayMs = 230;
 export default function useClickManagerFn(eventHandlers: BoardInterfaceProps) {
   const { onClick, onDoubleClick, pieceData } = eventHandlers;
   const isTrackingPress = useRef<boolean>(false);

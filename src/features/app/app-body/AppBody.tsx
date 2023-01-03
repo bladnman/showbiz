@@ -9,7 +9,7 @@ import BodyBoard from "@features/app/app-body/parts/BodyBoard";
 
 const AppBody = () => {
   const { isDrawerPermanentOpen } = useDrawerTools();
-  const bodyBoardName = useMegaStore((state) => state.bodyBoardName);
+  const bodyBoardName = useMegaStore((state) => state.bodyBoardId);
 
   return (
     <Box

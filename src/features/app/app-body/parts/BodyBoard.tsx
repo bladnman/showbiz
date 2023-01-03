@@ -1,20 +1,21 @@
-import React, { MouseEvent, useCallback } from "react";
-import { ShowbizItem } from "@types";
+import React from "react";
 import ShowBoard from "@components/show-collections/ShowBoard";
 import useBodyShows from "@hooks/useBodyShows";
-import { COLORS } from "@features/app/app-theme/theme_const";
 import { Box } from "@mui/material";
 import { useDisableNavScroll } from "@hooks/useDisableNavScroll";
+import useBoardConfig from "@components/show-collections/hooks/useBoardConfig";
+import NotFoundTile from "@components/tiles/NotFoundTile";
+import useMegaStore from "@store/MegaStore";
 
 export default function BodyBoard() {
   const shows = useBodyShows();
+  const bodyBoardId = useMegaStore((state) => state.bodyBoardId);
+  const boardConfig = useBoardConfig(bodyBoardId, shows);
+
   useDisableNavScroll();
-  const handleShowClick = useCallback(
-    (show: ShowbizItem, _event?: MouseEvent<HTMLDivElement>) => {
-      console.log(`[🐽](BodyBoard.tsx) ouch`); // ! remove me
-    },
-    []
-  );
+
+  // no items
+  if (!boardConfig?.items.length) return <NotFoundTile />;
 
   return (
     <Box
@@ -28,7 +29,7 @@ export default function BodyBoard() {
         overscrollBehaviorX: "contain",
       }}
     >
-      <ShowBoard shows={shows} onClick={handleShowClick} />
+      <ShowBoard board={boardConfig} />
     </Box>
   );
 }

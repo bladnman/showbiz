@@ -1,12 +1,12 @@
 import React from "react";
 import { IconButton } from "@mui/material";
 import WebStoriesIcon from "@mui/icons-material/WebStories";
-import setBodyBoardName from "@app-utils/setBodyBoardName";
+import setBodyBoardId from "@app-utils/setBodyBoardId";
 import useMegaStore from "@store/MegaStore";
 import { COLORS } from "@features/app/app-theme/theme_const";
 
 export default function BoardModeButton() {
-  const bodyBoardName = useMegaStore((state) => state.bodyBoardName);
+  const bodyBoardName = useMegaStore((state) => state.bodyBoardId);
   const isBoardMode = !!bodyBoardName;
   const selectButtonSx = {
     ":hover": {
@@ -19,9 +19,7 @@ export default function BoardModeButton() {
   return (
     <IconButton
       sx={selectButtonSx}
-      onClick={() =>
-        setBodyBoardName(isBoardMode ? undefined : "TEMPORARY BOARD NAME")
-      }
+      onClick={() => setBodyBoardId(isBoardMode ? undefined : 1)}
     >
       <WebStoriesIcon opacity={isBoardMode ? 1.0 : 0.6} />
     </IconButton>

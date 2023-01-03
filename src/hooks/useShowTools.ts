@@ -3,8 +3,8 @@ import useMegaStore from "../store/MegaStore";
 import { ShowbizItem } from "@/@types";
 import isShowInList from "@show-utils/isShowInList";
 import addShow from "@show-utils/addShow";
-import updateShowInCloud from "@show-utils/updateShowInCloud";
 import updateShows from "@show-utils/updateShows";
+import updateShow from "@show-utils/updateShow";
 
 export default function useShowTools() {
   const shows = useMegaStore((state) => state.shows);
@@ -27,9 +27,9 @@ export default function useShowTools() {
       shows,
       customDataList,
       addShow,
+      updateShow,
       updateShows,
       isShowSaved,
-      updateShowInCloud,
       selectedShows,
       isShowSelected,
     }),

@@ -3,6 +3,7 @@ import { ShowbizItem } from "@types";
 import Diary from "@utils/Diary";
 import fetchWatchMode from "@services/StreamAPI/fetchWatchMode";
 import useShowTools from "@/hooks/useShowTools";
+import updateShow from "@show-utils/updateShow";
 
 const promiseDiary = new Diary(300);
 
@@ -12,7 +13,7 @@ export default function useStreamInfo(
 ) {
   const [isLoading, setIsLoading] = useState(false);
   const [streamItems, setStreamItems] = useState<StreamItem[]>();
-  const { updateShowInCloud } = useShowTools();
+  const { updateShow } = useShowTools();
 
   useEffect(() => {
     if (!enabled || !show) {
@@ -40,7 +41,7 @@ export default function useStreamInfo(
 
       // put items on show
       show.streamItems = watchModeResults as StreamItem[];
-      updateShowInCloud(show); // only updates if a saved show
+      await updateShow(show); // only updates if a saved show
 
       // save to state (for re-render)
       setStreamItems(show.streamItems);
@@ -48,7 +49,7 @@ export default function useStreamInfo(
       setIsLoading(false);
     };
     doFetch().catch();
-  }, [show, enabled, updateShowInCloud, setIsLoading]);
+  }, [show, enabled, updateShow, setIsLoading]);
 
   return useMemo(() => {
     return {

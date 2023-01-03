@@ -8,9 +8,15 @@ import {
   Timestamp,
   where,
 } from "firebase/firestore";
-import { CustomDataItem, ShowbizItem } from "@types";
-import { fireDb, showsCollection, customDataCollection } from "../firestore";
+import { BoardConfig, CustomDataItem, ShowbizItem } from "@types";
 import {
+  fireDb,
+  showsCollection,
+  customDataCollection,
+  boardCollection,
+} from "../firestore";
+import {
+  FIRE_BOARD_COLLECTION_NAME,
   FIRE_CUSTOM_DATA_COLLECTION_NAME,
   FIRE_SHOWS_COLLECTION_NAME,
 } from "../fire_const";
@@ -159,4 +165,76 @@ export async function fire_fetchCustomDataList() {
     customDataList.push(doc.data() as CustomDataItem);
   });
   return customDataList;
+}
+
+export async function fire_fetchBoards() {
+  const querySnapshot = await getDocs(boardCollection);
+  const boards: BoardConfig[] = [];
+
+  querySnapshot.forEach((doc) => {
+    boards.push(doc.data() as BoardConfig);
+  });
+  return boards;
+}
+
+export async function fire_saveBoard(board: BoardConfig) {
+  // see if the board exists already
+  const cloudDoc = await fire_getBoardDocument(board);
+
+  // is fire-save enabled
+  if (!CLOUD_SAVE_ENABLED) {
+    console.log(`[🐽](fire_utils) [skipped] SAVING board`, board);
+    return;
+  }
+
+  // update
+  if (cloudDoc) {
+    await setDoc(cloudDoc, board);
+  }
+
+  // save new
+  else {
+    await addDoc(boardCollection, board);
+  }
+}
+
+export async function fire_deleteBoard(board: BoardConfig) {
+  // find show in collection
+  const q = query(boardCollection, where("id", "==", board.id));
+  const querySnapshotList = await getDocs(q);
+
+  // not found
+  if (!querySnapshotList) {
+    console.error("Show was not found to be saved.");
+    return;
+  }
+
+  const deletePromises = <any>[];
+  querySnapshotList.forEach((snapDoc) => {
+    deletePromises.push(
+      deleteDoc(doc(fireDb, FIRE_BOARD_COLLECTION_NAME, snapDoc.id))
+    );
+  });
+  await Promise.all(deletePromises);
+}
+
+export async function fire_getBoardDocument(board: BoardConfig) {
+  // find show in collection
+  const q = query(boardCollection, where("id", "==", board.id));
+  const querySnapshotList = await getDocs(q);
+
+  // not found
+  if (!querySnapshotList) return null;
+
+  const snapDoc = querySnapshotList.docs[0];
+  return fire_getBoardDocumentWithDocId(snapDoc?.id);
+}
+
+export function fire_getBoardDocumentWithDocId(docId: string) {
+  if (!docId) return null;
+  try {
+    return doc(fireDb, FIRE_BOARD_COLLECTION_NAME, docId);
+  } catch (e) {
+    return null;
+  }
 }

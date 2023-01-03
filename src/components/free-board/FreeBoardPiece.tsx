@@ -22,6 +22,8 @@ export type BoardEventHandlers = {
   onClick?: BoardEventFn;
   onDoubleClick?: BoardEventFn;
   onContextMenu?: BoardEventFn;
+  onBoardMoved?: (position: Position) => void;
+  onBoardScaled?: (scale: number) => void;
 };
 export type BoardInterfaceProps = BoardEventHandlers & {
   pieceData?: BoardPieceData;
@@ -29,14 +31,15 @@ export type BoardInterfaceProps = BoardEventHandlers & {
 export type PieceEventData = BoardEventData & {
   pieceData: BoardPieceData;
 };
-type PieceProps = {
+export type FreeBoardPieceProps = {
   children: React.ReactNode;
-  position: Position;
+  position?: Position;
+  startPosition?: Position;
   draggable?: boolean;
   resizable?: boolean;
   pieceData?: BoardPieceData;
 } & BoardEventHandlers;
-export default function FreeBoardPiece(props: PieceProps) {
+export default function FreeBoardPiece(props: FreeBoardPieceProps) {
   const {
     children,
     position = { x: 0, y: 0 },

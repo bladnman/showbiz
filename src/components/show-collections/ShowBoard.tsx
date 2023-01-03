@@ -1,26 +1,18 @@
-import React, { MouseEvent } from "react";
+import React from "react";
 import NotFoundTile from "../tiles/NotFoundTile";
-import { ShowbizItem } from "@types";
+import { BoardConfig } from "@types";
 import { Box } from "@mui/material";
 import FreeBoard from "@components/free-board/FreeBoard";
-import CompositePosterTile from "@/features/tiles/poster-tile/CompositePosterTile";
-import { PieceEventData } from "@components/free-board/FreeBoardPiece";
+import FreeBoardPiece, {
+  PieceEventData,
+  Position,
+} from "@components/free-board/FreeBoardPiece";
+import BoardTile from "@components/tiles/BoardTile";
+import updateBoard from "@utils/board-utils/updateBoard";
 
-export default function ShowBoard({
-  shows,
-  onClick,
-  columns,
-  gridWidth,
-  maxPosterWidth,
-}: {
-  shows?: ShowbizItem[] | null;
-  onClick?: (show: ShowbizItem, event?: MouseEvent<HTMLDivElement>) => void;
-  columns?: number;
-  gridWidth?: number;
-  maxPosterWidth?: number;
-}) {
+export default function ShowBoard({ board }: { board: BoardConfig }) {
   const handleDragStop = (data: PieceEventData) => {
-    console.log(`[🐽](ShowBoard) DRAG STOP`, data);
+    updateBoard(board).catch();
   };
   const handleClick = (data: PieceEventData) => {
     console.log(`[🐽](ShowBoard) CLICK`, data);
@@ -29,7 +21,18 @@ export default function ShowBoard({
   const handleDoubleClick = (data: PieceEventData) => {
     console.log(`[🐽](ShowBoard) DOUBLE-CLICK`, data);
   };
-  if (!shows || !shows.length) return <NotFoundTile />;
+  const handleBoardMoved = (position: Position) => {
+    console.log(`[🐽](ShowBoard) BOARD MOVED`, board, position);
+    updateBoard(board).catch();
+  };
+  const handleBoardScaled = (scale: number) => {
+    console.log(`[🐽](ShowBoard) BOARD ZOOMED`, board);
+    updateBoard(board).catch();
+  };
+
+  // no items
+  if (!board.items.length) return <NotFoundTile />;
+
   return (
     <Box
       className={"BOARD-HOLDER"}
@@ -49,12 +52,21 @@ export default function ShowBoard({
       }}
     >
       <FreeBoard
-        onDragStop={handleDragStop}
-        onClick={handleClick}
-        onDoubleClick={handleDoubleClick}
+        board={board}
+        onBoardMoved={handleBoardMoved}
+        onBoardScaled={handleBoardScaled}
       >
-        {shows.map((show, index) => (
-          <CompositePosterTile key={index} show={show} width={175} />
+        {board.items.map((boardItem, index) => (
+          <FreeBoardPiece
+            key={index}
+            position={boardItem.position}
+            pieceData={boardItem}
+            onDragStop={handleDragStop}
+            onClick={handleClick}
+            onDoubleClick={handleDoubleClick}
+          >
+            <BoardTile boardItem={boardItem} />
+          </FreeBoardPiece>
         ))}
       </FreeBoard>
     </Box>

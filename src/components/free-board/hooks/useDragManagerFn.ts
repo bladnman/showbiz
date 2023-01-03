@@ -24,6 +24,10 @@ export default function useDragManagerFn(eventHandlers: BoardInterfaceProps) {
       // DRAG START
       if (!moveStartPosition && isMove) {
         const currentPosition = { x: data.x, y: data.y };
+        // update pieceData if it has a startPosition
+        if (pieceData.startPosition) {
+          pieceData.startPosition = currentPosition;
+        }
         setMoveStartPosition(currentPosition);
         onDragStart &&
           onDragStart({
@@ -37,6 +41,12 @@ export default function useDragManagerFn(eventHandlers: BoardInterfaceProps) {
       // DRAG END
       else if (moveStartPosition && isRelease) {
         const currentPosition = { x: data.x, y: data.y };
+
+        // update pieceData if it has a position
+        if (pieceData.position) {
+          pieceData.position = currentPosition;
+        }
+
         setMoveStartPosition(null);
         onDragStop &&
           onDragStop({

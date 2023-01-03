@@ -110,3 +110,27 @@ type GroupByDef = {
   title: string;
   showGroups: ShowGroup[];
 };
+type BoardItem = {
+  id: number;
+  name: string;
+  type: "show";
+  position: {
+    x: number;
+    y: number;
+  };
+  rotation?: number;
+  scale?: number;
+  border?: string;
+  zIndex?: number;
+  opacity?: number;
+};
+type BoardConfig = {
+  id: number;
+  name: string;
+  position: {
+    x: number;
+    y: number;
+  };
+  scale: number;
+  items: BoardItem[];
+};

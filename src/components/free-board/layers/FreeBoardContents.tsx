@@ -1,7 +1,8 @@
-import React, { Children } from "react";
+import React, { Children, isValidElement } from "react";
 import { Box } from "@mui/material";
 import FreeBoardPiece, {
   BoardEventHandlers,
+  FreeBoardPieceProps,
 } from "@components/free-board/FreeBoardPiece";
 
 type ContentProps = {
@@ -33,10 +34,22 @@ export default function FreeBoardContents(
         const thetaAngle = 50 * index;
         const x = centerX + (a + b * thetaAngle) * Math.cos(thetaAngle);
         const y = centerY + (a + b * thetaAngle) * Math.sin(thetaAngle);
+
+        const isBoardPiece =
+          isValidElement(child) && child.type === FreeBoardPiece;
+
+        // CLONE - board pieces
+        if (isBoardPiece) {
+          const origPiece = child as React.ReactElement<FreeBoardPieceProps>;
+          return React.cloneElement(origPiece, {
+            key: index,
+          });
+        }
+
+        // WRAP - non-board-piece
         return (
           <FreeBoardPiece
             key={index}
-            position={{ x, y }}
             pieceData={child}
             onDragStart={onDragStart}
             onDragStop={onDragStop}

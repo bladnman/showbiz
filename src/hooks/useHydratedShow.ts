@@ -9,6 +9,7 @@ import updateShows from "@show-utils/updateShows";
 import updateObject from "@show-utils/updateObject";
 import mergeObjects from "@show-utils/mergeObjects";
 import { Timestamp } from "firebase/firestore";
+import updateShow from "@show-utils/updateShow";
 
 /**
  * ```
@@ -21,7 +22,6 @@ import { Timestamp } from "firebase/firestore";
  * will `hydrate` your show as much as possible
  * */
 export default function useHydratedShow(withShow?: ShowbizItem | null) {
-  console.log(`[🐽](useHydratedShow) withShow`, withShow);
   const [show, setShow] = useState(withShow);
 
   useEffect(() => {
@@ -35,8 +35,6 @@ export default function useHydratedShow(withShow?: ShowbizItem | null) {
       let finalShow: ShowbizItem;
       const listShow = getShowFromList(withShow);
       const secSinceHydration = secSince(listShow?.lastHydrationDate?.toDate());
-
-      console.log(`[🐽](useHydratedShow) secSinceHydration`, secSinceHydration);
 
       // API PULL NEEDED
       if (!listShow || secSinceHydration > REFRESH_DETAILS_SEC) {
@@ -53,14 +51,7 @@ export default function useHydratedShow(withShow?: ShowbizItem | null) {
         // update hydration date!
         finalShow.lastHydrationDate = Timestamp.fromDate(new Date());
 
-        if (listShow) {
-          // UPDATE CLOUD? : if this was in the cloud already
-          await fire_saveShow(finalShow);
-
-          // NOTIFY : tell app the data has changed
-          // since the updateObject may have changed this item
-          updateShows();
-        }
+        await updateShow(finalShow);
       }
 
       // SHOW RECENT ENOUGH
@@ -75,6 +66,5 @@ export default function useHydratedShow(withShow?: ShowbizItem | null) {
     doFetch().catch();
   }, [withShow]);
 
-  console.log(`[🐽](useHydratedShow) show`, show);
   return show;
 }
