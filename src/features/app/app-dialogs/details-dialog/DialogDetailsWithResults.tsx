@@ -10,7 +10,7 @@ import DetailSearchResultsGrid from "../../../details/parts/details-grids/Detail
 import DetailsSearchField from "./parts/DetailsSearchField";
 import { GLASS_BACKDROP_FILTER } from "@CONST";
 import setSearchMode from "@app-utils/setSearchMode";
-import useBreakSize from "@utils/useBreakSize";
+import useBreakSize from "@utils/../../../../../../footprinter/src/hooks/useBreakSize";
 
 export default function DialogDetailsWithResults({ show }: ShowPropOpt) {
   const similarToShow = useMegaStore((state) => state.similarToShow);

@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { Dialog } from "@mui/material";
-import useBreakSize from "../../../../utils/useBreakSize";
+import useBreakSize from "../../../../../../footprinter/src/hooks/useBreakSize";
 import useMegaStore from "../../../../store/MegaStore";
 import useHydratedShow from "../../../../hooks/useHydratedShow";
 import DialogDetailsWithResults from "./DialogDetailsWithResults";

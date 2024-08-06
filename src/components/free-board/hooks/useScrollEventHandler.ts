@@ -27,13 +27,7 @@ export default function useScrollEventHandler(
       if (event.ctrlKey) {
         const { deltaY } = event;
         const newScale = deltaY > 0 ? zoom * 0.95 : zoom * 1.05;
-        // const newScale = deltaY > 0 ? zoom - 0.01 : zoom + 0.01;
         const cleanScale = ~~(newScale * 1000) / 1000;
-        console.log(
-          `[🐽](useScrollEventHandler) newScale,cleanScale`,
-          newScale,
-          cleanScale
-        );
         setZoom(Math.min(Math.max(cleanScale, zoomRange[0]), zoomRange[1]));
         debouncedReportZoom(cleanScale);
       }

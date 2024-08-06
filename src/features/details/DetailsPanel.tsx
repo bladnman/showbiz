@@ -1,6 +1,6 @@
 import React from "react";
 import { ShowPropOpt } from "@types";
-import useBreakSize from "@utils/useBreakSize";
+import useBreakSize from "@utils/../../../../footprinter/src/hooks/useBreakSize";
 import DetailsOnePanelLayout from "./layouts/DetailsOnePanelLayout";
 import DetailsTwoPanelLayout from "./layouts/DetailsTwoPanelLayout";
 

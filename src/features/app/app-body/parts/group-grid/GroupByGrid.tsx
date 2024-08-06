@@ -19,13 +19,13 @@ export default function GroupByGrid({
   groupBy?: string;
 }) {
   const customDataList = useShowListCustomData(shows);
-  const groupByRef = useBodyGroupByDef({ groupBy, customDataList, shows });
+  const groupByDef = useBodyGroupByDef({ groupBy, customDataList, shows });
 
-  if (groupByRef.showGroups.length < 1) return <NotFoundTile />;
+  if (groupByDef.showGroups.length < 1) return <NotFoundTile />;
 
   return (
     <Box>
-      {groupByRef.showGroups.map(({ title, shows }: ShowGroup) => {
+      {groupByDef.showGroups.map(({ title, shows }: ShowGroup) => {
         return (
           <Box key={title}>
             <Stack

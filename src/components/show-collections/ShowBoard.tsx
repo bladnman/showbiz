@@ -11,14 +11,14 @@ import BoardTile from "@components/tiles/BoardTile";
 import updateBoard from "@utils/board-utils/updateBoard";
 
 export default function ShowBoard({ board }: { board: BoardConfig }) {
-  const handleDragStop = (data: PieceEventData) => {
+  const handleItemDragStop = (data: PieceEventData) => {
     updateBoard(board).catch();
   };
-  const handleClick = (data: PieceEventData) => {
+  const handleItemClick = (data: PieceEventData) => {
     console.log(`[🐽](ShowBoard) CLICK`, data);
     // onClick && onClick(data.show);
   };
-  const handleDoubleClick = (data: PieceEventData) => {
+  const handleItemDoubleClick = (data: PieceEventData) => {
     console.log(`[🐽](ShowBoard) DOUBLE-CLICK`, data);
   };
   const handleBoardMoved = (position: Position) => {
@@ -61,9 +61,9 @@ export default function ShowBoard({ board }: { board: BoardConfig }) {
             key={index}
             position={boardItem.position}
             pieceData={boardItem}
-            onDragStop={handleDragStop}
-            onClick={handleClick}
-            onDoubleClick={handleDoubleClick}
+            onDragStop={handleItemDragStop}
+            onClick={handleItemClick}
+            onDoubleClick={handleItemDoubleClick}
           >
             <BoardTile boardItem={boardItem} />
           </FreeBoardPiece>

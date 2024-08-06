@@ -6,7 +6,7 @@ import { useDrawerFilters } from "./hooks/useDrawerFilters";
 import useShowTools from "../../../hooks/useShowTools";
 import useCollectionTools from "../../../hooks/useCollectionTools";
 import useActiveCustomDataList from "@hooks/useActiveCustomDataList";
-import useBreakSize from "@utils/useBreakSize";
+import useBreakSize from "@utils/../../../../../footprinter/src/hooks/useBreakSize";
 import PushPinIcon from "@mui/icons-material/PushPin";
 import SideBarButton from "@components/interactables/SideBarButton";
 import useDrawerTools from "@hooks/useDrawerTools";

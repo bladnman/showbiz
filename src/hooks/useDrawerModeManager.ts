@@ -1,5 +1,5 @@
 import useMegaStore from "@store/MegaStore";
-import useBreakSize from "@utils/useBreakSize";
+import useBreakSize from "@utils/../../../footprinter/src/hooks/useBreakSize";
 import { useEffect } from "react";
 import setDrawerMode from "@/utils/app-utils/setDrawerMode";
 

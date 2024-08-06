@@ -14,7 +14,7 @@ import { SelectReverseIcon } from "@/images/AppIcons";
 import toggleSelectMode from "@app-utils/toggleSelectMode";
 import selectShows from "@show-utils/selectShows";
 import deselectShows from "@show-utils/deselectShows";
-import useBreakSize from "@utils/useBreakSize";
+import useBreakSize from "@utils/../../../../../../../footprinter/src/hooks/useBreakSize";
 
 export default function SelectionTools({ sx }: SxPropOpt) {
   const isSelectMode = useMegaStore((state) => state.isSelectMode);

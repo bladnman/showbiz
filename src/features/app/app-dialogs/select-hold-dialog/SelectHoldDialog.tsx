@@ -18,7 +18,7 @@ import { Stack } from "@mui/system";
 import Shim from "@components/utils/Shim";
 import Typography from "@mui/material/Typography";
 import setHoldUntilForShow from "@watch-status-utils/setHoldUntilForShow";
-import useBreakSize from "@utils/useBreakSize";
+import useBreakSize from "@utils/../../../../../../footprinter/src/hooks/useBreakSize";
 import getCustomDataForShow from "@custom-data-utils/getCustomDataForShow";
 import { dateFromTimestamp } from "@utils/helpers";
 
